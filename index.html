@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <title>test</title>
+    <!--<script src="src/main.js"></script>-->
+
+  </head>
+  <script>
+//    if(window.GreenSchool){
+//      // window.iosParams.sid=window.GreenSchool.getSchoolId();
+//      window.GreenSchool.showTitleBar(false);
+//      window.GreenSchool.setStatusBarAndActionBarColor('#2E2E31');
+//      alert(1)
+//    }else{
+//      alert(2)
+//    }
+//静态常量，通过登录APP自动获取，进行缓存;
+    window.iosParams={
+      stuTid:'',
+      sid:''
+    };
+    function getUserInfo(s1,s2,s3,s4,s5,s6,s7,s8,s9){
+    //     userid=s7;
+      window.iosParams.sid=s8;
+      window.iosParams.userid=s7;
+      window.iosParams.stuTid=s5;
+//      alert(111);
+//      alert(window.iosParams.stuTid);
+    }
+
+  </script>
+  <body onselectstart="return false">
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+
+</html>
