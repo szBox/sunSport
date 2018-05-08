@@ -7,9 +7,14 @@ import Vuex from 'vuex'
 import store from './Vuex/store'
 import iView from 'iview';
 import echarts from 'echarts'
+
 import 'iview/dist/styles/iview.css';
 import '@/assets/js/rem.js';
 import '@/assets/js/echart.min.js';
+
+//import  '@/assets/js/jquery-weui'
+//import  '@/assets/css/jquery-weui'
+
 
 Vue.use(iView);
 Vue.use(Vuex);
@@ -59,8 +64,8 @@ if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
   window.iosParams.sid=119;
 //   window.iosParams.stuTid=171;  //171测试区长帐号
   // window.iosParams.stuTid=454466819;  //171测试学校领导
-window.iosParams.stuTid=185;    //学生
-
+//window.iosParams.stuTid=185;    //学生
+//window.iosParams.stuTid; 
 
 
     //班主任

@@ -178,7 +178,10 @@ export default {
 
 .content {
   background: #fff;
-  height: 100vh;
+  position: absolute;
+	height: 100%;
+	width: 100%;
+  overflow-x: hidden;
 }
 .topbar {
   display: flex;

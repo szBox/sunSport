@@ -30,7 +30,7 @@
           </div>
         </div>
       </div>
-      <div class="lun" style="margin-top: 0;border-top: 0;margin-left:0;height: 11rem;border-bottom: 1px solid #1F1F21;padding-left: 5%;padding-right: 5%">
+      <div class="lun" style=" margin-top: 0;border-top: 0;margin-left:0;height: 11rem;border-bottom: 1px solid #1F1F21;padding-left: 5%;padding-right: 5%">
         <div class="li">
           <ul class="u1">
             <!--<div class="l4">-->
@@ -95,7 +95,7 @@
       var mainUrl=int.getgeneral;
       var params={
         school_opens_time:self.$store.state.d.startTime,
-        sid:self.$store.state.d.sid,
+        uid:self.$store.state.d.uid,
         weektime:w
       };
       var arr=new Array();
@@ -149,7 +149,7 @@
     /*margin-left: 5%;*/
     padding-left: 5%;
     padding-right: 5%;
-    width: 90%;
+    width: 100%;
   }
   .z{
     float: left;
@@ -177,7 +177,7 @@
   }
   .cont_t_f{
     padding-left: 5%;
-    width: 90%;
+    width: 100%;
     padding-right: 5%;
     height: 2rem;
     color: #ffffff;
@@ -322,6 +322,9 @@
     padding-right: 5%;
     width: 90%;
     height: 15rem;
+  }
+  .lun{
+  	width: 100%;
   }
 </style>
 <style src="../assets/css/rotate.css">

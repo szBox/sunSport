@@ -162,7 +162,7 @@
     /*margin-left: 5%;*/
     padding-left: 5%;
     padding-right: 5%;
-    width: 90%;
+    width: 100%;
   }
   .z{
     float: left;
@@ -191,7 +191,7 @@
   }
   .cont_t_f{
     padding-left: 5%;
-    width: 90%;
+    width: 100%;
     padding-right: 5%;
     height: 2rem;
     color: #ffffff;

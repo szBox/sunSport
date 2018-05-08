@@ -366,7 +366,7 @@
   }
   .ftime{
     font-size: 0.8rem;
-    line-height: 2rem;
+    line-height: 1.9rem;
     margin-left: 0.5rem;
     width: 70%;
     float: left;

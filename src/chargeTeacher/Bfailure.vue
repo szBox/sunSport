@@ -160,7 +160,7 @@
     /*margin-left: 5%;*/
     padding-left: 5%;
     padding-right: 5%;
-    width: 90%;
+    width: 100%;
   }
   .z{
     float: left;
@@ -188,7 +188,7 @@
   }
   .cont_t_f{
     padding-left: 5%;
-    width: 90%;
+    width: 100%;
     padding-right: 5%;
     height: 3rem;
     color: #ffffff;
@@ -218,7 +218,7 @@
   }
   .t_l .l1 li{
     padding-left: 5%;
-    width: 90%;
+    width: 100%;
     padding-right: 5%;
     height: 3rem;
     color: #B2B2B3;
@@ -238,7 +238,7 @@
     width: 30%;
   }
   .t_l .l1 li .fs .val{
-    width: 2.5rem;
+    /*width: 2.5rem;*/
     float: left;
     padding-left: 1.5rem;
   }

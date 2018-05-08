@@ -89,332 +89,7 @@
       ss_select:select1,
       s_loading:loading
     },
-//    mounted(){
-//      var self=this;
-//      var arr=['第一周', '第二周', '第三周', '第四周', '第五周', '第六周', '第七周', '第八周', '第九周', '第十周', '第十一周', '第十二周', '第十三周', '第十四周', '第十五周', '第十六周', '第十七周', '第十八周', '第十九周', '第二十周'];
-//      self.getgrade();
-//      console.log(self.$store.state.d.cid+"1"+self.$store.state.d.weekb+"2"+self.$store.state.d.weeke+"3"+self.$store.state.d.pid+"4"+self.$store.state.d.sgid);
-//      var num='',zz='',gg='',cc='',pp='';
-//      if(self.$store.state.d.num==1){
-//        alert(1111);
-//        num=self.$store.state.d.weekb;
-//        zz=self.$store.state.d.weeke;
-//        gg=self.$store.state.d.sgid;
-//        cc=self.$store.state.d.cid;
-//        pp=self.$store.state.d.pid;
-//        self.starttime1=arr[num-1];
-//        self.endtime1=arr[zz-1];
-//        alert(self.projectid);
-//        for(var i=0;i<self.gradeid.length;i++){
-//          if(gg==self.gradeid[i]){
-//            self.initgrade=self.allgrade[i];
-//          }
-//        }
-//        for(var j=0;j<self.classid.length;j++){
-//          if(gg==self.classid[j]){
-//            self.initclass=self.allclass[j];
-//          }
-//        }
-//        for(var z=0;z<self.projectid.length;z++){
-//          if(gg==self.projectid[z]){
-//            self.initproject=self.allproject[z];
-//          }
-//        }
-//      }else if(self.$store.state.d.num==0){
-//        num=1;
-//        zz=1;
-//        gg='';
-//        cc='';
-//        pp='';
-//      }
-//      self.getdata(num,zz,gg,cc,pp);
-//
-//      $("#picker1").picker({
-//        title: "请选择周期",
-//        cols: [
-//          {
-//            textAlign: 'center',
-//            values: arr
-//          }
-//        ],
-////      rotateEffect:true,
-//        onClose:function () {
-//          self.starttime1='第一周';
-//          for(var i=0;i<arr.length;i++){
-//            if($('#picker1').val()==arr[i]){
-//              num=i+1;
-//              if(num>zz){
-//                alert('起始时间需小于结束时间');
-//              }else if(zz!=1){
-//                self.shows=true;
-//                self.getdata(num,zz,gg,cc,pp);
-//                self.starttime1=$('#picker1').val();
-//                self.endtime1=$('#picker2').val();
-//              }
-//            }
-//          }
-//        }
-//      });
-//
-//      $("#picker2").picker({
-//        title: "请选择周期",
-//        cols: [
-//          {
-//            textAlign: 'center',
-//            values: arr
-//          }
-//        ],
-////      rotateEffect:true,
-//        onClose:function () {
-////        alert();
-//          self.endtime1='第一周';
-//          for(var i=0;i<arr.length;i++){
-//
-//            if($('#picker2').val()==arr[i]){
-////              alert(num+'xxxxxx'+(i+1));
-//              self.shows=true;
-//              zz=i+1;
-//              self.getdata(num,zz,gg,cc,pp);
-//              self.starttime1=$('#picker1').val();
-//              self.endtime1=$('#picker2').val();
-//            }
-//          }
-//        }
-//      });
-//
-//      $("#pickern").picker({
-//        title: "请选择年级",
-//        cols: [
-//          {
-//            textAlign: 'center',
-//            values: self.allgrade
-//          }
-//        ],
-//
-////      rotateEffect:true,
-//        onClose:function () {
-////        alert();
-//          self.shows=true;
-//          for(var i=0;i<self.allgrade.length;i++){
-//            if($('#pickern').val()==self.allgrade[i]){
-//              self.initgrade=$('#pickern').val();
-//              self.getclass(parseInt(self.gradeid[i]));
-//              self.initclass='全部班级';
-//              self.initproject='全部项目';
-//              gg=self.gradeid[i];
-//              cc='';
-//              pp='';
-//              self.getdata(num,zz,gg,cc,pp);
-//            }else if($('#pickern').val()=='全部年级'){
-//              gg='';
-//              cc='';
-//              pp='';
-//              self.getdata(num,zz,gg,cc,pp);
-//            }
-//          }
-//        }
-//      });
-//
-//      $("#pickerc").picker({
-//        title: "请选择班级",
-//        cols: [
-//          {
-//            textAlign: 'center',
-//            values: self.allclass
-//          }
-//        ],
-////      rotateEffect:true,
-//        onClose:function () {
-//          if(self.class!='' || self.class!=null){
-//            for(var i=0;i<self.allclass.length;i++){
-//              if($('#pickerc').val()==self.allclass[i]){
-//                self.shows=true;
-//                self.initclass=$('#pickerc').val();
-//                cc=self.classid[i];
-//                self.getdata(num,zz,gg,cc,pp);
-//              }else if($('#pickerc').val()=='全部班级'){
-//                self.shows=true;
-//
-//                cc='';
-//                self.getdata(num,zz,gg,cc,pp);
-//              }
-//            }
-//          }
-//        }
-//      });
-//
-//      $("#pickerp").picker({
-//        title: "请选择项目",
-//        cols: [
-//          {
-//            textAlign: 'center',
-//            values: self.allproject
-//          }
-//        ],
-////      rotateEffect:true,
-//        onClose:function () {
-//          self.shows=true;
-//          console.log(self.allproject);
-//          for(var i=0;i<self.allproject.length;i++){
-//            if($('#pickerp').val()==self.allproject[i]){
-//              self.initproject=$('#pickerp').val();
-//              pp=self.projectid[i];
-//              self.getdata(num,zz,gg,cc,pp);
-//            }else if($('#pickerp').val()=='全部项目'){
-//              pp='';
-//              self.getdata(num,zz,gg,cc,pp);
-//            }
-//          }
-//        }
-//      });
-////      var h=$(window).height();
-//      // alert(h);
-////      $('.statistic').css({height:h+'px',backgroundColor:'#1F1F21'});
-//    },
-//    methods:{
-//      goback(){
-//        this.$router.go(-1);
-//        self.$store.state.d.num=0;
-//      },
-//      selectdate(){
-//
-//      },
-//      getgrade(){
-//        var self=this;
-//        var mainUrl='http://112.74.100.48/index.php?m=content&f=leader&v=get_project';
-//        var params={
-//          sid:self.$store.state.d.sid,
-//        };
-//        api.get_api_data(mainUrl,params,function(d){
-//          var len=d.statistics.taught_grade.length;
-//          for(var i=0;i<len;i++){
-//            for(var j in d.statistics.taught_grade[i]){
-//              self.gradeid[i]=j;
-//              self.allgrade[i]=d.statistics.taught_grade[i][j];
-//            }
-//          }
-//          var len1=d.statistics.school_pro.length;
-//          for(let m=0;m<len1;m++){
-//            for(let n in d.statistics.school_pro[m]){
-//              self.projectid[m]=n;
-//              self.allproject[m]=d.statistics.school_pro[m][n];
-//            }
-//          }
-//        })
-//      },
-//      getclass(val){
-//        var self=this;
-//        var mainUrl='http://112.74.100.48/index.php?m=content&f=leader&v=get_project';
-//        var params={
-//          sid:self.$store.state.d.sid,
-//        };
-//        api.get_api_data(mainUrl,params,function(d){
-//          var len=d.statistics.taught_class.length;
-//          self.allclass.length=0;
-//          for(let i=0;i<len;i++){
-//            for(let j in d.statistics.taught_class[i]){
-//              if(val==j){
-//                for(let m=0;m<d.statistics.taught_class[i][j].length;m++){
-//                  for(let n in d.statistics.taught_class[i][j][m]){
-//                    self.classid[m]=n;
-//                    self.allclass[m]=d.statistics.taught_class[i][j][m][n];
-////                    alert(self.allclass[m]);
-//                  }
-//                }
-//              }
-//            }
-//          }
-//
-//          var len1=d.statistics.each_project.length;
-//          self.allproject.length=0;
-//          for(let i=0;i<len1;i++){
-//            for(let j in d.statistics.each_project[i]){
-//              if(val==j){
-//                for(let m=0;m<d.statistics.each_project[i][j].length;m++){
-//                  for(let n in d.statistics.each_project[i][j][m]){
-//                    self.projectid[m]=n;
-//                    self.allproject[m]=d.statistics.each_project[i][j][m][n];
-//                    console.log(self.allproject[m]);
-//                  }
-//                }
-//              }
-//            }
-//          }
-//
-//        });
-//      },
-////      getproject(val){
-////        var self=this;
-////        var mainUrl='http://112.74.100.48/index.php?m=content&f=leader&v=get_project';
-////        var params={
-////          sid:self.$store.state.d.sid,
-////        };
-////
-////        api.get_api_data(mainUrl,params,function(d){
-////
-////
-////        });
-////      },
-//      getdata(b,e,g,c,p){
-//        var self=this;
-//        var mainUrl='http://112.74.100.48/index.php?m=content&f=leader&v=grow_up';
-//        var params={
-//          sid:self.$store.state.d.sid,
-//          weekbegin:b,
-//          weekend:e,
-//          gid:g,
-//          cid:c,
-//          projectid:p
-//        };
-//        if(g!=''&&c!=''&&p!=''){
-//          self.show=false;
-//          self.$store.state.d.cid=c;
-//          self.$store.state.d.weekb=b;
-//          self.$store.state.d.weeke=e;
-//          self.$store.state.d.pid=p;
-//          self.$store.state.d.sgid=g;
-//          var classname=$('#pickerc').val();
-//          self.$store.state.d.classname=classname;
-//          api.get_api_data(mainUrl,params,function(d){
-//            self.$store.state.d.num=1;
-//            console.log(JSON.stringify(d));
-//            self.$store.state.d.single_statistics=d.statistics;
-//            var obj = document.getElementById("h");
-//            var data1=d.statistics.class;
-//            var c=[];
-//            var g=[];
-//            for(var i=0;i<data1.length;i++){
-//              c[i]=data1[i].split('%')[0];
-//            }
-//            var data2=d.statistics.grade;
-//            for(var j=0;j<data2.length;j++){
-//              g[j]=data2[j].split('%')[0];
-//            }
-//            echarts2.initDataH(c,g,obj);
-//            self.shows=false;
-//          });
-//        }else{
-//          self.show=true;
-//          api.get_api_data(mainUrl,params,function(d){
-//            self.$store.state.d.statistics=d.statistics;
-//            if(self.$store.state.d.statistics.score==null || self.$store.state.d.statistics.score==''){
-//              alert('该项目暂未测试数据');
-//              self.shows=false;
-//            }else{
-//              var obj = document.getElementById("tz");
-//              var dataBJ = [self.$store.state.d.statistics.score];
-//              var indicatorData =self.$store.state.d.statistics.project;
-//              echarts.initDataY(dataBJ,indicatorData,obj,'');
-//              var obj1 = document.getElementById("tzz");
-//              var data1=self.$store.state.d.statistics.linechartdata;
-//              var data2=[];
-//              echarts1.initDataZ(data1,data2,obj1);
-//              self.shows=false;
-//            }
-//          });
-//        }
-//      }
-//    }
+
     mounted(){
       var self=this;
       var arr=['第一周', '第二周', '第三周', '第四周', '第五周', '第六周', '第七周', '第八周', '第九周', '第十周', '第十一周', '第十二周', '第十三周', '第十四周', '第十五周', '第十六周', '第十七周', '第十八周', '第十九周', '第二十周','第二十一周','第二十二周','第二十三周','第二十四'];
@@ -611,7 +286,8 @@
         var mainUrl=int.getproject;
         var params={
           school_opens_time:self.$store.state.d.startTime,
-          sid:self.$store.state.d.sid
+          sid:self.$store.state.d.sid,
+          uid:self.$store.state.d.uid,
         };
         api.get_api_data(mainUrl,params,function(d){
           var len=d.statistics.taught_grade.length;
@@ -635,7 +311,8 @@
         var mainUrl=int.getproject;
         var params={
           school_opens_time:self.$store.state.d.startTime,
-          sid:self.$store.state.d.sid
+          sid:self.$store.state.d.sid,
+          uid:self.$store.state.d.uid
         };
         api.get_api_data(mainUrl,params,function(d){
           var len=d.statistics.taught_class.length;
@@ -693,7 +370,8 @@
           weekend:e,
           gid:g,
           cid:c,
-          projectid:p
+          projectid:p,
+          uid:self.$store.state.d.uid
         };
         if(g!=''&&c!=''&&p!=''){
           self.show=false;
@@ -808,7 +486,7 @@
   }
   .ftime{
     font-size: 0.8rem;
-    line-height: 2rem;
+    line-height: 1.9rem;
     margin-left: 0.5rem;
     width: 70%;
     float: left;
@@ -870,7 +548,7 @@
   }
   .select2 .s_l .s_i{
     width: 20%;
-    margin-top: 0.4rem;
+    margin-top: 0.7rem;
     float: left;
     /*width: 1rem;*/
     height: 1rem;

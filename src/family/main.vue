@@ -64,6 +64,8 @@
     },
     created (){
       var self = this;
+      console.log('登录uid---'+self.$router.currentRoute.params.uid);
+      window.iosParams.stuTid=self.$router.currentRoute.params.uid;
       $.ajax({
         type: "GET",
         dataType: "jsonp",
@@ -95,11 +97,12 @@
 
 
         goback(){
-        if(window.GreenSchool){
-          window.GreenSchool.goBack();
-        }else{
-          window.external.goBack();
-        }
+//      if(window.GreenSchool){
+//        window.GreenSchool.goBack();
+//      }else{
+//        window.external.goBack();
+//      }
+				this.$router.go(-1);
       },
       routerTo(time) {
         var vm = this;
@@ -285,7 +288,7 @@
             self.$store.state.b.basic.uid=val;  //替换一下
             self.$store.state.b.startTime=time;
             self.show=false;
-            self.$router.replace({path:'/teacher/'+time});
+            self.$router.push({path:'/teacher/'+time});
           });
 
         });
@@ -316,7 +319,7 @@
               self.$store.state.c.basic.uid=val;  //替换一下
               self.$store.state.c.startTime=time;
               self.show=false;
-              self.$router.replace({path:'/main/'+time});
+              self.$router.push({path:'/main/'+time});
             });
         });
       },
@@ -351,7 +354,7 @@
             self.$store.state.d.uid=val;  //替换一下
             self.$store.state.d.startTime=time;
             self.show=false;
-            self.$router.replace({path:'/lmain/'+time});
+            self.$router.push({path:'/lmain/'+time});
           });
 
         });

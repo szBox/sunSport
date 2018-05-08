@@ -263,14 +263,16 @@
 
 			}
 			var index = parseInt(arr.length - 1);
+			
 			self.m = arr[index];
-
+			
 			//  var hei = $(document).height();
 			//  $(".content").css({ height: hei + 'px', background: "#fff" });
 			//		console.log(hei)
 			var time = "";
 			if(self.$store.state.a.week) {
-				time = self.$store.state.a.week;
+				time = self.$store.state.a.week+1;
+				
 			} else {
 				time =
 					self.$store.state.a.weeks[self.$store.state.a.weeks.length - 1] - 1;

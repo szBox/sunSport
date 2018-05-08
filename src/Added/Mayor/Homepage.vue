@@ -164,7 +164,7 @@ export default {
       type: "GET",
       dataType: "jsonp",
       data:{
-      	uid:185,
+      	uid:vm.$store.state.d.uid,
       	school_opens_time:vm.trem_time
       },
       url: int.getalldatas,
@@ -281,7 +281,7 @@ export default {
       type: "GET",
       dataType: "jsonp",
       data:{
-      	uid:171,
+      	uid:vm.$store.state.d.uid,
       	school_opens_time:'2017-09-01'
       },
       url: int.getalldatas,

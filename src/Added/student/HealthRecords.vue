@@ -55,7 +55,7 @@ export default {
     console.log(hei);
     
     $(".content").css({ height: hei + "px", background: "#fff" });
-		$("body").css({ height: 0 + "px" });
+		$("body").css({ height: 0 + "px" , background: "#fff"});
     var vm = this;
     var d = new Date();
     var dTime =

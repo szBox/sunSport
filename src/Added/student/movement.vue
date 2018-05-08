@@ -104,8 +104,14 @@ export default {
       }
     };
   },
+  mounted(){
+  	 var hei = $(window).height();
+     $(".content").css({ height: hei + "px", background: "#fff" });
+		$("body").css({ height: 0 + "px"});
+  },
   created() {
     var vm = this;
+    
     var d = new Date();
     var dTime =
       parseInt(d.getFullYear()) +
@@ -234,7 +240,10 @@ export default {
 <style scoped>
 .content {
   background: #fff;
-  /*height: 100vh;*/
+ 	position: absolute;
+	height: 100%;
+	width: 100%;
+  overflow-x: hidden;
 }
 .topbar {
   display: flex;

@@ -5,9 +5,11 @@
 // let host='http://120.24.178.171';
 let host='http://192.168.0.211';
 export default {
-
+  
   //main.vue  判断角色类型
   host:host,
+  //登录
+  getlogin:host+"/index.php?m=content&f=login&v=login",
   getCard:host+"/index.php?m=content&f=leader&v=getuser",
   gofamily:host+'/index.php?m=content&f=statistics&v=index',
   goclassTeacher:host+"/index.php?m=content&f=statistics&v=head_teacher_index",

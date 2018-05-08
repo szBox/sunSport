@@ -18,10 +18,10 @@
             <!--<img src="../assets/img/fail.png" width="100%">-->
           <!--</div>-->
           <div class="c_cont" style="color: #FFCC00">
-            偏瘦(<span>{{list.bmi.too_light.percentage}}</span>)
+            偏瘦(<span>{{list.bmi.to_light.percentage}}</span>)
           </div>
           <div class="c_right">
-            <div class="c_num">{{list.bmi.too_light.num}}人</div>
+            <div class="c_num">{{list.bmi.to_light.num}}人</div>
             <div class="c_img2">
               <img src="../assets/img/advance.png" width="100%">
             </div>
@@ -127,6 +127,7 @@
         };
         api.get_api_data(mainUrl,params,function(d){
           self.list=d;
+          
           self.$store.state.b.cid=d.bmi.cid;
 //          console.log(d.bmi.cid);
           console.log(JSON.stringify(d));
@@ -190,7 +191,7 @@
     border-bottom: 1px solid #1F1F21;
   }
   .cont_c_c{
-    width: 90%;
+    width: 100%;
     padding-left: 5%;
     padding-right: 5%;
   }

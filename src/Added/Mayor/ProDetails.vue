@@ -135,7 +135,7 @@
 				url: int.getdatazengzhang,
 				data: {
 //					district: vm.Area,
-					uid: 171,
+					uid: vm.$store.state.d.uid,
 					
 					school_opens_time: '2017-09-01'
 				},
@@ -318,7 +318,7 @@
 				url: int.getdatazengzhang,
 				data: {
 //					district: vm.Area,
-					uid: 171,
+					uid: vm.$store.state.d.uid,
 					projectid:this.project_id,
 					school_opens_time: '2017-09-01'
 				},

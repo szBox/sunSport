@@ -98,7 +98,7 @@ export default {
       data: {
         // card: vm.$store.state.a.data.base.user.card,
 //      card: "000001535217002",
-				uid:185,
+				uid:vm.$store.state.a.data.base.user.uid,
         recommend: 0
       },
       success: function(response) {
@@ -174,7 +174,10 @@ export default {
 
 .content {
   background: #fff;
-  height: 100vh;
+ 	position: absolute;
+	height: 100%;
+	width: 100%;
+  overflow-x: hidden;
 }
 .topbar {
   display: flex;

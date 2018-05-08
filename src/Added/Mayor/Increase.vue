@@ -75,7 +75,7 @@
 				url: int.getdatazengzhang,
 				data: {
 //					district: vm.Area,
-					uid: 171,
+					uid: vm.$store.state.d.uid,
 					
 					school_opens_time: '2017-09-01'
 				},

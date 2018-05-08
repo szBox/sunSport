@@ -30,7 +30,8 @@ import Submit from '@/chargeTeacher/submit'
 import Import from '@/chargeTeacher/import'
 import Ranklist from '@/chargeTeacher/ranklist'
 
-
+//登录    新加的
+import login from '@/family/login'
 
 import Inquire from '@/Added/Inquire'
 /**学生 */
@@ -54,12 +55,18 @@ Vue.use(Router);
 
 export default new Router({
   routes: [
-
+		{
+			path:'/',
+			name:'login',
+			component:login
+		},
+		
     {
-      path: '/',
+      path: '/mainSel/:uid',
       name: 'main',
       component: index
     },
+    
     {
       path: '/teacher/:id',
       name: 'teacher',

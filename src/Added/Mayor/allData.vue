@@ -48,7 +48,7 @@ export default {
 				url: int.getdatazengzhang,
 				data: {
 //					district: vm.Area,
-					uid: 171,
+					uid: vm.$store.state.d.uid,
 					projectid:vm.pid,
 					school_opens_time: '2017-09-01'
 				},

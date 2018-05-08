@@ -132,8 +132,10 @@ export default {
 <style scoped>
 .content{
   background: #fff !important;
-  padding-bottom: 5vw;
-  height: 100vh;
+  position: absolute;
+	height: 100%;
+	width: 100%;
+  overflow-x: hidden;
 }
 .topbar {
   display: flex;
