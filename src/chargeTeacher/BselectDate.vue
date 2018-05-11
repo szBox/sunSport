@@ -118,19 +118,19 @@ export default {
       chart: false,
       Lists: true,
       result: [
-        {
-          avg: "",
-          excellent: "",
-          excellent_rate: "",
-          projectid: "",
-          projectname: "",
-          qualified: "",
-          qualified_rate: "",
-          real_test: "",
-          should_be_tested:"",
-          well: "",
-          well_rate: ""
-        }
+//      {
+//        avg: "",
+//        excellent: "",
+//        excellent_rate: "",
+//        projectid: "",
+//        projectname: "",
+//        qualified: "",
+//        qualified_rate: "",
+//        real_test: "",
+//        should_be_tested:"",
+//        well: "",
+//        well_rate: ""
+//      }
       ],
       Hinfo: {
         classname: "",

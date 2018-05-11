@@ -146,16 +146,19 @@ export default {
 }
 .topbar > p {
   font-size: 18px;
+   font-weight: bold;
+   padding-left: 0.9rem;
 }
 .topbar h3 {
 		flex: 1;
 		text-align: center;
 		padding-left: 18vw;
 		font-size: 22px;
+		 font-weight: bold;
 	}
 .topbar>img {
 		height: 1rem;
-		width: 0.75rem;
+
 	}
 .togBtn {
   padding: 7.7vw 0;

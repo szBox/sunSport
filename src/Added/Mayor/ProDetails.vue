@@ -62,13 +62,13 @@
 		</div>
 
 		<div class="rota">
-			<div class="rank">
+			<div class="rank" >
 				<div class="rankTle">
 					<i class="z-icon"></i>
 					<span class="fi">增长率排行</span>
 					<span @click="route()">查看全部</span>
 				</div>
-				<div id="map1" style="width: 80%;height:300px;">
+				<div id="map1" style="width: 90%;height:300px;margin: 0 auto;">
 
 				</div>
 			</div>
@@ -135,9 +135,9 @@
 				url: int.getdatazengzhang,
 				data: {
 //					district: vm.Area,
-					uid: vm.$store.state.d.uid,
+					uid: vm.$store.state.e.uid,
 					
-					school_opens_time: '2017-09-01'
+					school_opens_time: vm.$store.state.e.startTime
 				},
 				success: function(response) {
 					vm.result = response;
@@ -152,10 +152,12 @@
 							text:response.project_arr[i],
 							val:i
 						});
+						if(response.projectid==i){
+			        		 vm.project_on=response.project_arr[i];  //选择器默认 选择
+			        		 vm.project_id=i;  //选择器默认 选择
+		        		}
 					}
-//					if(response.projectid)
-					vm.project_on=vm.pickData1.pData1[response.projectid].text;  //选择器默认 选择
-					vm.project_id=vm.pickData1.pData1[response.projectid].val;  //选择器默认 选择
+					
 					for(var i = 0; i < response.pass_rate_rank.length; i++) {
 						if(i<5){
 							nums.push(response.pass_rate_rank[i].passrate); //挨个取出类别并填入类别数组
@@ -318,12 +320,12 @@
 				url: int.getdatazengzhang,
 				data: {
 //					district: vm.Area,
-					uid: vm.$store.state.d.uid,
+					uid: vm.$store.state.e.uid,
 					projectid:this.project_id,
-					school_opens_time: '2017-09-01'
+					school_opens_time: vm.$store.state.e.startTime
 				},
 				success: function(response) {
-					
+					vm.result = response;
 					console.log(response)
 					var project_text =[]; //选择项目的  项目名称
 					var project_val=[];	  //选择项目的  项目ID
@@ -481,23 +483,24 @@
 		width: 100%;
 		overflow-x: hidden;
 	}
-	
 	.topbar {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 2vw 3.7vw;
-		border-bottom: 2px solid #222224;
-	}
-	
-	.topbar>p {
-		/*font-size: 1.3rem;*/
-		color: #fff;
-	}
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ padding: 0 3.7vw;
+  height: 2.5rem;
+	line-height: 2.5rem;
+	border-bottom: 1px solid #222224;
+}
+.topbar > p {
+	color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+   padding-left: 0.9rem;
+}
 	
 	.topbar>img {
 		height: 1rem;
-		width: 0.75rem;
 	}
 	
 	.area {

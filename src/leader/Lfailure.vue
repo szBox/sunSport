@@ -101,6 +101,7 @@
       var params={
         school_opens_time:self.$store.state.d.startTime,
         cid:self.$store.state.d.cid,
+        uid:self.$store.state.d.uid,
         weekbegin:self.$store.state.d.weekb,
         weekend:self.$store.state.d.weeke,
         projectid:self.$store.state.d.pid,

@@ -190,10 +190,12 @@ export default {
 }
 .topbar > p {
   font-size: 18px;
+   font-weight: bold;
+    padding-left: 0.9rem;
 }
 .topbar>img {
 		height: 1rem;
-		width: 0.75rem;
+	
 	}
 .menu{
   width: 28px;

@@ -95,6 +95,7 @@
         school_opens_time:self.$store.state.d.startTime,
         sid:self.$store.state.d.sid,
         gid:self.$store.state.d.gid,
+        uid:self.$store.state.d.uid,
         weektime:week
       };
       var arr=new Array();

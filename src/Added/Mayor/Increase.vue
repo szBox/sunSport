@@ -75,9 +75,9 @@
 				url: int.getdatazengzhang,
 				data: {
 //					district: vm.Area,
-					uid: vm.$store.state.d.uid,
+					uid: vm.$store.state.e.uid,
 					
-					school_opens_time: '2017-09-01'
+					school_opens_time: vm.$store.state.e.startTime
 				},
 				success: function(response) {
 					vm.result = response;
@@ -111,21 +111,24 @@
 	}
 	
 	.topbar {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 2vw 3.7vw;
-		border-bottom: 2px solid #222224;
-	}
-	
-	.topbar>p {
-		/*font-size: 1.3rem;*/
-		color: #fff;
-	}
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ padding: 0 3.7vw;
+  height: 2.5rem;
+	line-height: 2.5rem;
+	border-bottom: 1px solid #222224;
+}
+.topbar > p {
+	color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+   padding-left: 0.9rem;
+}
 	
 	.topbar>img {
 		height: 1rem;
-		width: 0.75rem;
+		
 	}
 	
 	.area {

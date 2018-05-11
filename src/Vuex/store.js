@@ -862,13 +862,121 @@ const moduleD = {
   }
 }
 
+const moduleE = {
+  state: {
+    initweek:'',
+    startTime:'',
+    weeks:[],
+    week_s:[],
+    week__s:[],
+    count:0,
+    num:0,
+    sid:'',
+    week:'',
+    card:'',
+    uid:'',   //自己新加的,
+    gid:'',
+    cid:'',
+    weekb:'',
+    weeke:'',
+    pid:'',
+    sgid:'',
+    projectid:[],
+    allproject:[],
+    allgrade:[],
+    gradeid:[],
+    allclass:[],
+    classid:[],
+    basic:{
+      project:[],
+      score:[],
+      week:"",
+      rate:'',
+      average:'',
+      topscore:'',
+      topclass:'',
+      topgrade:''
+    },
+    statistics:{
+      project:[],
+      score:[],
+      average:'',
+      topscore:'',
+      assessment:'',
+      passrate:'',
+      well:'',
+      excellent:'',
+      topscore1:'',
+      topgrade:'',
+      topclass:'',
+      linechartdate:[]
+
+    },
+    prate:'',
+    classname:'',
+    single_statistics:{
+      topscore:'',
+      assessment:'',
+      average:'',
+      result:'',
+      no_passrate:'',
+      well:'',
+      excellent:'',
+      class:[],
+      no_passrate_num:'',
+      passrate_num:'',
+      well_num:'',
+      excellent_num:'',
+      rank:'',
+      grade:[],
+      all_student:'',
+      absent_student:''
+    },
+
+    detail:[
+
+    ],
+    single_grade_data:{
+      gradename:'',
+      project:[],
+      score:[],
+      classid:[],
+      rate:'',
+      average:'',
+      topscore:'',
+      topclass:''
+    },
+    details:[],
+    single_class_detail_data:[
+    
+    ],
+    classgrow:{
+    	
+    },
+    single_class_project_data:{
+    	
+    },
+    failure:{
+   
+    }
+  },
+  mutations: {
+
+  },
+  actions: {
+
+  }
+}
+
+
 
 const store = new Vuex.Store({
   modules: {
     a: moduleA,
     b: moduleB,
     c: moduleC,
-    d: moduleD
+    d: moduleD,
+    e: moduleE
   }
 })
 

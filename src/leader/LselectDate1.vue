@@ -149,18 +149,18 @@ export default {
       chart: false,
       Lists: true,
       result: [
-        {
-          avg_score: "",
-          cid: "",
-          class_stu: "",
-          classname: "",
-          excellent: "",
-          excellent_rate: "",
-          qualified: "",
-          qualified_rate: "",
-          well: "",
-          well_rate: ""
-        }
+//      {
+//        avg_score: "",
+//        cid:"",
+//        class_stu: "",
+//        classname: "",
+//        excellent: "",
+//        excellent_rate: "",
+//        qualified: "",
+//        qualified_rate: "",
+//        well: "",
+//        well_rate: ""
+//      }
       ],
       Hinfo : {
         classname:'',
@@ -176,7 +176,8 @@ export default {
     var params_l={
       school_opens_time:self.$store.state.d.startTime,
       gid:self.$route.params.id,
-      sid:self.$store.state.d.sid
+      sid:self.$store.state.d.sid,
+      uid:self.$store.state.d.uid
     };
     api.get_api_data(mainUrl_l,params_l,function(d) {
       self.$store.state.d.week_s.length=0;
@@ -194,7 +195,8 @@ export default {
     var params_l={
       school_opens_time:self.$store.state.d.startTime,
       gid:self.$route.params.id,
-      sid:self.$store.state.d.sid
+      sid:self.$store.state.d.sid,
+      uid:self.$store.state.d.uid
     };
     api.get_api_data(mainUrl_l,params_l,function(d) {
       for(var i=0;i<d.length;i++){
@@ -383,7 +385,8 @@ export default {
         school_opens_time:self.$store.state.d.startTime,
         gid:self.$route.params.id,
         sid:self.$store.state.d.sid,
-        weektime:week
+        weektime:week,
+        uid:self.$store.state.d.uid
       };
 
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
@@ -404,7 +407,8 @@ export default {
           school_opens_time: self.$store.state.d.startTime,
           weektime:time+1,
           gid:self.$route.params.id,
-          sid:self.$store.state.d.sid
+          sid:self.$store.state.d.sid,
+          uid:self.$store.state.d.uid
         },
         success: function(response) {
           self.Hinfo = response;

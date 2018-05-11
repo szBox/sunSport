@@ -483,12 +483,11 @@
 		text-align: center;
 		padding-left: 18vw;
 		font-size: 18px;
-		font-weight: normal;
 	}
 	
 	.topbar>img {
 		height: 1rem;
-		width: 0.75rem;
+	
 	}
 	
 	.info {

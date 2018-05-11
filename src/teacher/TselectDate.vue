@@ -106,18 +106,18 @@ export default {
       chart: false,
       Lists: true,
       result: [
-        {
-          avg_score: "",
-          excellent: "",
-          excellent_rate: "",
-          gid: "",
-          grade_stu: "",
-          gradename: "",
-          qualified: "",
-          qualified_rate: "",
-          well: "",
-          well_rate: ""
-        }
+//      {
+//        avg_score: "",
+//        excellent: "",
+//        excellent_rate: "",
+//        gid: "",
+//        grade_stu: "",
+//        gradename: "",
+//        qualified: "",
+//        qualified_rate: "",
+//        well: "",
+//        well_rate: ""
+//      }
       ]
     }
   },
@@ -295,7 +295,7 @@ export default {
 //      var dataBJ=[];
 //      var indicatorData=[];
       var newProject=[];
-      var classid=val.classid;
+      var classid=val.classuid;
       var obj1 = document.getElementById("main");
       var time=setInterval(function () {
         if(val.score==null || val.score == '' || val.score==undefined || val.project==null || val.project==''|| val.project==undefined){
@@ -383,7 +383,7 @@ export default {
         },
         success: function(response) {
           self.result = response;
-          console.log(response);
+          console.log(typeof response);
         },
         error: function(err) {
           console.log("err:" + err);

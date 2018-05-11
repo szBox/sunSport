@@ -523,6 +523,7 @@
           begintime:start+':00',
           endtime:end+':00',
           projectid:self.$route.params.id,
+          uid:self.$store.state.b.cid,
           gid:grade
         };
         api.get_api_data(mainUrl,params,function(d){

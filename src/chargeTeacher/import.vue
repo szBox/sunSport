@@ -67,6 +67,7 @@
     },
     methods:{
       queding(){
+      	 var self=this;
 //        $('.model').css({display:'block'});
         var cityid='';
         var ll=$('.im_li ul .s2 select option:selected').val();
@@ -103,6 +104,7 @@
           city:cityid,
           stuno:sno,
           projectid:projectid,
+          uid:self.$store.state.b.cid, //新加的
           result:score
         };
         if(sno=='' || score==''){

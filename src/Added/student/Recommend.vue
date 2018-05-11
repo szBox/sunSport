@@ -112,15 +112,18 @@ export default {
 }
 .topbar > p {
   font-size: 18px;
+   padding-left: 0.9rem;
 }
 .topbar h3 {
   flex: 1;
   text-align: center;
   padding-left: 18vw;
+   font-weight: bold;
+   
 }
 .topbar>img {
 		height: 1rem;
-		width: 0.75rem;
+
 	}
 .menu{
   width: 28px;

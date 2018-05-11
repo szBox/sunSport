@@ -150,6 +150,7 @@
         var params={
           school_opens_time:self.$store.state.d.startTime,
           cid:self.$store.state.b.cid,
+          uid:self.$store.state.b.uid,
           type:parseInt(self.$route.params.id)+1
         };
         api.get_api_data(mainUrl,params,function(d){

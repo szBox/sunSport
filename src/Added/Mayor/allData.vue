@@ -15,7 +15,7 @@
 			<span class="fi">增长率排行</span>
 			
 		</div>
-		<div id="map1" style="width: 80%;height:300px;">
+		<div id="map1" style="width: 90%;height:300px;margin: 0 auto;">
 
 		</div>
 	</div>
@@ -48,9 +48,9 @@ export default {
 				url: int.getdatazengzhang,
 				data: {
 //					district: vm.Area,
-					uid: vm.$store.state.d.uid,
+					uid: vm.$store.state.e.uid,
 					projectid:vm.pid,
-					school_opens_time: '2017-09-01'
+					school_opens_time: vm.$store.state.e.startTime
 				},
 				success: function(response) {
 					
@@ -199,22 +199,24 @@ export default {
 		background: #2E2E30;
 	}
 	
-	.topbar {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 2vw 3.7vw;
-		border-bottom: 2px solid #222224;
-	}
-	
-	.topbar>p {
-		/*font-size: 1.3rem;*/
-		color: #fff;
-	}
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ padding: 0 3.7vw;
+  height: 2.5rem;
+	line-height: 2.5rem;
+	border-bottom: 1px solid #222224;
+}
+.topbar > p {
+	color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+   padding-left: 0.9rem;
+}
 	
 	.topbar>img {
 		height: 1rem;
-		width: 0.75rem;
 	}
 	.rank>.rankTle {
 		display: flex;

@@ -262,7 +262,7 @@
   }
   .t_l .l1 li{
     padding-left: 5%;
-    width: 90%;
+    width: 100%;
     padding-right: 5%;
     height: 3rem;
     color: #B2B2B3;

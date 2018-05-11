@@ -134,18 +134,18 @@ export default {
       chart: false,
       Lists: true,
       result: [
-        {
-          avg_score: "",
-          excellent: "",
-          excellent_rate: "",
-          gid: "",
-          grade_stu: "",
-          gradename: "",
-          qualified: "",
-          qualified_rate: "",
-          well: "",
-          well_rate: ""
-        }
+//      {
+//        avg_score: "",
+//        excellent: "",
+//        excellent_rate: "",
+//        gid: "",
+//        grade_stu: "",
+//        gradename: "",
+//        qualified: "",
+//        qualified_rate: "",
+//        well: "",
+//        well_rate: ""
+//      }
       ]
     }
   },

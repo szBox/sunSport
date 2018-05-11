@@ -19,7 +19,10 @@
         <!--<div class="b" @click='gob'>班主任</div>-->
         <!--<div class="l" @click='gol'>领导</div>-->
         <!--<v_load v-if="show"></v_load>-->
-        <div class="main-title"></div>
+        <div class="main-title">
+        	<p data-type='1' :class="{'type-on':activeType==1}" @click="typec(1)">后台体侧标准</p>
+        	<p data-type='2' :class="{'type-on':activeType==2}" @click="typec(2)">国家体侧标准</p>
+        </div>
         <button class="main-btn" v-for="(item,index,key) in result" :key="key" @click="routerTo(item.starttime)">{{ item.name }}</button>
         <div class="modell" style="display: none;">
           <div class="model-img">
@@ -54,6 +57,7 @@
       return{
         addcj: false,
         show:true,
+        activeType:'1',
         result: [
           {
             name: '',
@@ -88,6 +92,9 @@
       v_load:load
     },
     methods:{
+    		typec(index){
+    			this.activeType=index;
+    		},
       /**新增代码 */
         toInq(){
           this.$router.push({path: 'Inquire'})
@@ -153,8 +160,10 @@
 //              self.show=false;
 
             }else if(s.type == 'district_manager'){
-             		
-                vm.$router.push({path: '/QHomepage/'+time})
+             		//区长的
+//              vm.$router.push({path: '/QHomepage/'+time})
+								
+								self.goa(s.uid,time);
             }
           });
         }
@@ -221,7 +230,6 @@
       },
       go(val,time){
         var self=this;
-
         var mainUrl_f=int.getweek;
         var params_f={
           school_opens_time:time,
@@ -358,11 +366,44 @@
           });
 
         });
+      },
+       goa(val,time){
+        var self=this;
+        var mainUrl_l=int.getweek;
+        var params_l={
+          uid:val,  //替换一下
+          school_opens_time:time
+        };
+        //通过周期切换去清楚当前的周期;
+       
+        self.$store.state.e.weeks=[];
+        api.get_api_data(mainUrl_l,params_l,function(d){
+          console.log(JSON.stringify(d));
+          //将当前接口返回的数据：（有数据的周期数组）进行缓存;
+          for(var i=0;i<d.length;i++){
+            self.$store.state.e.weeks[i]=d[i];
+          }
+          //缓存最新一次测试的周期数值
+          self.$store.state.e.initweek=d[d.length-1];
+          
+          //缓存界面跳转的周期
+          self.$store.state.e.week=self.$store.state.e.initweek-1;
+          var mainUrl=int.goLeader;
+          var params={
+            school_opens_time:time,
+            uid:val,  //替换一下
+            weektime:d[d.length-1]
+          };
+          api.get_api_data(mainUrl,params,function(d) {
+            self.$store.state.e.basic=d;
+            self.$store.state.e.uid=val;  //替换一下
+            self.$store.state.e.startTime=time;
+            self.show=false;
+            self.$router.push({path:'/QHomepage/'+time});
+          });
 
-
-
-
-      }
+        });
+      },
     }
   }
 </script>
@@ -501,8 +542,22 @@
   .main-title{
     color: #fff;
     text-align: center;
-    padding-top: 5rem;
-
+ 		height: 2.2rem;
+ 		line-height: 2.2rem;
+		overflow: hidden;
+		border: 1px solid #ffcc00;
+		margin: 1rem 5% 3rem;
+		border-radius: 0.2rem;
+  }
+  .type-on{
+  	background: #ffcc00;
+  	color: #333;
+  	font-weight: bold;
+  }
+  .main-title p{
+  	float: left;
+  	width: 50%;
+  	font-size: 0.8rem;
   }
   .teacher{
     width: 100%;

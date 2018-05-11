@@ -13,11 +13,11 @@
         地区选择
       -->
       <p>
-        <span>{{province}}</span>
-        <span>{{city}}</span>
+        <span>{{result.province}}</span>
+        <span>{{result.city}}</span>
       </p>
       <p>
-        <span class="city">{{Area}}</span>
+        <span class="city">{{result.district}}</span>
         
       </p>
       <p class="bfb">总体达标率</p>
@@ -34,7 +34,7 @@
     <div id="map1" style="width:100%;height:300px;">
 
 		</div>
-    <div class="eBtn" @click="toDate(local)">
+    <div class="eBtn" @click="toDate()">
       查看消息数据
     </div>
   </div>
@@ -84,6 +84,7 @@ export default {
       result: [],
       trem_on:'',
 			trem_time:'',
+			district:'',
       pickData1: {
 				columns: 1, // picker的列数
 				// 第一列的数据结构
@@ -91,10 +92,10 @@ export default {
 					
 				]
 			},
-      province: "广东省",
-      city: "深圳市",
-      Area: "龙华新区",
-      local: '广东省-深圳市-龙华新区',
+//    province: "广东省",
+//    city: "深圳市",
+//    Area: "龙华新区",
+//    local: '广东省-深圳市-龙华新区',
     };
   },
   components: {
@@ -107,20 +108,23 @@ export default {
     selectCt() {
       this.show1 = true;
     },
-    toDate(id) {
-      this.$router.push({path: "/ProDetails/" + id})
+    toDate() {
+    	var vm=this;
+    	
+      this.$router.push({path: "/ProDetails/" + vm.district})
     },
    
    
     Lmain(val) {
       var self = this;
       var time = this.$route.params.id;
+      
       var mainUrl_l = int.getweek;
       var params_l = {
         uid: val,
         school_opens_time: time
       };
-      //通过周期切换去清楚当前的周期;
+      //通过周期切换去清楚当前的周期;d
       self.$store.state.d.weeks = [];
       api.get_api_data(mainUrl_l, params_l, function(d) {
         //将当前接口返回的数据：（有数据的周期数组）进行缓存;
@@ -142,7 +146,7 @@ export default {
           self.$store.state.d.uid = val;
           self.$store.state.d.startTime = time;
           self.show = false;
-          self.$router.replace({ path: "/lmain/" + time });
+          self.$router.push({ path: "/lmain/" + time });
         });
       });
     },
@@ -164,13 +168,14 @@ export default {
       type: "GET",
       dataType: "jsonp",
       data:{
-      	uid:vm.$store.state.d.uid,
+      	uid:vm.$store.state.e.uid,
       	school_opens_time:vm.trem_time
       },
       url: int.getalldatas,
       success: function(response) {
         vm.result = response;
         console.log(response);
+        vm.district=response.district;
         for(var i=0; i<response.project.length; i++){
 					types.push({   //图表的 运动项目
 							text:response.project[i].projectname, // 不要数值的
@@ -193,7 +198,7 @@ export default {
 					nameGap: 25, // 图中工艺等字距离图的距离
 					
 					name: {
-						formatter: (text) => {
+						formatter: function(text) {
                 text = text.replace(/\S{5}/g, function(match) {
                     return match + '\n'
                 })
@@ -277,16 +282,18 @@ export default {
     var myChart1 = echarts.init(document.getElementById('map1'));
 		var nums=[];
 		var types=[];
+
     $.ajax({
       type: "GET",
       dataType: "jsonp",
       data:{
-      	uid:vm.$store.state.d.uid,
-      	school_opens_time:'2017-09-01'
+      	uid:vm.$store.state.e.uid,
+      	school_opens_time:vm.$route.params.id
       },
       url: int.getalldatas,
       success: function(response) {
         vm.result = response;
+        vm.district=response.district;
         console.log(response);
         for(var i=0; i<response.project.length; i++){
 					types.push({   //图表的 运动项目
@@ -301,9 +308,14 @@ export default {
 							text:response.term[i].name,
 							val:response.term[i].starttime			
 					})
+        	if(vm.$route.params.id==response.term[i].starttime){
+        		 vm.trem_on=vm.pickData1.pData1[i].text;  //选择器默认 选择
+        		 vm.trem_time=vm.pickData1.pData1[i].val;  //选择器默认 选择
+        	}
         }
-        vm.trem_on=vm.pickData1.pData1[0].text;  //选择器默认 选择
-				vm.trem_time=vm.pickData1.pData1[0].val;  //选择器默认 选择
+       
+//      vm.trem_on=vm.pickData1.pData1[0].text;  //选择器默认 选择
+//				vm.trem_time=vm.pickData1.pData1[0].val;  //选择器默认 选择
         myChart1.setOption({ //加载数据图表
 				
 				tooltip: {
@@ -318,7 +330,7 @@ export default {
 
 					name: {
 						show: true, // 是否显示工艺等文字
-						formatter: (text) => {
+						formatter: function(text){
                 text = text.replace(/\S{5}/g, function(match) {
                     return match + '\n'
                 })
@@ -408,16 +420,20 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2vw 3.7vw;
-  border-bottom: 2px solid #222224;
+ padding: 0 3.7vw;
+  height: 2.5rem;
+	line-height: 2.5rem;
+	border-bottom: 1px solid #222224;
 }
 .topbar > p {
-  /*font-size: 1.3rem;*/
- color: #fff;
+	color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+   padding-left: 0.9rem;
 }
 .topbar>img {
 		height: 1rem;
-		width: 0.75rem;
+	
 	}
 .area {
   display: flex;

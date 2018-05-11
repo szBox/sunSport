@@ -88,10 +88,13 @@ export default {
     -webkit-box-orient: vertical;
     width: 70%;
     text-align: center;
+     font-weight: bold;
+     
+      padding-left: 0.9rem;
 }
 .topbar>img {
 		height: 1rem;
-		width: 0.75rem;
+
 	}
 .menu{
   width: 28px;
