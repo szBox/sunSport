@@ -4,7 +4,8 @@
       <div class="z" @click="goback">
         <img src="../assets/img/goback.png" height="100%">
       </div>
-      <div class="c">详细数据</div>
+      <!--<div class="c">详细数据</div>-->
+      <div class="c">菁菁达人</div>
       <!--<div class="y" @click="goGrowUp">我的成长</div>-->
     </div>
     <div class="t_l" v-for="(i,index) in list" v-bind:class="index>=1? 'active0' :'active1'">
@@ -76,7 +77,8 @@
     },
     mounted(){
 			var mh = $(window).height();
-			$('.general').css('minHeight', mh);
+			$('.general').css({'minHeight': mh+'px',backgroundColor:'#2E2E31'});
+			$('body').css({backgroundColor:'#2E2E31'})
 //			var maxH=$('.topbar').height()+$('.area').height()+$('.proData').height()+$('.rota').height();
 //			alert(maxH)
 //			if(maxH>mh){
@@ -90,7 +92,8 @@
       var params={
         school_opens_time:self.$store.state.a.startTime,
         uid:self.$store.state.a.data.base.user.uid,
-        weektime:week
+        weektime:week,
+        proportion:self.$store.state.a.proportion
       };
       var arr=new Array();
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
@@ -98,7 +101,7 @@
       	console.log(d)
         self.$store.state.a.data.detail=d.detail;
 
-				
+
 				var len=d.detail.length;
         var time=setInterval(function(){
             if($('.pj').html()!=null){
@@ -282,7 +285,7 @@
     width: 30%;
   }
   .t_l .l1 li .fs .val{
-    width: 2.5rem;
+  
     float: left;
     padding-left: 1.5rem;
   }
@@ -299,62 +302,52 @@
     font-size: 1rem;
   }
   #h0{
-    padding-left: 5%;
-    padding-right: 5%;
+    margin: 0 4% 0 6%;
     width: 90%;
     height: 12rem;
   }
   #h1{
-    padding-left: 5%;
-    padding-right: 5%;
+    margin: 0 4% 0 6%;
     width: 90%;
     height: 12rem;
   }
   #h2{
-    padding-left: 5%;
-    padding-right: 5%;
+     margin: 0 4% 0 6%;
     width: 90%;
     height: 12rem;
   }
   #h3{
-    padding-left: 5%;
-    padding-right: 5%;
+   margin: 0 4% 0 6%;
     width: 90%;
     height: 12rem;
   }
   #h4{
-    padding-left: 5%;
-    padding-right: 5%;
+   margin: 0 4% 0 6%;
     width: 90%;
     height: 12rem;
   }
   #h5{
-    padding-left: 5%;
-    padding-right: 5%;
+   margin: 0 4% 0 6%;
     width: 90%;
     height: 12rem;
   }
   #h6{
-    padding-left: 5%;
-    padding-right: 5%;
+    margin: 0 4% 0 6%;
     width: 90%;
     height: 12rem;
   }
   #h7{
-    padding-left: 5%;
-    padding-right: 5%;
+    margin: 0 4% 0 6%;
     width: 90%;
     height: 12rem;
   }
   #h8{
-    padding-left: 5%;
-    padding-right: 5%;
+    margin: 0 4% 0 6%;
     width: 90%;
     height: 12rem;
   }
   #h9{
-    padding-left: 5%;
-    padding-right: 5%;
+  margin: 0 4% 0 6%;
     width: 90%;
     height: 12rem;
   }

@@ -24,34 +24,41 @@ Vue.config.productionTip = false;
 /* eslint-disable no-new */
 var u = navigator.userAgent;
 if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
-  var time=setInterval(function() {
-    if (window.iosParams.stuTid) {
-      // alert(window.iosParams.stuTid);
-      window.external.changeNavBarColor('#2E2E31,Y');
+  // var time=setInterval(function() {
+  //   if (window.iosParams.stuTid) {
+  //     // alert(window.iosParams.stuTid);
+  //     window.external.changeNavBarColor('#2E2E31,Y');
       new Vue({
         el: '#app',
         router,
         store,
         template: '<App/>',
-        components: { App }
+        components: { App },
+         data:{
+						eventHub:new Vue()
+					},
       });
-      clearInterval(time);
-    }
-  },100);
+  //     clearInterval(time);
+  //   }
+  // },100);
 
 }else if(window.GreenSchool){
-  window.iosParams.sid=window.GreenSchool.getSchoolId();
-  window.iosParams.userid=window.GreenSchool.getUserID();
-  window.iosParams.stuTid=window.GreenSchool.getStudentId();
-  window.GreenSchool.showTitleBar(false);
-  window.GreenSchool.setStatusBarAndActionBarColor('#2E2E31');
+  // window.iosParams.sid=window.GreenSchool.getSchoolId();
+  // window.iosParams.userid=window.GreenSchool.getUserID();
+  // window.iosParams.stuTid=window.GreenSchool.getStudentId();
+  // window.GreenSchool.showTitleBar(false);
+
+  // window.GreenSchool.setStatusBarAndActionBarColor('#2E2E31');
 
   new Vue({
     el: '#app',
     router,
     store,
     template: '<App/>',
-    components: { App }
+    components: { App },
+     data:{
+				eventHub:new Vue()
+			},
   })
   // alert(window.iosParams.stuTid+"xxxx"+window.iosParams.sid+"xxxx"+window.iosParams.userid);
 //  alert(1);
@@ -65,7 +72,7 @@ if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
 //   window.iosParams.stuTid=171;  //171测试区长帐号
   // window.iosParams.stuTid=454466819;  //171测试学校领导
 //window.iosParams.stuTid=185;    //学生
-//window.iosParams.stuTid; 
+//window.iosParams.stuTid;
 
 
     //班主任
@@ -85,7 +92,10 @@ if(!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
     router,
     store,
     template: '<App/>',
-    components: { App }
+    components: { App },
+    data:{
+				eventHub:new Vue()
+			},
   })
 }
 

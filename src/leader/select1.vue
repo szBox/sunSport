@@ -221,8 +221,7 @@
   }
   .cont_c_c{
     width: 90%;
-    padding-left: 5%;
-    padding-right: 5%;
+    margin: 0 5%;
   }
   .t_b{
     float: left;

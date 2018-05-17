@@ -5,7 +5,8 @@
         <div class="z" @click="goback">
           <img src="../assets/img/goback.png" height="100%">
         </div>
-        <div class="c">体质监测</div>
+        <!--<div class="c">体质监测</div>-->
+        <div class="c">菁菁达人</div>
         <!--<div class="y" @click="gostatistic">数据统计</div>-->
       </div>
       <hello-div></hello-div>

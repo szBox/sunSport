@@ -2,9 +2,10 @@
 <div class="content">
   <div class="topbar">
     <img src="../../assets/img/Navigationbar_icon_fanhui.png" @click="goBack">
-    <p>体质监测</p>
+    <!--<p>体质监测</p>-->
+    <p>菁菁达人</p>
     <div class="menu" >
-        
+
     </div>
   </div>
   <div class="area">
@@ -13,12 +14,12 @@
         地区选择
       -->
       <p>
-        <span>{{result.province}}</span>
-        <span>{{result.city}}</span>
+        <span>{{province}}</span>
+        <span>{{city}}</span>
       </p>
       <p>
-        <span class="city">{{result.district}}</span>
-        
+        <span class="city">{{district}}</span>
+				<img style="width: 0.8rem;margin-left: 0.5rem;" src="../../assets/img/downhei.png" alt="" />
       </p>
       <p class="bfb">总体达标率</p>
     </div>
@@ -27,22 +28,23 @@
     </div>
   </div>
   <div class="proData">
-    <div id="ect" @click="open()">
+    <!--<div id="ect" @click="open()">
 				<span>{{trem_on}}</span>
 				<img src="../../assets/img/archives_icon_Arrow.png" alt="" />
-    </div>
+    </div>-->
     <div id="map1" style="width:100%;height:300px;">
 
 		</div>
     <div class="eBtn" @click="toDate()">
-      查看消息数据
+      查看详细数据
     </div>
   </div>
 
   <div class="rank">
     <div class="rankTle">
       <i class="i-icon"></i>
-      <span>达标率排行</span>
+      <span class="fi">达标率排行</span>
+    
     </div>
     <ol class="rankWrap">
       <li class="rankTop">
@@ -84,12 +86,14 @@ export default {
       result: [],
       trem_on:'',
 			trem_time:'',
+			province:'',
 			district:'',
+			city:'',
       pickData1: {
 				columns: 1, // picker的列数
 				// 第一列的数据结构
 				pData1: [
-					
+
 				]
 			},
 //    province: "广东省",
@@ -110,21 +114,30 @@ export default {
     },
     toDate() {
     	var vm=this;
-    	
-      this.$router.push({path: "/ProDetails/" + vm.district})
+			if(vm.city==''){
+				this.$router.push({path: "/ProDetails/" + vm.district})
+				
+			}
+			else{
+				this.$router.push({path: "/ProDetails/" + vm.city})
+			}
+				
+      
     },
-   
-   
+	
+
     Lmain(val) {
       var self = this;
       var time = this.$route.params.id;
-      
+
       var mainUrl_l = int.getweek;
       var params_l = {
         uid: val,
-        school_opens_time: time
+        school_opens_time: time,
+        proportion:self.$store.state.e.proportion
       };
       //通过周期切换去清楚当前的周期;d
+      self.$store.state.d.proportion=self.$store.state.e.proportion;
       self.$store.state.d.weeks = [];
       api.get_api_data(mainUrl_l, params_l, function(d) {
         //将当前接口返回的数据：（有数据的周期数组）进行缓存;
@@ -139,7 +152,8 @@ export default {
         var params = {
           school_opens_time: time,
           uid: val,
-          weektime: d[d.length - 1]
+          weektime: d[d.length - 1],
+          proportion:self.$store.state.d.proportion
         };
         api.get_api_data(mainUrl, params, function(d) {
           self.$store.state.d.basic = d;
@@ -169,13 +183,22 @@ export default {
       dataType: "jsonp",
       data:{
       	uid:vm.$store.state.e.uid,
-      	school_opens_time:vm.trem_time
+      	school_opens_time:vm.trem_time,
+        proportion:vm.$store.state.e.proportion
       },
       url: int.getalldatas,
       success: function(response) {
         vm.result = response;
         console.log(response);
-        vm.district=response.district;
+         if(response.district==''){
+        	vm.province=response.province;
+        	vm.city='';
+        	vm.district=response.city
+        }else{
+        	vm.district=response.district;
+        	vm.city=response.city;
+        	vm.province=response.province
+        }
         for(var i=0; i<response.project.length; i++){
 					types.push({   //图表的 运动项目
 							text:response.project[i].projectname, // 不要数值的
@@ -184,19 +207,19 @@ export default {
 							});
 					nums.push(response.project[i].passrate); //图表的 运动项目的分数
 				}
-   
+
         myChart1.setOption({ //加载数据图表
-				
+
 				tooltip: {
 					trigger: 'item',
 				},
 				 grid:{
             left:'2%',
-           
+
         },
 				polar: [{
 					nameGap: 25, // 图中工艺等字距离图的距离
-					
+
 					name: {
 						formatter: function(text) {
                 text = text.replace(/\S{5}/g, function(match) {
@@ -206,7 +229,7 @@ export default {
             },
 						show: true, // 是否显示工艺等文字
 					},
-					
+
 					indicator:types,
 					 radius : '60%',
 					axisLine: { // 坐标轴线
@@ -234,9 +257,9 @@ export default {
 				}],
 
 				series: [{
-//						symbol:'none', // 去点
+						symbol:'none', // 去点
 						type: 'radar',
-						
+
 						tooltip: {
 							trigger: 'item'
 						},
@@ -247,28 +270,28 @@ export default {
                 width:2
            		}
 						},
-						
+
 						data: [{
 							value:nums,
-							name: '分数',
+							name: '达标率',
 							areaStyle:{
 								normal: {
 									opacity:1,
 									color:'#FFCC00'
 								}
-								
+
 							},
-							
+
 						}],
 						borderColor:['#fff'],
 						width :0,
-						
+
 					},
 
 				]
 
 			});
-	
+
       },
       error: function(err) {
         console.log(err);
@@ -288,12 +311,22 @@ export default {
       dataType: "jsonp",
       data:{
       	uid:vm.$store.state.e.uid,
-      	school_opens_time:vm.$route.params.id
+      	school_opens_time:vm.$route.params.id,
+        proportion:vm.$store.state.e.proportion
       },
       url: int.getalldatas,
       success: function(response) {
         vm.result = response;
-        vm.district=response.district;
+        if(response.district==''){
+        	vm.province=response.province;
+        	vm.city='';
+        	vm.district=response.city
+        }else{
+        	vm.district=response.district;
+        	vm.city=response.city;
+        	vm.province=response.province
+        }
+        
         console.log(response);
         for(var i=0; i<response.project.length; i++){
 					types.push({   //图表的 运动项目
@@ -306,24 +339,31 @@ export default {
         for(var i=0; i<response.term.length; i++){
         	vm.pickData1.pData1.push({							//切换 运动 选择器
 							text:response.term[i].name,
-							val:response.term[i].starttime			
+							val:response.term[i].starttime
 					})
         	if(vm.$route.params.id==response.term[i].starttime){
         		 vm.trem_on=vm.pickData1.pData1[i].text;  //选择器默认 选择
         		 vm.trem_time=vm.pickData1.pData1[i].val;  //选择器默认 选择
         	}
         }
-       
+
 //      vm.trem_on=vm.pickData1.pData1[0].text;  //选择器默认 选择
 //				vm.trem_time=vm.pickData1.pData1[0].val;  //选择器默认 选择
         myChart1.setOption({ //加载数据图表
-				
+
 				tooltip: {
 					trigger: 'item',
+					formatter: function(text){
+								var res='';
+                for(var i=0; i<response.project.length; i++){
+                	res+=response.project[i].projectname+':'+response.project[i].passrate+'%'+'</br>'
+                }
+                return '达标率'+'<br>'+ res
+           	}
 				},
 				 grid:{
             left:'2%',
-           
+
         },
 				polar: [{
 					nameGap: 25, // 图中工艺等字距离图的距离
@@ -364,7 +404,7 @@ export default {
 				}],
 
 				series: [{
-//						symbol:'none', // 去点
+						symbol:'none', // 去点
 						type: 'radar',
 						radius:'160%',
 						tooltip: {
@@ -377,28 +417,28 @@ export default {
                 width:2
            		}
 						},
-						
+
 						data: [{
 							value:nums,
-							name: '分数',
+							name: '达标率',
 							areaStyle:{
 								normal: {
 									opacity:1,
 									color:'#FFCC00'
 								}
-								
+
 							},
-							
+
 						}],
 						borderColor:['#fff'],
 						width :0,
-						
+
 					},
 
 				]
 
 			});
-			
+
       },
       error: function(err) {
         console.log(err);
@@ -433,7 +473,7 @@ export default {
 }
 .topbar>img {
 		height: 1rem;
-	
+
 	}
 .area {
   display: flex;
@@ -448,7 +488,7 @@ export default {
 }
 .area .areaL .bfb {
   color: #bebebf;
-  font-size: 18px;
+  font-size: 16px;
 }
 .area .areaL .city {
   color: #fff;
@@ -472,14 +512,15 @@ export default {
   display: flex;
   align-items: center;
   height: 12vw;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #252527;
+  padding: 0 7.7vw;
 }
 .rank > .rankTle > img {
   width: 23px;
   height: 24px;
 }
 .rank .i-icon {
-  margin: 0 4.2vw 0 7.7vw;
+	margin: 0 4.2vw 0 0;
   display: inline-block;
   width: 23px;
   height: 23px;
@@ -491,6 +532,14 @@ export default {
   display: inline-block;
   color: #ccc;
 }
+.rank > .rankTle > span.sc {
+    color: #ffcc00;
+}
+.rank .fi{
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+     flex: 1; 
+}
 .rank .rankWrap {
   padding: 0 6.6vw;
   font-size: 16px;
@@ -499,9 +548,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #252527;
   text-align: center;
-  height: 9.2vw;
+  padding: 5px 0;
   color: #ccc;
 }
 .rank .rankWrap .rankTop :nth-child(1) {
@@ -529,9 +578,9 @@ export default {
   color: #fff;
   height: 2rem;
   line-height: 2rem;
-
+	border-bottom: 1px solid #242426;
   padding: 0 4.3vw 0 6.9vw;
-  
+
   /*width: 600px;*/
   /*height: 400px;*/
 }
@@ -556,6 +605,8 @@ export default {
   height: 11.7vw;
   line-height: 11.7vw;
   border-radius: 0.7vw;
+  font-size: 0.75rem;
+  margin-bottom: 0.75rem;
 }
 
 </style>

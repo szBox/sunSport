@@ -105,7 +105,8 @@
           stuno:sno,
           projectid:projectid,
           uid:self.$store.state.b.cid, //新加的
-          result:score
+          result:score,
+          proportion:self.$store.state.b.proportion
         };
         if(sno=='' || score==''){
           alert('请输入学号和成绩');

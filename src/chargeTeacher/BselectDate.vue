@@ -92,6 +92,7 @@
     <div class="btn" @click="godetails">
       查看项目详情
     </div>
+   
   </div>
 </template>
 
@@ -102,6 +103,7 @@
   import echarts from '../assets/js/echarts'
   import echartsh from '../assets/js/fhistogram'
   import int from '../assets/js/interface'
+
 export default {
   name: 'hello',
   data () {
@@ -139,6 +141,9 @@ export default {
       }
     }
   },
+  components:{
+     
+   },
   computed:{
     nowdate(){
       var self=this;
@@ -214,6 +219,8 @@ export default {
   },
   methods:{
     routerTo(gid) {
+    	var self=this;
+    	self.$root.eventHub.$emit('Vloading',true)
       this.$router.push({ path: "/ranklist/" + gid });
     },
     /* 显隐切换 */
@@ -237,8 +244,11 @@ export default {
       $('.model-b').css({display:'none'});
     },
     godetails(){
+
       var self=this;
       var arr=self.alldate;
+      self.$root.eventHub.$emit('Vloading',true)
+      
       var  x=1;
       for(var i=0;i<arr.length;i++){
         if($('#picker').val()==arr[i]){
@@ -247,6 +257,9 @@ export default {
       }
 
       self.$store.state.b.week=x;
+//     console.log(this.$store.state.b.basic)
+//			alert('nnn')
+       console.log(this.$store.state.b.basic)
       this.$router.push({path:'/general_details/'+x})
     },
     selectData(val){
@@ -315,6 +328,7 @@ export default {
     },
     getdata(index){
       var self = this;
+      
       var week = index + 1;
 //      console.log(self.$store.state.b.basic.card);
       var val = self.$store.state.b.basic.uid;
@@ -323,7 +337,8 @@ export default {
 //        card:'000001791887178',
         school_opens_time:self.$store.state.b.startTime,
         uid: self.$store.state.b.basic.uid,
-        weektime: week
+        weektime: week,
+        proportion:self.$store.state.b.proportion
       };
 
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
@@ -332,7 +347,6 @@ export default {
         self.$store.state.b.basic=d;
         self.$store.state.b.basic.uid=val;
         self.selectData(d);
-//        alert(JSON.stringify(d));
       })
     },
     getlist(time){
@@ -344,7 +358,8 @@ export default {
         data: {
           uid: self.$store.state.b.basic.uid,
           school_opens_time:self.$store.state.b.startTime,
-          weektime: time+1
+          weektime: time+1,
+          proportion:self.$store.state.b.proportion
         },
         success: function(response) {
           self.result = response.data;
@@ -363,7 +378,8 @@ export default {
       var mainUrl = int.goclassTeacher;
       var params = {
         uid: self.$store.state.b.basic.uid,
-        weektime: week
+        weektime: week,
+        proportion:self.$store.state.b.proportion
       };
 
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
@@ -565,7 +581,7 @@ export default {
 
   .listTopBar {
     padding: 1rem 0vw 0.5rem 7vw;
-    border-bottom: 2px solid rgb(31, 31, 33);
+    border-bottom: 1px solid #252528;
   }
 
   .listTopBar>div {
@@ -595,7 +611,7 @@ export default {
   /*  content */
 
   .listContent {
-    border-bottom: 2px solid rgb(31, 31, 33);
+    border-bottom: 1px solid #252528;
     list-style: none;
     padding: 1rem 3vw;
     cursor: pointer;
@@ -634,7 +650,7 @@ export default {
     align-items: center;
     /*text-align: center;*/
     padding: 0.8rem 0;
-    border-bottom: 2px solid rgb(31, 31, 33);
+    border-bottom: 1px solid #252528;
     padding-left: 1rem;
     color: #9B9B9B;
     font-size: 1rem;

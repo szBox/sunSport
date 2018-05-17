@@ -12,6 +12,7 @@ const moduleA = {
   state: {
     initweek:'',
     startTime:'',
+    proportion:'',
     movieID: '',
     week:'',
     count:0,
@@ -33,7 +34,8 @@ const moduleA = {
             class_ranking:'',
             grade_ranking:'',
             school_ranking:'',
-            uid:'',   //自己新加的,
+            uid:'',   //自己新加的
+            gid:'' //自己新加的
           },
           qualified:'',
           each_average:{},
@@ -178,6 +180,7 @@ const moduleB = {
   state: {
     initweek:'',
     startTime:'',
+    proportion:"",
     cid:'',
     weeks:[],
     projectname:'',
@@ -214,6 +217,7 @@ const moduleB = {
     basic:{
       card:'',
       uid:'',   //自己新加的,
+
       project_avg:{},
       project:[],
       score:[],
@@ -414,6 +418,7 @@ const moduleC = {
   state: {
     initweek:'',
     startTime:'',
+    proportion:"",
     model:false,
     count:0,
     weeks:[],
@@ -429,6 +434,7 @@ const moduleC = {
       // grade:'',
       card:'',
       uid:'',   //自己新加的,
+
       card1:'',
       // nowdate:'2017上学期第一周',
       // alldate:['2017上学期第二周','2017上学期第三周','2017上学期第四周','2017上学期第五周','2017上学期第六周',
@@ -662,6 +668,7 @@ const moduleD = {
     week:'',
     card:'',
     uid:'',   //自己新加的,
+    proportion:"",
     gid:'',
     cid:'',
     weekb:'',
@@ -875,6 +882,7 @@ const moduleE = {
     week:'',
     card:'',
     uid:'',   //自己新加的,
+    proportion:"",
     gid:'',
     cid:'',
     weekb:'',
@@ -948,16 +956,16 @@ const moduleE = {
     },
     details:[],
     single_class_detail_data:[
-    
+
     ],
     classgrow:{
-    	
+
     },
     single_class_project_data:{
-    	
+
     },
     failure:{
-   
+
     }
   },
   mutations: {

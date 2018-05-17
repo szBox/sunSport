@@ -105,7 +105,8 @@
         weekbegin:self.$store.state.d.weekb,
         weekend:self.$store.state.d.weeke,
         projectid:self.$store.state.d.pid,
-        status:status
+        status:status,
+        proportion:self.$store.state.d.proportion
       };
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
       api.get_api_data(mainUrl,params,function(d){
@@ -138,8 +139,8 @@
     line-height: 2.5rem;
     /*margin-left: 5%;*/
     padding-left: 5%;
-    padding-right: 5%;
-    width: 90%;
+    
+    width:100%;
   }
   .z{
     float: left;
@@ -217,7 +218,7 @@
     width: 30%;
   }
   .t_l .l1 li .fs .val{
-    width: 2.5rem;
+    /*width: 2.5rem;*/
     float: left;
     padding-left: 1.5rem;
   }

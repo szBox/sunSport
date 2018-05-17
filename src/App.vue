@@ -1,20 +1,37 @@
 <template>
   <div id="app">
     <!--<img src="./assets/logo.png">-->
+    	<s_loading v-if="shows"></s_loading>
     <router-view></router-view>
+  
   </div>
 </template>
 
 <script>
   import $ from 'jquery'
   import resize from '../src/assets/js/resize'
+  
+  import loading from '@/assets/commont/loading1'
   export default {
     name: 'app',
+   data(){
+   	return{
+   		shows:false
+   	}
+   },
     created(){
       resize.getFontSzie();
       resize.root();
       resize.getHeight();
-    }
+      var vm=this
+      this.$root.eventHub.$on('Vloading',function(t){
+      	vm.shows=	t
+      })
+    },
+    
+    components:{
+			 s_loading:loading
+    },
   }
 
 </script>

@@ -1,52 +1,61 @@
 <template>
   <transition name="slideIn">
-      <div class="main">
-        <div class="teacher">
-          <div class="top">
-            <div class="z" @click="goback">
-              <img src="../assets/img/goback.png" height="100%">
-            </div>
-            <div class="c">请选择学期</div>
-            <!--<div class="y" @click="gostatistic">数据统计</div>-->
+    <div class="main">
+    	
+      <div class="teacher">
+        <div class="top">
+          <div class="z" @click="goback">
+            <img src="../assets/img/goback.png" height="100%">
           </div>
-          <!--<hello-div></hello-div>-->
-          <!--<lun-div></lun-div>-->
+          <div class="c" style="font-weight: normal;">菁菁达人</div>
+          <!--<div class="y" @click="gostatistic">数据统计</div>-->
         </div>
-        <!--<div class="title">选择学期</div>-->
-        <!--<div class="j" @click='goj'>2017~2018第一学期</div>-->
-        <!--<div class="j" @click='goj'>2017~2018第二学期</div>-->
-        <!--<div class="s" @click='gos'>授课老师</div>-->
-        <!--<div class="b" @click='gob'>班主任</div>-->
-        <!--<div class="l" @click='gol'>领导</div>-->
-        <!--<v_load v-if="show"></v_load>-->
-        <div class="main-title">
-        	<p data-type='1' :class="{'type-on':activeType==1}" @click="typec(1)">后台体侧标准</p>
-        	<p data-type='2' :class="{'type-on':activeType==2}" @click="typec(2)">国家体侧标准</p>
+        <!--<hello-div></hello-div>-->
+        <!--<lun-div></lun-div>-->
+      </div>
+      <!--<div class="title">选择学期</div>-->
+      <!--<div class="j" @click='goj'>2017~2018第一学期</div>-->
+      <!--<div class="j" @click='goj'>2017~2018第二学期</div>-->
+      <!--<div class="s" @click='gos'>授课老师</div>-->
+      <!--<div class="b" @click='gob'>班主任</div>-->
+      <!--<div class="l" @click='gol'>领导</div>-->
+      <!--<v_load v-if="show"></v_load>-->
+      <div class="main-title">
+        <p data-type='0' :class="{'type-on':proportion==0}" @click="typec(0)">实际体测成绩</p>
+        <p data-type='1' :class="{'type-on':proportion==1}" @click="typec(1)">国家体测标准</p>
+      </div>
+      
+      <!--之前的可以选择学期-->
+      <!--<button class="main-btn" v-for="(item,index,key) in result" :key="key" @click="routerTo(item.starttime)">{{ item.name }}</button>-->
+      
+      <!--现在点击查询成绩-->
+      <div  class="main-btn"  @click="routerTo(result[0].starttime)">查询成绩</div>
+      
+       
+      <div class="modell" style="display: none;">
+        <div class="model-img">
+          <img src="../assets/img/xinxitu@2x.png" width="100%">
         </div>
-        <button class="main-btn" v-for="(item,index,key) in result" :key="key" @click="routerTo(item.starttime)">{{ item.name }}</button>
-        <div class="modell" style="display: none;">
-          <div class="model-img">
-            <img src="../assets/img/xinxitu@2x.png" width="100%">
-          </div>
-          <div class="model-text">
-            用户没有权限或者未绑定卡号
-          </div>
-          <div class="model-content" >
-            <div class="model-btn" @click="close">知道了</div>
-          </div>
+        <div class="model-text">
+          用户没有权限或者未绑定卡号
         </div>
-        <div class="model-b" style="display: none;"></div>
+        <div class="model-content" >
+          <div class="model-btn" @click="close">知道了</div>
+        </div>
+      </div>
+      <div class="model-b" style="display: none;"></div>
 
 
-        <!--成绩查询-->
-        <div class="main-btn" @click="toInq" id="possss" v-show="addcj">
-          成绩添加
+      <!--成绩查询-->
+      <div class="main-btn" @click="toInq" id="possss" v-show="addcj">
+        成绩添加
       </div>
-      </div>
+    </div>
   </transition>
 </template>
 <script>
   import load from '../assets/commont/loading.vue'
+  import loading from '@/assets/commont/loading1'
   import $ from 'jquery'
   import weui from '../assets/js/jquery-weui'
   import api from '../fetch/api'
@@ -57,7 +66,10 @@
       return{
         addcj: false,
         show:true,
-        activeType:'1',
+      
+        proportion:0,
+     
+                modal10: false,
         result: [
           {
             name: '',
@@ -65,6 +77,12 @@
           }
         ]
       }
+    },
+    watch:{
+    	$route(to, from) {  
+        alert(to);  
+        console.log(from);  
+    	} 
     },
     created (){
       var self = this;
@@ -75,7 +93,8 @@
         dataType: "jsonp",
         url:int.getxueqi,
         success: function(response) {
-        	console.log(response)
+        
+          console.log(response);
           self.result = response;
         },
         error: function(err) {
@@ -87,32 +106,40 @@
       this.closebtn();
       var h=$(window).height();
       $('.main').css({height:h+'px',backgroundColor:'#2E2E31'});
+      $('body').css({backgroundColor:'#2E2E31'})
     },
     components:{
-      v_load:load
+      v_load:load,
+     
     },
     methods:{
-    		typec(index){
-    			this.activeType=index;
-    		},
-      /**新增代码 */
-        toInq(){
-          this.$router.push({path: 'Inquire'})
-        },
+      typec(index){
+        this.proportion=index;
 
-/**之前的代码 */
+      },
+//      /**新增代码 */
+      toInq(){
+        this.$router.push({path: 'Inquire'})
+      },
+
+//      /**之前的代码 */
 
 
-        goback(){
+      goback(){
 //      if(window.GreenSchool){
 //        window.GreenSchool.goBack();
 //      }else{
 //        window.external.goBack();
 //      }
-				this.$router.go(-1);
+        this.$router.go(-1);
+				
+//				 console.log('11111',this.$router)
+//      	console.log('222222222',this.$router.go(-1))
+				
       },
       routerTo(time) {
         var vm = this;
+       vm.$root.eventHub.$emit('Vloading',true)
         if(window.iosParams.stuTid==0){
           this.got();
         }else{
@@ -120,104 +147,109 @@
           var mainUrl=int.getCard;
           var params={
             uid:window.iosParams.stuTid,
-            coursename:'体育'
+            coursename:'体育',
+            proportion:self.proportion
           };
 //
           api.get_api_data(mainUrl,params,function(s){
-          	console.log(s)
+//						console.log('gid',s.gid)
+//						vm.$root.eventHub.$emit('Vloading',false)
             if(s.type=='student'){
 //            vm.addcj = false;
               self.go(s.uid,time);  // 新 传uid
+               localStorage.setItem('stugid',s.gid);
               /*if(s.card==" " || s.card==null || s.card==undefined ){
-                $('.modell').css({display:'block'});
-                $('.model-b').css({display:'block'});
-              }else{
-//              self.go(s.card,time);
-              }*/
-							
+               $('.modell').css({display:'block'});
+               $('.model-b').css({display:'block'});
+               }else{
+               //              self.go(s.card,time);
+               }*/
+
               //班主任
 //          alert('你是一名学生')
             }else if(s.type=='headteacher'){
-            	
+
 //            alert('你是一名班主任');
-                self.gob(s.uid,time);
+              self.gob(s.uid,time);
               //授课老师
             }else if(s.type=='physical'){
-            	
+
 //            alert('你是一名体育老师');
               self.got(s.uid,time);
 
 //          self.$router.push({path:'/main'});
               //领导
             }else if(s.type=='manager'){
-    
-                self.gol(s.uid,time);
+
+              self.gol(s.uid,time);
 
             }else if(s.type=='other'){
+//          	alert('11111')
               $('.modell').css({display:'block'});
               $('.model-b').css({display:'block'});
 //            alert('用户没有权限或者未绑定卡号');
 //              self.show=false;
 
             }else if(s.type == 'district_manager'){
-             		//区长的
+              //区长的
 //              vm.$router.push({path: '/QHomepage/'+time})
-								
-								self.goa(s.uid,time);
+
+              self.goa(s.uid,time);
             }
           });
         }
       },
       closebtn(){
-          var self=this;
+        var self=this;
 //        $('.main').css({backgroundColor:'#2E2E31'});
-          var mainUrl=int.getCard;
-          var params={
-            uid:window.iosParams.stuTid,
-            coursename:'体育'
-          };
-           api.get_api_data(mainUrl,params,function(s){
-            if(s.type=='student'){
+        var mainUrl=int.getCard;
+        var params={
+          uid:window.iosParams.stuTid,
+          coursename:'体育',
+          proportion:self.proportion
+        };
+        api.get_api_data(mainUrl,params,function(s){
+          if(s.type=='student'){
 //            self.addcj = false;
-             /* if(s.card==" " || s.card==null || s.card==undefined ){
-              }else{
-              }*/
-              //班主任
+            /* if(s.card==" " || s.card==null || s.card==undefined ){
+             }else{
+             }*/
+            //班主任
 //          alert('你是一名学生')
-            }else if(s.type=='headteacher'){
+          }else if(s.type=='headteacher'){
 //            alert('你是一名班主任');
-              /*if(s.card==" " || s.card==null || s.card==undefined ){
-              
-              }else{
-               
-              }*/
+            /*if(s.card==" " || s.card==null || s.card==undefined ){
 
-              //授课老师
-            }else if(s.type=='physical'){
+             }else{
+
+             }*/
+
+            //授课老师
+          }else if(s.type=='physical'){
 //            alert('你是一名体育老师');
-              /*if(s.card==" " || s.card==null || s.card==undefined ){
-              
-              }else{
-              
-              }*/
+            /*if(s.card==" " || s.card==null || s.card==undefined ){
+
+             }else{
+
+             }*/
 
 //          self.$router.push({path:'/main'});
-              //领导
-            }else if(s.type=='manager,district_manager' ){
-              
-             /* if(s.card==" " || s.card==null || s.card==undefined ){
-              
-              }else{
-              
-              }*/
+            //领导
+          }else if(s.type=='manager,district_manager' ){
 
-            }else if(s.type=='other'){
-            
+            /* if(s.card==" " || s.card==null || s.card==undefined ){
+
+             }else{
+
+             }*/
+
+          }else if(s.type=='other'){
+
 //            alert('用户没有权限或者未绑定卡号');
 //              self.show=false;
 
-            }
-          });
+          }
+        });
       },
       close(){
         $('.modell').css({display:'none'});
@@ -234,11 +266,12 @@
         var params_f={
           school_opens_time:time,
 //        card:val   //替换一下
-					uid:val
+          uid:val,
+          proportion:self.proportion
         };
         self.$store.state.a.weeks=[];
         api.get_api_data(mainUrl_f,params_f,function(d){
-        	
+
           console.log(JSON.stringify(d));
           for(var i=0;i<d.length;i++){
             self.$store.state.a.weeks[i]=d[i];
@@ -248,22 +281,23 @@
           var mainUrl=int.gofamily;
           var params={
 //          card:val,  //替换一下
-						uid:val,
+            uid:val,
             school_opens_time:time,
-            weektime:d[d.length-1]
+            weektime:d[d.length-1],
+            proportion:self.proportion
           };
           api.get_api_data(mainUrl,params,function(d) {
-          	console.log(d);
+            console.log('学生',d);
+            
             self.$store.state.a.data.base=d;
 //          self.$store.state.a.data.base.user.card=val; //替换一下
             self.$store.state.a.data.base.user.uid=val;
+            self.$store.state.a.proportion=self.proportion;
             self.$store.state.a.startTime=time;
-            
-            
-            
+						
             self.show=false;
 //          self.$router.replace({path:'/fmain/'+time});
-             self.$router.push({path:'/fmain/'+time});
+            self.$router.push({path:'/fmain/'+time});
           });
 
         });
@@ -275,7 +309,8 @@
         var mainUrl_b=int.getweek;
         var params_b={
           uid:val,  //替换一下
-          school_opens_time:time
+          school_opens_time:time,
+          proportion:self.proportion
         };
         self.$store.state.b.weeks=[];
         api.get_api_data(mainUrl_b,params_b,function(d){
@@ -289,11 +324,14 @@
           var params={
             school_opens_time:time,
             uid:val,
-            weektime:d[d.length-1]
+            weektime:d[d.length-1],
+            proportion:self.proportion
           };
           api.get_api_data(mainUrl,params,function(d) {
             self.$store.state.b.basic=d;
             self.$store.state.b.basic.uid=val;  //替换一下
+            self.$store.state.b.proportion=self.proportion;
+//          self.$store.state.b.basic.proportion2=self.proportion;
             self.$store.state.b.startTime=time;
             self.show=false;
             self.$router.push({path:'/teacher/'+time});
@@ -303,40 +341,46 @@
       },
       got(val,time){
         var self=this;
+
         var mainUrl_t=int.getweek;
         var params_t={
           uid:val,  //替换一下
-          school_opens_time:time
+          school_opens_time:time,
+          proportion:self.proportion
         };
         self.$store.state.c.weeks=[];
         api.get_api_data(mainUrl_t,params_t,function(d){
 
-            for(var i=0;i<d.length;i++){
-              self.$store.state.c.weeks[i]=d[i];
-            }
-            self.$store.state.c.initweek=d[d.length-1];
-            self.$store.state.c.week=self.$store.state.c.initweek-1;
+          for(var i=0;i<d.length;i++){
+            self.$store.state.c.weeks[i]=d[i];
+          }
+          self.$store.state.c.initweek=d[d.length-1];
+          self.$store.state.c.week=self.$store.state.c.initweek-1;
           var mainUrl=int.goTeacher;
           var params={
             school_opens_time:time,
             uid:val,  //替换一下
-            weektime:d[d.length-1]
+            weektime:d[d.length-1],
+            proportion:self.proportion
           };
-            api.get_api_data(mainUrl,params,function(d) {
-              self.$store.state.c.basic=d;
-              self.$store.state.c.basic.uid=val;  //替换一下
-              self.$store.state.c.startTime=time;
-              self.show=false;
-              self.$router.push({path:'/main/'+time});
-            });
+          api.get_api_data(mainUrl,params,function(d) {
+            self.$store.state.c.basic=d;
+            self.$store.state.c.basic.uid=val;  //替换一下
+            self.$store.state.c.proportion=self.proportion;
+            self.$store.state.c.startTime=time;
+            self.show=false;
+            self.$router.push({path:'/main/'+time});
+          });
         });
       },
       gol(val,time){
         var self=this;
+
         var mainUrl_l=int.getweek;
         var params_l={
           uid:val,  //替换一下
-          school_opens_time:time
+          school_opens_time:time,
+          proportion:self.proportion
         };
         //通过周期切换去清楚当前的周期;
         self.$store.state.d.weeks=[];
@@ -348,18 +392,20 @@
           }
           //缓存最新一次测试的周期数值
           self.$store.state.d.initweek=d[d.length-1];
-          
+
           //缓存界面跳转的周期
           self.$store.state.d.week=self.$store.state.d.initweek-1;
           var mainUrl=int.goLeader;
           var params={
             school_opens_time:time,
             uid:val,  //替换一下
-            weektime:d[d.length-1]
+            weektime:d[d.length-1],
+            proportion:self.proportion
           };
           api.get_api_data(mainUrl,params,function(d) {
             self.$store.state.d.basic=d;
             self.$store.state.d.uid=val;  //替换一下
+            self.$store.state.d.proportion=self.proportion;
             self.$store.state.d.startTime=time;
             self.show=false;
             self.$router.push({path:'/lmain/'+time});
@@ -367,15 +413,17 @@
 
         });
       },
-       goa(val,time){
+      goa(val,time){
         var self=this;
+
         var mainUrl_l=int.getweek;
         var params_l={
           uid:val,  //替换一下
-          school_opens_time:time
+          school_opens_time:time,
+          proportion:self.proportion
         };
         //通过周期切换去清楚当前的周期;
-       
+
         self.$store.state.e.weeks=[];
         api.get_api_data(mainUrl_l,params_l,function(d){
           console.log(JSON.stringify(d));
@@ -385,25 +433,27 @@
           }
           //缓存最新一次测试的周期数值
           self.$store.state.e.initweek=d[d.length-1];
-          
+
           //缓存界面跳转的周期
           self.$store.state.e.week=self.$store.state.e.initweek-1;
           var mainUrl=int.goLeader;
           var params={
             school_opens_time:time,
             uid:val,  //替换一下
-            weektime:d[d.length-1]
+            weektime:d[d.length-1],
+            proportion:self.proportion
           };
           api.get_api_data(mainUrl,params,function(d) {
             self.$store.state.e.basic=d;
             self.$store.state.e.uid=val;  //替换一下
+            self.$store.state.e.proportion=self.proportion;
             self.$store.state.e.startTime=time;
             self.show=false;
             self.$router.push({path:'/QHomepage/'+time});
           });
 
         });
-      },
+      }
     }
   }
 </script>
@@ -468,12 +518,12 @@
     border-radius: 0.25rem;
   }
   /*.model-b{*/
-    /*position: absolute;*/
-    /*!*width: 100%;*!*/
-    /*!*height: 100%;*!*/
-    /*z-index:20;*/
-    /*background-color: #121214;*/
-    /*overflow: hidden;*/
+  /*position: absolute;*/
+  /*!*width: 100%;*!*/
+  /*!*height: 100%;*!*/
+  /*z-index:20;*/
+  /*background-color: #121214;*/
+  /*overflow: hidden;*/
   /*}*/
   .modell{
     position: absolute;
@@ -542,22 +592,22 @@
   .main-title{
     color: #fff;
     text-align: center;
- 		height: 2.2rem;
- 		line-height: 2.2rem;
-		overflow: hidden;
-		border: 1px solid #ffcc00;
-		margin: 1rem 5% 3rem;
-		border-radius: 0.2rem;
+    height: 2.2rem;
+    line-height: 2.2rem;
+    overflow: hidden;
+    border: 1px solid #ffcc00;
+    margin: 1rem 5% 3rem;
+    border-radius: 0.2rem;
   }
   .type-on{
-  	background: #ffcc00;
-  	color: #333;
-  	font-weight: bold;
+    background: #ffcc00;
+    color: #333;
+    font-weight: bold;
   }
   .main-title p{
-  	float: left;
-  	width: 50%;
-  	font-size: 0.8rem;
+    float: left;
+    width: 50%;
+    font-size: 0.8rem;
   }
   .teacher{
     width: 100%;
@@ -581,7 +631,12 @@
   }
   .c{
     position: absolute;
-    left: 40%;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
     text-align: center;
     /*width: 50%;*/
     font-weight: bold;
@@ -597,5 +652,7 @@
     position: absolute;
     bottom: 5vh;
   }
+  
+
 </style>
 

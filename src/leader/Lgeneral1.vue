@@ -5,7 +5,8 @@
       <div class="z" @click="goback">
         <img src="../assets/img/goback.png" height="100%">
       </div>
-      <div class="c">详细数据</div>
+      <!--<div class="c">详细数据</div>-->
+      <div class="c">菁菁达人</div>
     </div>
     <li v-for="(i,index) in list">
       <div class="cont_t">
@@ -30,7 +31,7 @@
           </div>
         </div>
       </div>
-      <div class="lun" style="margin-top: 0;border-top: 0;margin-left:0;height: 9rem;border-bottom: 1px solid #1F1F21;padding-left: 5%;padding-right: 5%">
+      <div class="lun" style="margin-top: 0;border-top: 0;margin-left:0;height: 9rem;border-bottom: 1px solid #1F1F21;width: 90%;margin: 0 5%;">
         <div class="li">
           <ul class="u1">
             <!--<div class="l4">-->
@@ -96,11 +97,13 @@
         sid:self.$store.state.d.sid,
         gid:self.$store.state.d.gid,
         uid:self.$store.state.d.uid,
-        weektime:week
+        weektime:week,
+        proportion:self.$store.state.d.proportion
       };
       var arr=new Array();
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
       api.get_api_data(mainUrl,params,function(d){
+      	 self.$root.eventHub.$emit('Vloading',false)
         console.log(JSON.stringify(d));
         self.$store.state.d.details=d.details;
         var len=d.details.length;

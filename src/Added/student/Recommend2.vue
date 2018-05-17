@@ -6,10 +6,10 @@
     <div class="menu"></div>
   </div>
 
- 
+
   <div class="typeO" v-html="result.content" v-if="result.type == 0"></div>
   <div class="typeI" v-if="result.type == 1">
-   
+
   </div>
 </div>
 </template>
@@ -37,13 +37,13 @@ export default {
       dataType: "jsonp",
       url:int.getrecommend2,
       data:{
-        id: this.$route.params.id
-
+        id: this.$route.params.id,
+        proportion:vm.$store.state.a.data.base.user.proportion
       },
       success: function(response){
       	console.log(response)
         vm.result = response.data;
-        
+
       },
       error: function (err){
         console.log('err' + err);
@@ -72,25 +72,30 @@ export default {
   margin: 0 auto;
 }
 .topbar {
-  border-bottom: 1px solid #ddd;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 3.7vw;
+ padding: 0 3.7vw;
   height: 2.5rem;
-	line-height: 2.5rem;
+	/*line-height: 2.5rem;*/
+	border-bottom: 1px solid #ddd;
 }
-.topbar p{
-	overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
+.topbar > p {
+  font-size: 18px;
+   padding-left: 0.9rem;
+   font-weight: bold;
     -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    width: 70%;
-    text-align: center;
-     font-weight: bold;
-     
-      padding-left: 0.9rem;
+    overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+}
+.topbar h3 {
+  flex: 1;
+  text-align: center;
+  padding-left: 18vw;
+   font-weight: bold;
+
 }
 .topbar>img {
 		height: 1rem;
@@ -99,5 +104,5 @@ export default {
 .menu{
   width: 28px;
   height: 20px;
-}	
+}
 </style>

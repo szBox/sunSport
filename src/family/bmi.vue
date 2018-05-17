@@ -4,7 +4,8 @@
       <div class="ran_z" @click="goback">
         <img src="../assets/img/goback.png" height="100%">
       </div>
-      <div class="ran_c">体质信息</div>
+      <!--<div class="ran_c">体质信息</div>-->
+      <div class="ran_c">菁菁达人</div>
     </div>
     <div class="select">
       <div class="s">
@@ -90,7 +91,8 @@
       var mainUrl_t=int.getbmi_week;
       var params_t={
         school_opens_time:self.$store.state.a.startTime,
-        uid:self.$store.state.a.data.base.user.uid
+        uid:self.$store.state.a.data.base.user.uid,
+        proportion:self.$store.state.a.proportion
       };
       api.get_api_data(mainUrl_t,params_t,function(d) {
 
@@ -141,7 +143,8 @@
         var mainUrl=int.getbmi;
         var params={
           uid:self.$store.state.a.data.base.user.uid,
-          weektime:week
+          weektime:week,
+          proportion:self.$store.state.a.proportion
         };
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
         api.get_api_data(mainUrl,params,function(d){

@@ -5,7 +5,8 @@
       <div class="z" @click="goback">
         <img src="../assets/img/goback.png" height="100%">
       </div>
-      <div class="c">详细数据</div>
+      <!--<div class="c">详细数据</div>-->
+      <div class="c">菁菁达人</div>
     </div>
     <li>
       <div class="cont_t">
@@ -299,7 +300,7 @@
   }
   .v1{
     color: #F8C702;
-    font-size: 1rem;
+    font-size: 0.8rem;
     margin-left: 0.5rem;
   }
   .cont_b{

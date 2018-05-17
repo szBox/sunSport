@@ -524,7 +524,8 @@
           endtime:end+':00',
           projectid:self.$route.params.id,
           uid:self.$store.state.b.cid,
-          gid:grade
+          gid:grade,
+          proportion:self.$store.state.b.proportion
         };
         api.get_api_data(mainUrl,params,function(d){
 //          self.show1=false;

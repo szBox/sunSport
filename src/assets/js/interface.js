@@ -3,9 +3,10 @@
  */
 //let host='http://112.74.100.48';
 // let host='http://120.24.178.171';
-let host='http://192.168.0.211';
+// let host='http://192.168.0.211';
+let host='http://120.24.168.30:99';
 export default {
-  
+
   //main.vue  判断角色类型
   host:host,
   //登录
@@ -38,6 +39,8 @@ export default {
   getranklist:host+"/index.php?m=content&f=statistics&v=get_student_week_mark",
   /*submit接口中调用的是java方面的输入时间的接口*/
 
+  //健康计划
+  getPl:host+'/index.php?m=content&f=web_healthy&v=project&recommend=0',
 
   //family
   getbmi:host+"/index.php?m=content&f=statistics&v=getbmi",
@@ -70,16 +73,16 @@ export default {
   Inq1:host+"/index.php?m=content&f=web_add&v=add",
   Inq2: host+"/index.php?m=content&f=web_add&v=show&stat=1",
   Inq3: host+"/index.php?m=content&f=web_add&v=show&stat=0",
-  
-  
+
+
   //学生端
-  
+
 	//健康档案
 	getdangan:host+'/index.php?m=content&f=statistics&v=getbmi',
 	//统计-计划
 	getplan:host+'/index.php?m=content&f=statistics&v=getbmi',
 	getplan2:host+'/index.php?m=content&f=web_healthy&v=bmi&recommend=0',
-	
+
 	getrecommend:host+'/index.php?m=content&f=web_healthy&v=bmi&recommend=1&callback',
 	getrecommend1:host+'/index.php?m=content&f=web_healthy&v=project&recommend=1',
 	getrecommend2:host+'/index.php?m=content&f=web_healthy&v=detail',

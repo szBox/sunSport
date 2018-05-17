@@ -6,7 +6,8 @@
         <div class="z" @click="goback">
           <img src="../assets/img/goback.png"  height="100%">
         </div>
-        <div class="c">体质监测</div>
+        <!--<div class="c">体质监测</div>-->
+        <div class="c">菁菁达人</div>
         <div class="y" @click="goGrowUp">我的成长</div>
       </div>
       <div class="n">
@@ -32,6 +33,7 @@
   export default{
     name:'teacher',
     data(){
+
       return{
 
       }

@@ -2,7 +2,7 @@
   <div class="content">
     <div class="topbar">
       <img src="../../assets/img/Navigationbar_icon_fanhui.png" @click="goBack">
-      <p>运动档案</p>
+      <p>{{prohead}}</p>
       <div class="menu" @click="open">
         <img src="../../assets/img/Navigationbar_icon_liebiao.png">
       </div>
@@ -21,7 +21,7 @@
         banner
       -->
     </div>
-    
+
     <div class="togBtn">
       <span class="active" @click="toRouter">测量统计</span><span @click="toPlan">运动计划</span>
     </div>
@@ -37,7 +37,7 @@
         <!--
           日期选择组件
         -->
-        <DatePicker type="date"  :transfer='true' :editable="false" placeholder="查看指定日期" class="DPicker" style="width: 73vw" @on-change="getTime"></DatePicker>
+        <DatePicker type="date"  :transfer='true' :editable="false" placeholder="最近测试  (查看日期)" class="DPicker" style="width: 73vw" @on-change="getTime"></DatePicker>
       </div>
       <div class="dateIcon">
         <img src="../../assets/img/archives_icon_Arrow.png">
@@ -52,15 +52,20 @@
             <p>{{item.createdate}}</p>
           </div>
           <div class="Val">
-            <p>测量值 {{item.result}}</p>
-            <p>测量标准值 {{item.standard}}</p>
+            <p>测量值 <span>{{item.result}}</span></p>
+            <p></p>
           </div>
-          <div class="result">
-            {{item.text}}
+          <div class="result bmiIcon" v-if="item.text=='达标'">
+            <!--<p>{{item.text}}</p>-->
+            <img src="../../assets/img/Ropeskipping_icon_Standard.png" alt="" style="width: 2.5rem;"/>
+          </div>
+           <div class="result bmiIcon" v-if="item.text=='未达标'">
+            <!--<p>{{item.text}}</p>-->
+            <img src="../../assets/img/Ropeskipping_icon_no.png" alt="" style="width: 3rem;"/>
           </div>
         </li>
       </ul>
-     
+
   	 <ul v-if='!result.mark.length'>
         <li>
           <div class="infoText">
@@ -69,14 +74,14 @@
           </div>
           <div class="Val">
             <p>测量值: <span style="font-size: 16px;">暂无数据</span></p>
-            <p>测量标准值</p>
+            <p></p>
           </div>
           <div class="result">
-           
+
           </div>
         </li>
   	</ul>
-  
+
     </div>
   </div>
 </template>
@@ -95,11 +100,13 @@ export default {
       result: [],
       newTime: '',
       show1: false,
+      prohead:'',
+      resultImg:'',
       pickData1: {
         columns: 1, // picker的列数
         // 第一列的数据结构
         pData1: [
-         
+
         ]
       }
     };
@@ -111,7 +118,9 @@ export default {
   },
   created() {
     var vm = this;
-    
+    var pHead=localStorage.getItem('proheads')
+		vm.prohead=pHead;
+		var stugid=localStorage.getItem('stugid')
     var d = new Date();
     var dTime =
       parseInt(d.getFullYear()) +
@@ -119,7 +128,6 @@ export default {
       parseInt(d.getMonth() + 1) +
       "-" +
       parseInt(d.getDate());
-  
     $.ajax({
       type: "GET",
       dataType: "jsonp",
@@ -127,13 +135,23 @@ export default {
       data: {
         uid: vm.$store.state.a.data.base.user.uid,
         // date: dTime
-        date:(new Date().getFullYear())+'-'+(new Date().getMonth()+1)+'-'+(new Date().getDate()),
-        projectid: vm.$route.params.id
+//      date:(new Date().getFullYear())+'-'+(new Date().getMonth()+1)+'-'+(new Date().getDate()),
+        projectid: vm.$route.params.id,
+        proportion:vm.$store.state.a.data.base.user.proportion,
+        sex:vm.$store.state.a.data.base.user.sex,
+        gid:stugid
       },
       success: function(response) {
-      	
+
       	console.log(response)
-      	
+//    	for(var i = 0; i < response.mark.length; i++ ){
+//    		if(response.mark[i].text=='达标'){
+//						vm.resultImg=require('../../assets/img/Ropeskipping_icon_Standard.png')
+//					}else if(response.mark[i].text=='未达标'){
+//						vm.resultImg=require('../../assets/img/Ropeskipping_icon_no.png')
+//					}
+//    	}
+				
         vm.result = response
          for (var i = 0; i < response.project.length; i++) {
          vm.pickData1.pData1.push({
@@ -149,7 +167,7 @@ export default {
   },
   methods: {
     toRouter() {
-      this.$router.replace({ path: "/HealthRecords" + this.$route.params.id });
+//    this.$router.replace({ path: "/HealthRecords/" + this.$route.params.id });
     },
     getTime(t) {
 //  	alert(t)
@@ -169,7 +187,7 @@ export default {
         success: function(response) {
           vm.result = response;
           console.log(response);
-         
+
         },
         error: function(err) {
           console.log(err);
@@ -187,21 +205,26 @@ export default {
     confirmFn(val) {
     	console.log(val);
       console.log(val.select1.val);
-
+			
       var vm = this;
       if(val.select1.text=='身高体重'){
       	this.$router.replace({ path: "/HealthRecords/" + val.select1.val });
       }
       else{
+      	$('.ivu-input').val('')
+      		localStorage.setItem('proheads',val.select1.text)
+      		 var pHead=localStorage.getItem('proheads')
+					vm.prohead=pHead;
       	 this.$router.replace({ path: "/movement/" + val.select1.val });
 			      var vm = this;
 			      var times='';
+			      var stugid=localStorage.getItem('stugid')
 //			      判断时间有没有选择时间,没有选择就用今天的
 						console.log('选择的时间'+this.newTime);
 						if(this.newTime!=''){
 							times=this.newTime
 						}else{
-							times=(new Date().getFullYear())+'-'+(new Date().getMonth()+1)+'-'+(new Date().getDate())
+							times=""
 						}
 			      $.ajax({
 			        type: "GET",
@@ -209,22 +232,24 @@ export default {
 							 url:int.getdangan,
 			        data: {
 			          uid: vm.$store.state.a.data.base.user.uid,
-			          date: times,
+//			          date: times,
 			          school_opens_time:vm.$store.state.a.startTime,
-			          projectid:val.select1.val
+			          projectid:val.select1.val,
+			          sex:vm.$store.state.a.data.base.user.sex,
+        				gid:stugid
 			        },
 			        success: function(response) {
 			          vm.result = response;
 			          console.log(response);
-			        
+
 			        },
 			        error: function(err) {
 			          console.log(err);
 			        }
 			      });
-			    
+
       }
-     
+
       this.close();
     },
     close() {
@@ -257,20 +282,27 @@ export default {
 .topbar > p {
   font-size: 18px;
    font-weight: bold;
-    padding-left: 0.9rem;
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 .topbar>img {
 		height: 1rem;
 	}
 .togBtn {
-  padding: 7.7vw 0;
-  text-align: center;
-  color: #000;
+	text-align: center;
+	color: #000;
+	width: 66%;
+	margin: 7.7vw auto;
+	 border: 1px solid #ccc;
+	  border-radius:0.2rem;
 }
 .togBtn span {
-  border: 1px solid #ccc;
-  width: 32vw;
-  height: 8.3vw;
+  width: 50%;
   display: inline-block;
   line-height: 8.3vw;
   font-size: 0.8rem;
@@ -278,34 +310,27 @@ export default {
   /* background: linear-gradient(to right, #2cdea0, #10be3b);
   color: #fff; */
 }
-.togBtn span:last-child {
-  border-radius: 0 0.2rem 0.2rem 0;
-  border-left: 0;
-}
-.togBtn span:first-child {
-  border-radius: 0.2rem 0 0 0.2rem;
-  border-right: 0;
-}
+
 .active {
   background: linear-gradient(to left, #23c9b1, #2bc893);
   color: #fff;
+  border: none !important;
 }
 .menu img {
-  width: 28px;
-  height: 20px;
+  width: 20px;
+  height: 16px;
 }
 .banner {
   width: 100%;
   height: 46vw;
 }
 .banner.ban1 {
-  background: url("../../assets/img/archives_banner.png") no-repeat;
+  background: url("../../assets/img/Ropeskipping_banner.png") no-repeat;
   background-size: cover;
 }
 
 .dateSelection {
-  border-top: 1px solid #888;
-  border-bottom: 1px solid #888;
+
   padding: 5vw 7.5vw;
   display: flex;
   justify-content: space-between;
@@ -320,22 +345,23 @@ export default {
 .dateSelection .dateIcon {
   position: absolute;
   right: 7.6vw;
-  top: calc(5vw - 15px);
+  top: calc(5vw - 12px);
   z-index: 1;
 }
 .dateSelection .dateIcon img {
-  width: 22px;
-  height: 15px;
+  width: 15px;
+  height: 10px;
 }
 .dateSelection .dateFn img {
   margin: 0 2.7vw 0 0;
+  width: 1.2rem;
 }
 .dataList > ul > li {
   display: flex;
   align-items: flex-end;
   font-size: 14px;
-  border-bottom: 1px solid;
-  padding: 3.3vw 3vw;
+  border-bottom: 1px solid #E0E0E0;
+  padding: 5vw 3vw;
   justify-content: space-between;
 }
 .dataList > ul > li .infoText {
@@ -343,9 +369,10 @@ export default {
 }
 .dataList > ul > li .infoText img {
   padding-bottom: 0.3rem;
+  width: 1.2rem;
 }
 .dataList > ul > li > div:nth-child(1) {
-  border-right: 1px solid;
+  border-right: 1px solid #E0E0E0;
   width: 20vw;
 }
 
@@ -354,7 +381,7 @@ export default {
   padding-left: 1rem;
 }
 .dataList > ul > li > div:nth-child(2) > p:last-child {
-  color: #ccc;
+  color: #adadad;
 }
 .dataList > ul > li > div:nth-child(2) > p:first-child {
   font-size: 18px;
@@ -363,10 +390,8 @@ export default {
 .dataList > ul > li > div:nth-child(3) {
   color: #ccc;
 }
-.dataList > ul > li > div.bmiIcon {
-  border: 1px solid;
-  border-radius: 50%;
-  padding: 2px;
+.dataList > ul > li > div.bmiIcon img{
+
 }
 .dataList > ul > li > div.bmiIcon > p {
   border-radius: 50%;
@@ -377,5 +402,20 @@ export default {
   text-align: center;
   background: #2ac895;
   overflow: hidden;
+  color: #fff;
+  font-size: 0.6rem;
+}
+.Val span,.Val i{
+	color: #0EB0CD;
+}
+.Val span{
+	font-size: 1.2rem;
+	
+}
+.dataList > ul > li > div.bmiIconNo > p{
+	background: #555;
+}
+.dataList > ul > li > div.bmiIconOk > p{
+	background: #2e2e2e;
 }
 </style>

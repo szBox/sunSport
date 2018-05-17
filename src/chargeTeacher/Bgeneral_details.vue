@@ -5,8 +5,10 @@
       <div class="z" @click="goback">
         <img src="../assets/img/goback.png" height="100%">
       </div>
-      <div class="c">详细数据</div>
+      <!--<div class="c">详细数据</div>-->
+      <div class="c">菁菁达人</div>
     </div>
+ 
     <div class="cont_t" @click="godetails(get_projectid(i.project))" v-for="(i,index) in list">
       <div class="cont_t_f">
         <div class="f_l">{{i.project}}</div>
@@ -71,11 +73,13 @@
   import rotate from '@/assets/commont/rotate'
   import $ from 'jquery'
   import int from '../assets/js/interface'
+
   export default{
     name:'detail',
     data(){
       return{
-        list:''
+        list:'',
+      
       }
     },
     computed:{
@@ -84,10 +88,12 @@
 //      }
     },
     created(){
+    	 console.log(this.$store.state.b.basic)
 //      alert(this.$route.params.id);
     },
     components:{
-      m_rotate:rotate
+      m_rotate:rotate,
+   
     },
     mounted(){
       this.getdata();
@@ -102,25 +108,31 @@
         return api.get_projectid(val)
       },
       godetails(val){
-//        alert(val);
+      	var self=this;
+         self.$root.eventHub.$emit('Vloading',true)
         this.$router.push({path:'/ranklist/'+val})
       },
       goback(){
         this.$router.go(-1);
       },
       getdata(){
+      	
         var self=this;
+       var proportion='';
         var week=self.$route.params.id;
         var schooltime='';
-        if(self.$store.state.c.week){
+          if(self.$store.state.c.week){
 //          weektime=self.$store.state.c.week+1;
           schooltime=self.$store.state.c.startTime;
+          proportion=self.$store.state.c.proportion;
         }else if(self.$store.state.d.week){
 //          weektime=self.$store.state.d.week+1;
           schooltime=self.$store.state.d.startTime;
+          proportion=self.$store.state.d.proportion;
         }else if(self.$store.state.b.week){
 //          weektime=self.$store.state.b.week;
           schooltime=self.$store.state.b.startTime;
+          proportion=self.$store.state.b.proportion;
         }
 //      console.log(self.$store.state.b.basic.card);
         var val=self.$store.state.b.basic.uid;
@@ -128,16 +140,18 @@
         var params={
           school_opens_time:schooltime,
           uid:self.$store.state.b.basic.uid,
-          weektime:week
+          weektime:week,
+          proportion:proportion
         };
 
         api.get_api_data(mainUrl,params,function(d){
+        	self.$root.eventHub.$emit('Vloading',false)
           var arr=new Array();
+          console.log('dddddd',d)
           for(var i=0;i<d.detail.length;i++){
             arr[i]=api.get_projectid(d.detail[i].project);
           }
           self.$store.state.b.projectnum=arr;
-//          alert(self.$store.state.b.projectnum);
           self.list=d.detail;
           for(var i in d.detail){
             self.$store.state.b.details[i]=d.detail[i];

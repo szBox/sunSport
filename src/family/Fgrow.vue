@@ -5,7 +5,8 @@
         <div class="z" @click="goback">
           <img src="../assets/img/goback.png" height="100%">
         </div>
-        <div class="c">我的成长</div>
+        <!--<div class="c">我的成长</div>-->
+        <div class="c">菁菁达人</div>
       </div>
       <div class="select1">
         <div class="s1">
@@ -110,6 +111,17 @@
       </div>
       <div id="m"></div>
       <v_load v-if="show1"></v_load>
+       <div class="modell" style="display: none;">
+        <div class="model-img">
+          <img src="../assets/img/xinxitu@2x.png" width="100%">
+        </div>
+        <div class="model-text">
+          <!--用户没有权限或者未绑定卡号-->
+        </div>
+        <div class="model-content" >
+          <div class="model-btn" @click="closeBtn">知道了</div>
+        </div>
+      </div>
     </div>
   </transition>
 </template>
@@ -145,6 +157,9 @@
       m_rotate:rotate,
       v_load:load
     },
+    created(){
+    	$('body').css({background:'#2e2e31'})
+    },
     computed:{
 //      allproject(){
 //        console.log()
@@ -162,6 +177,7 @@
       var num=1;
       var zz=self.$store.state.a.weeks[self.$store.state.a.weeks.length-1];
       var p=0;
+      
       var arr=['第一周', '第二周', '第三周', '第四周', '第五周', '第六周', '第七周', '第八周', '第九周', '第十周', '第十一周', '第十二周', '第十三周', '第十四周', '第十五周', '第十六周', '第十七周', '第十八周', '第十九周', '第二十周','第二十一周','第二十二周','第二十三周'];
 //      var allproject=['仰卧起坐', '立定跳远', '引体向上', '肺活量', '跳绳', '1000米跑', '篮球运动'];
       self.starttime1='第一周';
@@ -178,12 +194,14 @@
 //      rotateEffect:true,
         onClose:function () {
 //        alert();
-          self.starttime1='第一周';
+//        self.starttime1='第一周';
           for(var i=0;i<arr.length;i++){
             if($('#picker1').val()==arr[i]){
               num=i+1;
               if(num>zz){
-                alert('起始时间需小于结束时间');
+//              alert('起始时间需小于结束时间1111');
+                 $('.modell').show();
+								$('.model-text').html('起始时间需小于结束时间');
               }else{
                 self.getdata(num,zz,p);
                 self.starttime1=$('#picker1').val();
@@ -205,14 +223,17 @@
 //      rotateEffect:true,
         onClose:function () {
 //        alert();
-          self.endtime1='第一周';
+//        self.endtime1='第一周';
           for(var i=0;i<arr.length;i++){
             if($('#picker2').val()==arr[i]){
 //              alert(num+'xxxxxx'+(i+1));
+							 zz=i+1;
               if(num>i+1){
-                alert('起始时间需小于结束时间')
+//              alert('起始时间需小于结束时间2222')
+								$('.modell').show();
+								$('.model-text').html('起始时间不能大于结束时间');
               }else{
-                zz=i+1;
+               
                 self.show1=true;
                 self.getdata(num,zz,p);
                 self.starttime1=$('#picker1').val();
@@ -233,13 +254,17 @@
         ],
 //      rotateEffect:true,
         onClose:function () {
-//        alert();
+//        alert('1111');
+					
           for(var i=0;i<self.allproject.length;i++){
+          	
             if($('#picker3').val()==self.allproject[i]){
 //              var all=self.$store.state.a.data.base.each_average;
 //              for(var n in all){
 //                projectid.push(n);
 //              }
+						console.log(self.allproject[i]);
+						console.log(zz)
               self.show1=true;
               p=self.allprojectid[i];
               self.getdata(num,zz,p);
@@ -273,6 +298,7 @@
     methods:{
       getdata(start,end,pro){
         var self=this;
+
 //        self.allproject=[];
 //        self.allprojectid=[];
         var mainUrl=int.getFgrowup;
@@ -281,11 +307,12 @@
           uid:self.$store.state.a.data.base.user.uid,
           weekbegin:start,
           weekend:end,
-          projectcode:pro,
+          projectid:pro,
           sex:self.$store.state.a.data.base.user.sex,
           class:self.$store.state.a.data.base.user.class,
           grade:self.$store.state.a.data.base.user.grade,
-          sid:self.$store.state.a.data.base.user.sid
+          sid:self.$store.state.a.data.base.user.sid,
+          proportion:self.$store.state.a.proportion
         };
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
         var obj = document.getElementById("m");
@@ -318,6 +345,10 @@
       },
       goback(){
         this.$router.go(-1);
+      },
+       closeBtn(){
+        $('.modell').css({display:'none'});
+        $('.model-b').css({display:'none'});
       },
       alert(){
         var self=this;
@@ -633,6 +664,47 @@
     height: 12rem;
     margin-bottom: 1rem;
   }
+    .modell{
+    position: fixed;
+    z-index: 30;
+    width: 12rem;
+    height: 13rem;
+    left: 50%;
+    top: 50%;
+    margin-top: -6.5rem;
+    margin-left: -6rem;
+    background-color: #F6F6F6;
+    border-radius: 0.5rem;
+    }
+    .model-img img{
+    width: 7rem;
+    height: 8rem;
+    margin-left: 2.5rem;
+    margin-top: 1rem;
+	}
+	.model-text{
+    font-size: 0.75rem;
+    color: #000000;
+    text-align: center;
+}
+.model-content{
+    border-top: 1px solid #C9CBD1;
+    margin-top: 0.5rem;
+    height: 4rem;
+    width: 100%;
+}
+.model-btn{
+    width: 5rem;
+    margin-left: 3.5rem;
+    height: 1.5rem;
+    border-radius: 1rem;
+    background-color: #33B097;
+    color: #ffffff;
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+    text-align: center;
+    line-height: 1.5rem;
+}
 </style>
 <style src="../assets/css/rotate.css">
 

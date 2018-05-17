@@ -6,7 +6,8 @@
 <div class="content">
   <div class="topbar">
     <img src="../../assets/img/Navigationbar_icon_fanhui.png" @click="goBack">
-    <p>推荐食谱</p>
+    <!--<p>推荐食谱</p>-->
+    <p>菁菁达人</p>
     <div class="menu">
     	<!--<img src="../../assets/img/Navigationbar_icon_liebiao.png">-->
     </div>
@@ -53,7 +54,7 @@
     </li>
   </ol>
 
-  
+
 </div>
 </template>
 
@@ -75,21 +76,23 @@ export default {
   },
   created(){
     var vm = this;
+    var tjid=localStorage.getItem('tjid');
     $.ajax({
       type: 'POST',
       dataType: 'jsonp',
       url:int.getrecommend,
       data:{
 //      "card": vm.$store.state.a.data.base.user.card,
-        id:vm.$route.params.id,
-        'recommend': 1
+        id:tjid,
+        'recommend': 1,
+        proportion:vm.$store.state.a.data.base.user.proportion
       },
       success:function (response){
       	console.log(response)
         vm.result = response.data.breakfast;
         vm.result2=	response.data.lunch;
 //			console.log(vm.result);
-  
+
       }
     })
   }
@@ -112,14 +115,22 @@ export default {
 }
 .topbar > p {
   font-size: 18px;
-   padding-left: 0.9rem;
+  
+   font-weight: bold;
+   position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 .topbar h3 {
   flex: 1;
   text-align: center;
   padding-left: 18vw;
    font-weight: bold;
-   
+
 }
 .topbar>img {
 		height: 1rem;
@@ -128,7 +139,7 @@ export default {
 .menu{
   width: 28px;
   height: 20px;
-}	
+}
 .breakfast{
   margin: 0 3.8vw;
   padding-bottom: 4.9vw;
@@ -142,7 +153,7 @@ export default {
 }
 .breakfast .rmTitle {
   font-size: 0.75rem;
-  padding: 0.3rem 0.5rem;
+  padding: 0.1rem 0.5rem;
   color: #fff;
   background: linear-gradient(to right, #53b0fe, #367bfd);
   border-radius: 0.2rem;
@@ -157,6 +168,7 @@ export default {
 .Bicon img{
 		width: 1.2rem;
 		height: 1.2rem;
+		margin-right: 0.2rem;
 }
 .bannerI {
   width: 100vw;
@@ -174,8 +186,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 10vw;
-  line-height: 10vw;
+ padding: 0.6rem 0;
   border-bottom: 1px solid #ddd;
   font-size: 15px;
 }

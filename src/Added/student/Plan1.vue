@@ -3,7 +3,7 @@
   <div class="content">
     <div class="topbar">
       <img src="../../assets/img/Navigationbar_icon_fanhui.png" @click="goBack">
-      <p>运动档案</p>
+      <p>菁菁达人</p>
       <div class="menu">
       </div>
     </div>
@@ -17,7 +17,7 @@
         banner
       -->
     </div>
-    
+
     <div class="togBtn">
       <span @click="toRouter">测量统计</span><span @click="toPlan" class="active">运动计划</span>
     </div>
@@ -27,7 +27,8 @@
 
 
     <ol class="day">
-      <li v-for="(Day,index,key) in week" :key="key" class="weekDay" :class="{'active': index == result.data.period}"> {{Day}} </li>
+      <!--<li v-for="(Day,index,key) in week" :key="key" class="weekDay" :class="{'active': index == result.data.period}"> {{Day}} </li>-->
+      <li class="weekDay" >{{weekDay}}</li>
     </ol>
 
     <div class="Suggest">
@@ -53,12 +54,12 @@
           <img src="../../assets/img/Healthplan_icon_consume.png" alt="">
           <span>消耗建议</span>
         </div>
-      </div>  
+      </div>
       <ol class="Scontent add" v-if="datashow">
         <li v-for="item in result.data.sport_plan">{{item}}</li>
       </ol>
     </div>
-    
+
 
   </div>
 </template>
@@ -72,6 +73,7 @@ export default {
     return {
       week: ["周末", "周一", "周二", "周三", "周四", "周五", "周六"],
       result: [],
+      weekDay:'',
       datashow:false,
     };
   },
@@ -91,17 +93,26 @@ export default {
   },
   created() {
     var vm = this;
+    var stugid=localStorage.getItem('stugid');
+     var a = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+		var weekNow = new Date().getDay(); 
+		var weeks=a[weekNow];
+		
+		vm.weekDay=weeks
     $.ajax({
       type: "POST",
       dataType: "jsonp",
 //    url:int.getplan2,
-			url:'http://192.168.0.211/index.php?m=content&f=web_healthy&v=project&recommend=0',
+			url:int.getPl,
       data: {
         // card: vm.$store.state.a.data.base.user.card,
 //      card: "000001535217002",
 				uid:vm.$store.state.a.data.base.user.uid,
         recommend: 0,
-        project:this.$route.params.id
+        project:this.$route.params.id,
+        proportion:vm.$store.state.a.data.base.user.proportion,
+        gid:stugid,
+        sex:vm.$store.state.a.data.base.user.sex
       },
       success: function(response) {
       	if(response.data){
@@ -111,7 +122,7 @@ export default {
 	        vm.week[response.data.period] = "今天";
 	        vm.datashow=true
       	}
-      	
+
       },
       error: function(err) {
         console.log(err);
@@ -141,14 +152,13 @@ export default {
   color: #e24651;
 }
 .recommend {
-  font-size: 3vw;
+  font-size: 0.7rem;
   background: #f60;
   border: none;
   color: #fff;
   border-radius: 0.5vw;
-  height: 6.4vw;
-  line-height: 6.4vw;
-  width: 24vw;
+ 	padding:0.2rem 0.5rem;
+  border-radius: 0.2rem;
 }
 .Suggest {
   margin: 0 3.7vw;
@@ -158,19 +168,22 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #E4E2E2;
 }
 .Suggest > .Stitle > div {
   padding: 6.1vw 0 5.3vw 0;
 }
 .Suggest > .Stitle > div > span {
-  font-size: 20px;
+  font-size: 18px;
 }
 .Suggest > .Stitle > div > img {
-  width: 30px;
+  width: 1.2rem;
+  margin-right: 0.8rem;
+  float: left;
 }
 .Scontent li {
-  padding-top: 3.7vw;
+  padding-top: 2vw;
+  color: #666;
 }
 .add {
   padding-bottom: 6vw;
@@ -178,42 +191,49 @@ export default {
 
 .content {
   background: #fff;
-  position: absolute;
+ 	position: absolute;
 	height: 100%;
 	width: 100%;
   overflow-x: hidden;
 }
 .topbar {
   display: flex;
-  border-bottom: 1px solid #ddd;
   justify-content: space-between;
   align-items: center;
  padding: 0 3.7vw;
   height: 2.5rem;
 	line-height: 2.5rem;
+	/*border-bottom: 1px solid #ddd;*/
 }
 .topbar > p {
   font-size: 18px;
    font-weight: bold;
-    padding-left: 0.9rem;
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 .topbar>img {
 		height: 1rem;
-	
+
 	}
 .menu{
   width: 28px;
   height: 20px;
-}	
+}
 .togBtn {
-  padding: 7.7vw 0;
-  text-align: center;
-  color: #000;
+	text-align: center;
+	color: #000;
+	width: 66%;
+	margin: 7.7vw auto;
+	 border: 1px solid #ccc;
+	  border-radius:0.2rem;
 }
 .togBtn span {
-  border: 1px solid #ccc;
-  width: 32vw;
-  height: 8.3vw;
+  width: 50%;
   display: inline-block;
   line-height: 8.3vw;
   font-size: 0.8rem;
@@ -221,17 +241,11 @@ export default {
   /* background: linear-gradient(to right, #2cdea0, #10be3b);
   color: #fff; */
 }
-.togBtn span:last-child {
-  border-radius: 0 0.2rem 0.2rem 0;
-  border-left: 0;
-}
-.togBtn span:first-child {
-  border-radius: 0.2rem 0 0 0.2rem;
-  border-right: 0;
-}
+
 .active {
   background: linear-gradient(to left, #23c9b1, #2bc893);
   color: #fff;
+  border: none !important;
 }
 .menu img {
   width: 28px;

@@ -5,7 +5,7 @@
         <div class="ran_z" @click="goback">
           <img src="../assets/img/goback.png" height="100%">
         </div>
-        <div class="ran_c">成绩排行榜</div>
+        <div class="ran_c" style="font-size: 0.8rem;font-weight: bold">成绩排行榜</div>
       </div>
       <div class="ran_project">
         <div class="ran_project_con">
@@ -125,15 +125,19 @@
         var mainUrl = int.getranklist;
         var weektime='';
         var schooltime='';
+        var proportion='';
         if(self.$store.state.c.week !=0 || self.$store.state.c.week===0){
           weektime=self.$store.state.c.week+1;
           schooltime=self.$store.state.c.startTime;
+          proportion=self.$store.state.c.proportion;
         }else if(self.$store.state.d.week!=0 || self.$store.state.d.week===0){
           weektime=self.$store.state.d.week+1;
           schooltime=self.$store.state.d.startTime;
+          proportion=self.$store.state.d.proportion;
         }else if(self.$store.state.b.week!=0 || self.$store.state.b.week===0){
           weektime=self.$store.state.b.week;
           schooltime=self.$store.state.b.startTime;
+          proportion=self.$store.state.b.proportion;
         }
         var params = {
           school_opens_time: schooltime,
@@ -141,10 +145,12 @@
           weektime:weektime,
           projectid:self.$route.params.id,
           type:type,
+          proportion:proportion
         };
 
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
         api.get_api_data(mainUrl, params, function (d) {
+        	self.$root.eventHub.$emit('Vloading',false)
             console.log(d.length);
             if(d.length==1){
               self.num_one=d[0]
@@ -168,6 +174,7 @@
       },
       godetail(){
         var self=this;
+        self.$root.eventHub.$emit('Vloading',true)
         var val=self.$route.params.id;
         self.$router.push({path:'/details/'+val})
       }

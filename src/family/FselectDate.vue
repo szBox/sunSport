@@ -292,10 +292,12 @@ export default {
       var params={
         school_opens_time:self.$route.params.id,
         uid:self.$store.state.a.data.base.user.uid,
-        weektime:week
+        weektime:week,
+        proportion:self.$store.state.a.proportion
       };
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
       api.get_api_data(mainUrl,params,function(d) {
+
         self.$store.state.a.data.base = d;
         self.selectData(d);
 

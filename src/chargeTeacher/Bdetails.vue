@@ -5,7 +5,8 @@
       <div class="z" @click="goback">
         <img src="../assets/img/goback.png" height="100%">
       </div>
-      <div class="c">统计详情</div>
+      <!--<div class="c">统计详情</div>-->
+      <div class="c">菁菁达人</div>
       <!--<div class="y" @click="goRanking">成绩导入导出</div>-->
     </div>
     <div class="cont_t">
@@ -161,14 +162,18 @@
 //      console.log(num);
 //      var x=self.$route.params.id;
       var schooltime='';
+      var proportion='';
       if(self.$store.state.c.week){
         self.$store.state.b.week=self.$store.state.c.week+1;
         schooltime=self.$store.state.c.startTime;
+        proportion=self.$store.state.c.proportion;
       }else if(self.$store.state.d.week){
         self.$store.state.b.week=self.$store.state.d.week+1;
+        proportion=self.$store.state.d.proportion;
         schooltime=self.$store.state.d.startTime;
       }else if(self.$store.state.b.week){
         self.$store.state.b.week=self.$store.state.b.week;
+        proportion=self.$store.state.b.proportion;
         schooltime=self.$store.state.b.startTime;
       }
 //      alert(self.$store.state.b.week);
@@ -179,10 +184,12 @@
         school_opens_time:schooltime,
         uid:self.$store.state.b.basic.uid,
         weektime:self.$store.state.b.week,
-        projectid:self.$route.params.id
+        projectid:self.$route.params.id,
+        proportion:proportion
       };
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
       api.get_api_data(mainUrl,params,function(d){
+      	self.$root.eventHub.$emit('Vloading',false)
           self.da=d.single_project_data;
           var rate=d.single_project_data.standard;
           self.$store.state.b.rate=rate;
@@ -211,6 +218,8 @@
 //        alert(self.$route.params.id)
       },
       gofail(val){
+      	var self=this;
+      	self.$root.eventHub.$emit('Vloading',true)
         this.$router.push({path:'/fail/'+val})
       },
       goback(){

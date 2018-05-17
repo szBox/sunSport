@@ -5,7 +5,8 @@
       <div class="z" @click="goback">
         <img src="../assets/img/goback.png" height="100%">
       </div>
-      <div class="c">体质信息</div>
+      <!--<div class="c">体质信息</div>-->
+      <div class="c">菁菁达人</div>
     </div>
     <div class="cont_c">
       <div class="cont_c_t">
@@ -111,23 +112,29 @@
         var mainUrl=int.getclassbmi;
         var uid='';
         var schooltime='';
+         var proportion='';
         if(self.$store.state.b.basic.uid){
           uid=self.$store.state.b.basic.uid;
           schooltime=self.$store.state.startTime;
+          proportion=self.$store.state.b.proportion;
         }else if(self.$store.state.c.basic.uid){
           uid=self.$store.state.c.basic.uid;
           schooltime=self.$store.state.c.startTime;
+          proportion=self.$store.state.c.proportion;
         }else if(self.$store.state.d.basic.uid){
           uid=self.$store.state.d.basic.uid;
           schooltime=self.$store.state.d.startTime;
+          proportion=self.$store.state.d.proportion;
         }
         var params={
           school_opens_time:schooltime,
-          uid:uid
+          uid:uid,
+          proportion:proportion
         };
         api.get_api_data(mainUrl,params,function(d){
+        	self.$root.eventHub.$emit('Vloading',false)
           self.list=d;
-          
+
           self.$store.state.b.cid=d.bmi.cid;
 //          console.log(d.bmi.cid);
           console.log(JSON.stringify(d));
@@ -140,6 +147,8 @@
         this.$router.go(-1);
       },
       godetail(val){
+      	var self=this;
+      	self.$root.eventHub.$emit('Vloading',true)
         this.$router.push({path:'/healthdetail/'+val})
       }
     }

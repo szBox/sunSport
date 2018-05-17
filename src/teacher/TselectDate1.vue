@@ -215,19 +215,24 @@
     },
     created(){
       var self=this;
-
+//      alert(self.$store.state.c.basic.proportion);
       var schooltime='';
+      var proportion='';
       if(self.$store.state.d.week!=0 || self.$store.state.d.week===0){
         schooltime=self.$store.state.d.startTime;
+        proportion=self.$store.state.d.proportion;
       }else if(self.$store.state.c.week!=0 || self.$store.state.c.week===0){
         schooltime=self.$store.state.c.startTime;
+        proportion=self.$store.state.c.proportion;
       }
       var mainUrl_t=int.getweek;
       var params_t={
         uid:self.$route.params.id,
-        school_opens_time: schooltime
+        school_opens_time: schooltime,
+        proportion: proportion
       };
       api.get_api_data(mainUrl_t,params_t,function(d) {
+      	 self.$root.eventHub.$emit('Vloading',false)
         if(self.$store.state.c.week===0 || self.$store.state.c.week!=0){
           self.$store.state.c.week_s.length=0;
           for(var i=0;i<d.length;i++){
@@ -244,7 +249,6 @@
       });
     },
     mounted(){
-
       var hei=$(document).height();
       $('.model-b').css({height:hei+"px"});
       var self=this;
@@ -424,19 +428,24 @@
         var val=self.$route.params.id;
         var mainUrl=int.getheaderteacher;
         var schooltime='';
+        var proportion='';
         if(self.$store.state.d.week!=0 || self.$store.state.d.week===0){
           schooltime=self.$store.state.d.startTime;
+          proportion=self.$store.state.d.proportion;
         }else if(self.$store.state.c.week!=0 || self.$store.state.c.week===0){
           schooltime=self.$store.state.c.startTime;
+          proportion=self.$store.state.c.proportion;
         }
         var params={
           school_opens_time: schooltime,
           uid:self.$route.params.id,
-          weektime:week
+          weektime:week,
+          proportion:proportion
         };
 
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
         api.get_api_data(mainUrl,params,function(d){
+        	 self.$root.eventHub.$emit('Vloading',false)
           console.log(JSON.stringify(d));
           self.$store.state.b.basic=d;
           self.$store.state.b.basic.uid=val;
@@ -453,10 +462,13 @@
       getlist(time){
         var self=this;
         var schooltime='';
+        var proportion='';
         if(self.$store.state.d.week!=0 || self.$store.state.d.week===0){
           schooltime=self.$store.state.d.startTime;
+          proportion=self.$store.state.d.proportion;
         }else if(self.$store.state.c.week!=0 || self.$store.state.c.week===0){
           schooltime=self.$store.state.c.startTime;
+          proportion=self.$store.state.c.proportion;
         }
         $.ajax({
           type: "GET",
@@ -465,7 +477,8 @@
           data: {
             uid: self.$route.params.id,
             school_opens_time:schooltime,
-            weektime: time+1
+            weektime: time+1,
+            proportion:proportion
           },
           success: function(response) {
             self.result = response.data;
@@ -795,7 +808,7 @@
     align-items: center;
     /*text-align: center;*/
     padding: 0.8rem 0;
-    border-bottom: 2px solid rgb(31, 31, 33);
+    border-bottom: 1px solid #27272A;
     padding-left: 1rem;
     color: #9B9B9B;
     font-size: 1rem;

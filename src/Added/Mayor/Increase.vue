@@ -2,20 +2,21 @@
 <div class="content">
   <div class="topbar">
     <img src="../../assets/img/Navigationbar_icon_fanhui.png" @click="goBack">
-    <p>排行详情</p>
+    <!--<p>排行详情</p>-->
+    <p>菁菁达人</p>
     <div>
-    	
+
     </div>
   </div>
-  
+
   <div class="proData">
 			<div class="rank">
 				<div class="rankTle">
 					<i class="i-icon"></i>
 					<span class="fi">达标率排行</span>
-					
+
 				</div>
-				
+
 				<ol class="rankWrap">
 					<li class="rankTop">
 						<p>名次</p>
@@ -47,7 +48,7 @@
 	export default {
 		name: "name",
 		components:{
-		
+
 		},
 		data: function() {
 			return {
@@ -67,7 +68,7 @@
 			this.province = a[0];
 			this.city = a[1];
 			this.Area = a[2];
-			
+
 			function ajax(){
 				$.ajax({
 				type: "GET",
@@ -76,8 +77,8 @@
 				data: {
 //					district: vm.Area,
 					uid: vm.$store.state.e.uid,
-					
-					school_opens_time: vm.$store.state.e.startTime
+					school_opens_time: vm.$store.state.e.startTime,
+          proportion:vm.$store.state.e.proportion
 				},
 				success: function(response) {
 					vm.result = response;
@@ -86,7 +87,7 @@
 					console.log("err" + err);
 				}
 			});
-			
+
 			}
 			ajax()
 		},
@@ -96,20 +97,19 @@
 			},
 		},
 		destroyed(){
-			
+
 		},
 		created() {
 
 		}
 	};
 </script>
-</script>
 
 <style scoped>
 .content {
 		background: #2E2E30;
 	}
-	
+
 	.topbar {
   display: flex;
   justify-content: space-between;
@@ -125,12 +125,12 @@
   font-weight: bold;
    padding-left: 0.9rem;
 }
-	
+
 	.topbar>img {
 		height: 1rem;
-		
+
 	}
-	
+
 	.area {
 		display: flex;
 		justify-content: space-between;
@@ -138,33 +138,33 @@
 		padding: 5.5vw 4.3vw 5.5vw 6.9vw;
 		font-size: 18px;
 	}
-	
+
 	.area .areaR {
 		color: #ffcc00;
 		font-size: 10vw;
 	}
-	
+
 	.area .areaL .proId {
 		font-size: 22px;
 		color: #fff;
 		padding: 3vw 0 2.4vw 0;
 		display: inline-block;
 	}
-	
+
 	.area .areaL .bfb {
 		color: #bebebf;
 		font-size: 18px;
 	}
-	
+
 	.area .areaL p:first-child {
 		color: #bebebf;
 		font-size: 18px;
 	}
-	
+
 	.area .areaL p:first-child span {
 		margin-left: 1.1vw;
 	}
-	
+
 	.area .areaL p:first-child span:first-child {
 		margin-left: 0;
 	}
@@ -179,7 +179,7 @@
 		border-bottom: 1.8vw solid #202022;
 		padding: 2.1vw 0;
 	}
-	
+
 	.rank>.rankTle {
 		display: flex;
 		align-items: center;
@@ -187,12 +187,12 @@
 		border-bottom: 1px solid #000;
 		padding: 0 7.7vw;
 	}
-	
+
 	.rank>.rankTle>img {
 		width: 23px;
 		height: 24px;
 	}
-	
+
 	.rank .i-icon {
 		margin: 0 4.2vw 0 0;
 		display: inline-block;
@@ -201,7 +201,7 @@
 		background: url("../../assets/img/Projectdetails_icon_Standard.png") no-repeat;
 		background-size: cover;
 	}
-	
+
 	.rank .z-icon {
 		margin: 0 4.2vw 0 0;
 		display: inline-block;
@@ -210,11 +210,11 @@
 		background: url("../../assets/img/Projectdetails_icon_increase.png") no-repeat;
 		background-size: cover;
 	}
-	
+
 	.rank .fi {
 		flex: 1;
 	}
-	
+
 	.rank .s-icon {
 		margin-left: 1.7vw;
 		display: inline-block;
@@ -223,22 +223,22 @@
 		background: url('../../assets/img/Projectdetails_icon_Arrow.png') no-repeat;
 		background-size: cover;
 	}
-	
+
 	.rank>.rankTle>span {
 		font-size: 0.8rem;
 		display: inline-block;
 		color: #ccc;
 	}
-	
+
 	.rank>.rankTle :nth-child(3) {
 		color: #ffcc00;
 	}
-	
+
 	.rank .rankWrap {
 		padding: 0 6.6vw;
 		font-size: 16px;
 	}
-	
+
 	.rank .rankWrap .rankTop {
 		display: flex;
 		align-items: center;
@@ -248,31 +248,31 @@
 		height: 9.2vw;
 		color: #ccc;
 	}
-	
+
 	.rank .rankWrap .rankTop :nth-child(1) {
 		width: 10vw;
 	}
-	
+
 	.rank .rankWrap .rankTop :nth-child(2) {
 		width: 35vw;
 	}
-	
+
 	.rank .rankWrap .rankTop :nth-child(3) {
 		width: 20vw;
 	}
-	
+
 	.rank .rankWrap .rankTop :nth-child(4) {
 		width: 15vw;
 	}
-	
+
 	.rank .rankWrap .rankTop:nth-child(2) {
 		color: #ffcc00;
 	}
-	
+
 	.rank .rankWrap .rankTop:nth-child(3) {
 		color: #ffcc00;
 	}
-	
+
 	.rank .rankWrap .rankTop:nth-child(4) {
 		color: #ffcc00;
 	}

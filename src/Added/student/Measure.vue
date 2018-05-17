@@ -10,7 +10,7 @@
         <!--
           日期选择组件
         -->
-        <DatePicker type="date" :transfer='true' :editable="false" placeholder="查看指定日期" class="DPicker" style="width: 73vw" @on-change="getTime"></DatePicker>
+        <DatePicker type="date" :transfer='true' :editable="false" placeholder="最近测试  (查看日期)" class="DPicker" style="width: 73vw;" @on-change="getTime"></DatePicker>
       </div>
       <div class="dateIcon">
         <img src="../../assets/img/archives_icon_Arrow.png">
@@ -18,18 +18,19 @@
     </div>
 
     <div class="dataList">
-      <ul>
+    	
+      <ul v-if='result.bmi.bmi!=null'>
         <li>
           <div class="infoText">
             <img src="../../assets/img/archives_icon_height.png" alt="">
             <p>{{result.height.projectname}}</p>
           </div>
           <div class="Val">
-            <p>测量值 {{result.height.height}}</p>
-            <p>测量标准值 {{result.height.normal_range}}</p>
+            <p>测量值 <span>{{result.height.height}}</span><i>cm</i></p>
+            <p></p>
           </div>
           <div class="result">
-            {{result.height.text}}
+            <!--{{result.height.text}}-->
           </div>
         </li>
 
@@ -39,11 +40,11 @@
             <p>{{result.weight.projectname}}</p>
           </div>
           <div class="Val">
-            <p>测量值 {{result.weight.height}}</p>
-            <p>测量标准值 {{result.weight.normal_range}}</p>
+            <p>测量值 <span>{{result.weight.weight}}</span><i>kg</i></p>
+            <p></p>
           </div>
           <div class="result">
-            {{result.weight.text}}
+            <!--{{result.weight.text}}-->
           </div>
         </li>
 
@@ -53,7 +54,7 @@
             <p>{{result.bmi.projectname}}</p>
           </div>
           <div class="Val">
-            <p>测量值 {{result.bmi.height}}</p>
+            <p>测量值 <span>{{result.bmi.bmi}}</span></p>
             <p>测量标准值 {{result.bmi.normal_range}}</p>
           </div>
           <div class="result bmiIcon">
@@ -61,6 +62,21 @@
           </div>
         </li>
       </ul>
+       <ul  v-else>
+        <li>
+          <div class="infoText">
+            <img src="../../assets/img/Ropeskipping_icon_time.png" alt="">
+            <p></p>
+          </div>
+          <div class="Val">
+            <p>测量值: <span style="font-size: 16px;">暂无数据</span></p>
+            <p></p>
+          </div>
+          <div class="result">
+
+          </div>
+        </li>
+  	</ul>
     </div>
   </div>
 
@@ -90,11 +106,12 @@ export default {
       data: {
         uid: vm.$store.state.a.data.base.user.uid,
         // date: dTime
-        date:(new Date().getFullYear())+'-'+(new Date().getMonth()+1)+'-'+(new Date().getDate()),
+//      date:(new Date().getFullYear())+'-'+(new Date().getMonth()+1)+'-'+(new Date().getDate()),
+        proportion:vm.$store.state.a.data.base.user.proportion
       },
       success: function(response) {
         console.log(response);
-        
+
         vm.result = response;
       },
       error: function(err) {
@@ -116,7 +133,8 @@ export default {
           uid: vm.$store.state.a.data.base.user.uid,
           date: t,
           school_opens_time:vm.$store.state.a.startTime,
-          projectid:vm.$route.params.id
+          projectid:vm.$route.params.id,
+          proportion:vm.$store.state.a.data.base.user.proportion
         },
         success: function(response) {
           vm.result = response;
@@ -133,8 +151,7 @@ export default {
 
 <style scoped>
 .dateSelection {
-  border-top: 1px solid #888;
-  border-bottom: 1px solid #888;
+
   padding: 5vw 7.5vw;
   display: flex;
   justify-content: space-between;
@@ -149,32 +166,34 @@ export default {
 .dateSelection .dateIcon{
   position: absolute;
   right: 7.6vw;
-  top: calc(5vw - 15px);
+  top: calc(5vw - 12px);
   z-index: 1;
 }
 .dateSelection .dateIcon img{
-  width: 22px;
-  height: 15px;
+  width: 15px;
+  height: 10px;
 }
 .dateSelection .dateFn img {
   margin: 0 2.7vw 0 0;
+  width: 1.2rem;
 }
 .dataList > ul > li {
   display: flex;
   align-items: flex-end;
   font-size: 14px;
-  border-bottom: 1px solid;
-  padding: 3.3vw 3vw;
+  border-bottom: 1px solid #E0E0E0;
+  padding: 5vw 3vw;
   justify-content: space-between;
 }
 .dataList > ul > li .infoText {
   text-align: center;
 }
 .dataList > ul > li .infoText img {
+	width:1.2rem;
   padding-bottom: 0.3rem;
 }
 .dataList > ul > li > div:nth-child(1) {
-  border-right: 1px solid;
+  border-right: 1px solid #E0E0E0;
   width: 20vw;
 }
 
@@ -183,7 +202,7 @@ export default {
   padding-left: 1rem;
 }
 .dataList > ul > li > div:nth-child(2) > p:last-child {
-  color: #ccc;
+  color: #adadad;
 }
 .dataList > ul > li > div:nth-child(2) > p:first-child {
   font-size: 18px;
@@ -193,7 +212,7 @@ export default {
   color: #ccc;
 }
 .dataList > ul > li > div.bmiIcon {
-  border: 1px solid;
+  border: 1px solid #2ac895;
   border-radius: 50%;
   padding: 2px;
 }
@@ -206,6 +225,16 @@ export default {
   text-align: center;
   background: #2ac895;
   overflow: hidden;
+  color: #fff;
+  font-size: 0.6rem;
+}
+
+.Val span,.Val i{
+	color: #0EB0CD;
+}
+.Val span{
+	font-size: 1.2rem;
+	
 }
 
 

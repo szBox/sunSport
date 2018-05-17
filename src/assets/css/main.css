@@ -1220,7 +1220,7 @@ a{text-decoration:none;}
   right: 0;
   height: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 9999999999;
 }
 .city-picker .picker-items-col {
   -webkit-box-flex: 1;
@@ -2429,7 +2429,7 @@ body {  }
 .container { text-align: center;
   -webkit-user-selec:none }
 section {
-  position: absolute;
+  position: fixed;
   z-index:10;
   /*width: 30%;*/
   display: inline-block;
@@ -2438,8 +2438,12 @@ section {
   vertical-align: top;
   top:50%;
   left:50%;
-  margin-left: -105px;
-  margin-top: -105px;
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+ 
   /*margin-top:50%;*/
   /*background: #080915; border-radius: 5px; */
   /*box-shadow: 0px 0px 30px 1px #103136 inset; */

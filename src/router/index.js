@@ -50,6 +50,7 @@ import QHomepage from '@/Added/Mayor/Homepage'
 import ProDetails from '@/Added/Mayor/ProDetails'
 import Increase from '@/Added/Mayor/Increase'
 import allData from '@/Added/Mayor/allData'
+
 // import Model from '../assets/commont/model'
 Vue.use(Router);
 
@@ -272,6 +273,7 @@ export default new Router({
       path: '/allData/:id',
       name: 'allData',
       component: allData
-    }
+    },
+  
   ]
 })

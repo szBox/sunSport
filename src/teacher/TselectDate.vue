@@ -295,7 +295,7 @@ export default {
 //      var dataBJ=[];
 //      var indicatorData=[];
       var newProject=[];
-      var classid=val.classuid;
+      var classid=val.classid;
       var obj1 = document.getElementById("main");
       var time=setInterval(function () {
         if(val.score==null || val.score == '' || val.score==undefined || val.project==null || val.project==''|| val.project==undefined){
@@ -358,11 +358,13 @@ export default {
 //        card:'000001791887178',
         school_opens_time: self.$route.params.id,
         uid:self.$store.state.c.basic.uid,
-        weektime:week
+        weektime:week,
+        proportion:self.$store.state.c.proportion
       };
 
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
       api.get_api_data(mainUrl,params,function(d){
+      	 self.$root.eventHub.$emit('Vloading',true)
         console.log(JSON.stringify(d));
         self.$store.state.c.basic=d;
         self.$store.state.c.basic.uid=val;
@@ -379,7 +381,8 @@ export default {
         data: {
           uid:self.$store.state.c.basic.uid,
           school_opens_time: self.$route.params.id,
-          weektime:index+1
+          weektime:index+1,
+          proportion:self.$store.state.c.proportion
         },
         success: function(response) {
           self.result = response;
@@ -400,7 +403,8 @@ export default {
       var params={
 //        card:'000001791887178',
         uid:self.$store.state.c.basic.uid,
-        weektime:week
+        weektime:week,
+        proportion:self.$store.state.c.proportion
       };
 
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);

@@ -96,7 +96,7 @@ var data=(function () {
         } else if (val == '7') {
           return '引体向上（男）'
         } else if (val == '8') {
-          return '1分钟仰卧起坐（女）'
+          return '1分钟仰卧起坐'
         } else if (val == '9') {
           return '1000米跑（男）'
         } else if (val == '10') {
@@ -132,7 +132,7 @@ var data=(function () {
           return 6
         } else if (val == '引体向上（男）') {
           return 7
-        } else if (val == '1分钟仰卧起坐（女）') {
+        } else if (val == '1分钟仰卧起坐') {
           return 8
         } else if (val == '1000米跑（男）') {
           return 9

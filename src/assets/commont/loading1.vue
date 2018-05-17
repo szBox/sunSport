@@ -49,7 +49,7 @@
     <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
     <!--</div>-->
-    <div class="bj" style="position: absolute;top:0;width: 100%;height:100%;background-color: #000000;opacity: 0.7;z-index:4"></div>
+    <div class="bj" style="position: absolute;top:0;width: 100%;height:100%;opacity: 0.7;z-index:9999999999"></div>
     <div class="container">
       <section>
         <div class="loader loader-1">

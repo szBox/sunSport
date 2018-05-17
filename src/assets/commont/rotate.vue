@@ -111,6 +111,7 @@
     width:5rem;
     height:5rem;
     position:relative;
+    margin: 0 auto;
   }
   .rotate-box ul{
     width:100%;

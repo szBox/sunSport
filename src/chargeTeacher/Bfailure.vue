@@ -107,15 +107,19 @@
         status='excellent'
       }
       var schooltime='';
+      var proportion='';
       if(self.$store.state.c.week){
 //        self.$store.state.b.week=self.$store.state.c.week+1;
         schooltime=self.$store.state.c.startTime;
+        proportion=self.$store.state.c.proportion;
       }else if(self.$store.state.d.week){
 //        self.$store.state.b.week=self.$store.state.d.week+1;
         schooltime=self.$store.state.d.startTime;
+        proportion=self.$store.state.d.proportion;
       }else if(self.$store.state.b.week){
 //        self.$store.state.b.week=self.$store.state.b.week;
         schooltime=self.$store.state.b.startTime;
+        proportion=self.$store.state.b.proportion;
       }
       var mainUrl=int.getBfailure;
       var params={
@@ -125,10 +129,12 @@
         weektime:self.$store.state.b.week,
 
         projectid:self.$store.state.b.projectid,
-        status:status
+        status:status,
+        proportion:proportion
       };
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
       api.get_api_data(mainUrl,params,function(d){
+      	self.$root.eventHub.$emit('Vloading',false)
           console.log(JSON.stringify(d));
           self.list=d.failure;
 //          alert(self.list.all_failure[0].status);

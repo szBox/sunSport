@@ -5,7 +5,8 @@
       <div class="z" @click="goback">
         <img src="../assets/img/goback.png" height="100%">
       </div>
-      <div class="c">详细数据</div>
+      <!--<div class="c">详细数据</div>-->
+      <div class="c">菁菁达人</div>
     </div>
     <li v-for="(i,index) in list">
       <div class="cont_t">
@@ -96,11 +97,13 @@
       var params={
         school_opens_time:self.$store.state.d.startTime,
         uid:self.$store.state.d.uid,
-        weektime:w
+        weektime:w,
+        proportion:self.$store.state.d.proportion
       };
       var arr=new Array();
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
       api.get_api_data(mainUrl,params,function(d){
+      	self.$root.eventHub.$emit('Vloading',false)
         console.log(JSON.stringify(d));
         self.$store.state.d.detail=d.details;
         var len=d.details.length;

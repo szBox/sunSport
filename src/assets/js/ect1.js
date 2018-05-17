@@ -57,6 +57,7 @@ var zz=(function(){
             fontSize: 12,
           }
         },
+        
         xAxis: [
           {
             type: 'category',
@@ -106,7 +107,11 @@ var zz=(function(){
               }
             },
             axisLine:{
-              show: true
+              show: true,
+               lineStyle:{  
+                    color:'#ccc',  
+                    width:1,//这里是为了突出显示加上的   新加的
+                } 
             },
             axisTick:{
               show: false

@@ -255,6 +255,9 @@ export default {
       $('.model-b').css({display:'none'});
     },
     routerTo(gid){
+    	var self=this;
+    	
+    	self.$root.eventHub.$emit('Vloading',true)
       this.$router.push({ path: "/lsingle/" + gid})
     },
     toggle() {
@@ -274,6 +277,7 @@ export default {
     },
     godetails(){
       var self=this;
+      self.$root.eventHub.$emit('Vloading',true)
       var arr=self.alldate;
       var  x=1;
       for(var i=0;i<arr.length;i++){
@@ -392,11 +396,13 @@ export default {
 //        card:'000001791887178',
         school_opens_time:self.$route.params.id,
         uid:self.$store.state.d.uid,
-        weektime:week
+        weektime:week,
+        proportion:self.$store.state.d.proportion
       };
 
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
       api.get_api_data(mainUrl,params,function(d){
+      	self.$root.eventHub.$emit('Vloading',false)
         console.log(JSON.stringify(d));
         self.$store.state.d.basic=d;
         self.$store.state.d.uid=val;
@@ -414,7 +420,8 @@ export default {
         data: {
           uid:self.$store.state.d.uid,
           school_opens_time: self.$route.params.id,
-          weektime:index+1
+          weektime:index+1,
+          proportion:self.$store.state.d.proportion
         },
         success: function(response) {
           self.result = response;
@@ -695,7 +702,7 @@ export default {
     position: absolute;
     top: -15rem;
     height: 13rem;
-    overflow: auto;
+    overflow-x: hidden;
     padding-left: 5%;
   }
 

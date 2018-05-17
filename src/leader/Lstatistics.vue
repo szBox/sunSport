@@ -5,7 +5,8 @@
         <div class="z" @click="goback">
           <img src="../assets/img/goback.png" height="100%">
         </div>
-        <div class="c">数据统计</div>
+        <!--<div class="c">数据统计</div>-->
+        <div class="c">菁菁达人</div>
       </div>
       <div class="select1">
         <div class="s">
@@ -49,6 +50,18 @@
       <s_select v-if="show"></s_select>
       <ss_select v-else="show"></ss_select>
       <s_loading v-if="shows"></s_loading>
+      
+      <div class="modell" style="display: none;">
+        <div class="model-img">
+          <img src="../assets/img/xinxitu@2x.png" width="100%">
+        </div>
+        <div class="model-text">
+          <!--用户没有权限或者未绑定卡号-->
+        </div>
+        <div class="model-content" >
+          <div class="model-btn" @click="closeBtn">知道了</div>
+        </div>
+      </div>
     </div>
   </transition>
 </template>
@@ -92,7 +105,7 @@
 
     mounted(){
       var self=this;
-      var arr=['第一周', '第二周', '第三周', '第四周', '第五周', '第六周', '第七周', '第八周', '第九周', '第十周', '第十一周', '第十二周', '第十三周', '第十四周', '第十五周', '第十六周', '第十七周', '第十八周', '第十九周', '第二十周','第二十一周','第二十二周','第二十三周','第二十四'];
+      var arr=['第一周', '第二周', '第三周', '第四周', '第五周', '第六周', '第七周', '第八周', '第九周', '第十周', '第十一周', '第十二周', '第十三周', '第十四周', '第十五周', '第十六周', '第十七周', '第十八周', '第十九周', '第二十周','第二十一周','第二十二周','第二十三周','第二十四周'];
 
       console.log(self.$store.state.d.cid+"1"+self.$store.state.d.weekb+"2"+self.$store.state.d.weeke+"3"+self.$store.state.d.pid+"4"+self.$store.state.d.sgid);
       var num='',zz='',gg='',cc='',pp='';
@@ -141,12 +154,14 @@
         ],
 //      rotateEffect:true,
         onClose:function () {
-          self.starttime1='第一周';
+//        self.starttime1='第一周';
           for(var i=0;i<arr.length;i++){
             if($('#picker1').val()==arr[i]){
               num=i+1;
               if(num>zz){
-                alert('起始时间需小于结束时间');
+//              alert('起始时间需小于结束时间1111111');
+                $('.modell').show();
+								$('.model-text').html('起始时间需小于结束时间');
               }else if(zz!=1){
                 self.shows=true;
                 self.getdata(num,zz,gg,cc,pp);
@@ -169,17 +184,36 @@
 //      rotateEffect:true,
         onClose:function () {
 //        alert();
-          self.endtime1='第一周';
+//        self.endtime1='第一周';
           for(var i=0;i<arr.length;i++){
 
-            if($('#picker2').val()==arr[i]){
+            /*if($('#picker2').val()==arr[i]){
 //              alert(num+'xxxxxx'+(i+1));
               self.shows=true;
               zz=i+1;
               self.getdata(num,zz,gg,cc,pp);
               self.starttime1=$('#picker1').val();
               self.endtime1=$('#picker2').val();
+            }*/
+           
+            if($('#picker2').val()==arr[i]){
+//              alert(num+'xxxxxx'+(i+1));
+							 zz=i+1;
+              if(num>i+1){
+								$('.modell').show();
+								$('.model-text').html('起始时间不能大于结束时间');
+								
+              }else{
+               self.shows=true;
+          
+               self.getdata(num,zz,gg,cc,pp);
+              self.starttime1=$('#picker1').val();
+              self.endtime1=$('#picker2').val();
+               
+              }
+              
             }
+            	
           }
         }
       });
@@ -278,6 +312,10 @@
         this.$router.go(-1);
         this.$store.state.d.num=0;
       },
+      closeBtn(){
+        $('.modell').css({display:'none'});
+        $('.model-b').css({display:'none'});
+      },
       selectdate(){
 
       },
@@ -288,6 +326,7 @@
           school_opens_time:self.$store.state.d.startTime,
           sid:self.$store.state.d.sid,
           uid:self.$store.state.d.uid,
+          proportion:self.$store.state.d.proportion
         };
         api.get_api_data(mainUrl,params,function(d){
           var len=d.statistics.taught_grade.length;
@@ -312,7 +351,8 @@
         var params={
           school_opens_time:self.$store.state.d.startTime,
           sid:self.$store.state.d.sid,
-          uid:self.$store.state.d.uid
+          uid:self.$store.state.d.uid,
+          proportion:self.$store.state.d.proportion
         };
         api.get_api_data(mainUrl,params,function(d){
           var len=d.statistics.taught_class.length;
@@ -371,7 +411,8 @@
           gid:g,
           cid:c,
           projectid:p,
-          uid:self.$store.state.d.uid
+          uid:self.$store.state.d.uid,
+          proportion:self.$store.state.d.proportion
         };
         if(g!=''&&c!=''&&p!=''){
           self.show=false;
@@ -383,6 +424,7 @@
           var classname=$('#pickerc').val();
           self.$store.state.d.classname=classname;
           api.get_api_data(mainUrl,params,function(d){
+          	self.$root.eventHub.$emit('Vloading',false)
             self.$store.state.d.num=1;
             console.log(JSON.stringify(d));
             self.$store.state.d.single_statistics=d.statistics;
@@ -405,11 +447,14 @@
             self.shows=false;
           });
         }else{
-          self.show=true;
+//        self.show=true;  //自己去掉的
           api.get_api_data(mainUrl,params,function(d){
+          	self.$root.eventHub.$emit('Vloading',false)
             self.$store.state.d.statistics=d.statistics;
             if(self.$store.state.d.statistics.score==null || self.$store.state.d.statistics.score==''){
-              alert('该项目暂未测试数据');
+//            alert('该项目暂未测试数据');
+              $('.modell').show();
+							$('.model-text').html('该项目暂未测试数据');
               self.shows=false;
             }else{
               var obj = document.getElementById("tz");
@@ -442,6 +487,7 @@
   .statistic{
     width: 100%;
     height: 100%;
+    overflow-x: hidden;
   }
   .top{
     color: #ffffff;
@@ -469,7 +515,7 @@
   }
   .select1{
     width: 100%;
-    height: 3rem;
+    /*height: 3rem;*/
     background-color: #1F1F21;
   }
   .s{
@@ -553,7 +599,47 @@
     /*width: 1rem;*/
     height: 1rem;
   }
-
+  .modell{
+    position: fixed;
+    z-index: 30;
+    width: 12rem;
+    height: 13rem;
+    left: 50%;
+    top: 50%;
+    margin-top: -6.5rem;
+    margin-left: -6rem;
+    background-color: #F6F6F6;
+    border-radius: 0.5rem;
+    }
+    .model-img img{
+    width: 7rem;
+    height: 8rem;
+    margin-left: 2.5rem;
+    margin-top: 1rem;
+	}
+	.model-text{
+    font-size: 0.75rem;
+    color: #000000;
+    text-align: center;
+}
+.model-content{
+    border-top: 1px solid #C9CBD1;
+    margin-top: 0.5rem;
+    height: 4rem;
+    width: 100%;
+}
+.model-btn{
+    width: 5rem;
+    margin-left: 3.5rem;
+    height: 1.5rem;
+    border-radius: 1rem;
+    background-color: #33B097;
+    color: #ffffff;
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+    text-align: center;
+    line-height: 1.5rem;
+}
 </style>
 <style src="../assets/css/rotate.css">
 

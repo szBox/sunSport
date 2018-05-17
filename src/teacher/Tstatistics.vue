@@ -7,7 +7,8 @@
       <div class="z" @click="goback">
         <img src="../assets/img/goback.png" height="100%">
       </div>
-      <div class="c">数据统计</div>
+      <!--<div class="c">数据统计</div>-->
+      <div class="c">菁菁达人</div>
     </div>
     <div class="select1">
       <div class="s">
@@ -96,6 +97,7 @@
         <div class="xpm" style="text-align:left;width: 100%;margin-left: 1rem">得分最高班级<span class="v1">六年级一班</span></div>
       </div>
     </div>
+    
     <div id="tzz"></div>
   </div>
   </transition>

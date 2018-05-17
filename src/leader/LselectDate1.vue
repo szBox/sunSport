@@ -177,9 +177,11 @@ export default {
       school_opens_time:self.$store.state.d.startTime,
       gid:self.$route.params.id,
       sid:self.$store.state.d.sid,
-      uid:self.$store.state.d.uid
+      uid:self.$store.state.d.uid,
+      proportion:self.$store.state.d.proportion
     };
     api.get_api_data(mainUrl_l,params_l,function(d) {
+    	self.$root.eventHub.$emit('Vloading',false)
       self.$store.state.d.week_s.length=0;
       for(var i=0;i<d.length;i++){
         self.$store.state.d.week_s[i]=d[i];
@@ -196,9 +198,11 @@ export default {
       school_opens_time:self.$store.state.d.startTime,
       gid:self.$route.params.id,
       sid:self.$store.state.d.sid,
-      uid:self.$store.state.d.uid
+      uid:self.$store.state.d.uid,
+      proportion:self.$store.state.d.proportion
     };
     api.get_api_data(mainUrl_l,params_l,function(d) {
+    	self.$root.eventHub.$emit('Vloading',false)
       for(var i=0;i<d.length;i++){
         self.arr.push(self.alldate[d[i]-1]);
       }
@@ -286,6 +290,8 @@ export default {
     },
     /*路由跳转*/
     routerTo(gid) {
+    	var self=this;
+    	 self.$root.eventHub.$emit('Vloading',true)
       this.$router.push({ path: "/single/" + gid });
     },
     /* 显隐切换 */
@@ -306,6 +312,7 @@ export default {
     },
     godetails(){
       var self=this;
+      self.$root.eventHub.$emit('Vloading',true)
       var arr=self.alldate;
 
       var  x=1;
@@ -321,7 +328,7 @@ export default {
 //      var dataBJ=[];
 //      var indicatorData=[];
       var newProject=[];
-      var classid=val.classid;
+      var classid=val.tuid;
       var obj1 = document.getElementById("main");
       var time=setInterval(function () {
       if(val.score==null || val.score == '' || val.score==undefined || val.project==null || val.project==''|| val.project==undefined){
@@ -386,12 +393,13 @@ export default {
         gid:self.$route.params.id,
         sid:self.$store.state.d.sid,
         weektime:week,
-        uid:self.$store.state.d.uid
+        uid:self.$store.state.d.uid,
+        proportion:self.$store.state.d.proportion
       };
 
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
       api.get_api_data(mainUrl,params,function(d){
-
+ 			self.$root.eventHub.$emit('Vloading',false)
         self.$store.state.d.single_grade_data=d;
         self.selectData(d);
 
@@ -408,7 +416,8 @@ export default {
           weektime:time+1,
           gid:self.$route.params.id,
           sid:self.$store.state.d.sid,
-          uid:self.$store.state.d.uid
+          uid:self.$store.state.d.uid,
+          proportion:self.$store.state.d.proportion
         },
         success: function(response) {
           self.Hinfo = response;
@@ -657,7 +666,7 @@ export default {
     position: absolute;
     top: -15rem;
     height: 13rem;
-    overflow: auto;
+    overflow-x: hidden;
     padding-left: 5%;
   }
 

@@ -148,14 +148,16 @@
         var self=this;
         var mainUrl=int.getbmidetail;
         var params={
-          school_opens_time:self.$store.state.d.startTime,
-          cid:self.$store.state.b.cid,
-          uid:self.$store.state.b.uid,
-          type:parseInt(self.$route.params.id)+1
+          school_opens_time:self.$store.state.b.startTime,
+//        cid:self.$store.state.b.basic.cid,
+          uid:self.$store.state.b.basic.uid,
+          type:parseInt(self.$route.params.id)+1,
+          proportion:self.$store.state.b.proportion
         };
         api.get_api_data(mainUrl,params,function(d){
 //        self.$store.state.a.data.base=d;
 //        self.selectData(d);
+				self.$root.eventHub.$emit('Vloading',false)
           self.list=d;
           console.log(JSON.stringify(d));
         })
@@ -191,6 +193,7 @@
     width: 90%;
     font-weight: bold;
     z-index:-1;
+    font-size: 0.9rem;
   }
   .ran_y{
     width: 30%;
