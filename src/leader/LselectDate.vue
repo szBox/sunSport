@@ -69,7 +69,7 @@
 
 
         <ul>
-          <li class="listContent clearfix" v-for="(item,index,key) in result" @click="routerTo(result[index].gid)" :key="key">
+          <li class="listContent clearfix" v-for="(item,index,key) in result" @click="routerTo(result[index].gid,result[index].gradename)" :key="key">
             <div class="gradeGroup"><span>{{ result[index].gradename }}</span><span>({{ result[index].grade_stu }})</span></div>
             <div class="evelGroup">
           <span>
@@ -254,9 +254,9 @@ export default {
       $('.modell').css({display:'none'});
       $('.model-b').css({display:'none'});
     },
-    routerTo(gid){
+    routerTo(gid,grade){
     	var self=this;
-    	
+    	 localStorage.setItem('gradeName',grade)
     	self.$root.eventHub.$emit('Vloading',true)
       this.$router.push({ path: "/lsingle/" + gid})
     },
@@ -716,7 +716,7 @@ export default {
 
   .listTopBar {
     padding: 1rem 5vw 0.7rem 5vw;
-    border-bottom: 2px solid rgb(31, 31, 33);
+    border-bottom: 1px solid #222225;
   }
 
   .listTopBar>div {
@@ -746,7 +746,7 @@ export default {
 
   .listContent {
     /*margin: 0 5vw;*/
-    border-bottom: 2px solid rgb(31, 31, 33);
+    border-bottom: 1px solid #222225;
     list-style: none;
     padding: 1rem 5vw;
     cursor: pointer;

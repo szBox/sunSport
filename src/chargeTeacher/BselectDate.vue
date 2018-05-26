@@ -343,6 +343,7 @@ export default {
 
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
       api.get_api_data(mainUrl, params, function (d) {
+      	self.$root.eventHub.$emit('Vloading',false)
         console.log(d.basic.score);
         self.$store.state.b.basic=d;
         self.$store.state.b.basic.uid=val;

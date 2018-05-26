@@ -164,11 +164,16 @@
     color: #9C9C9E;
   }
   .c{
+    font-size: 18px;
+   font-weight: bold;
     position: absolute;
-    left: 40%;
-    text-align: center;
-    /*width: 50%;*/
-    font-weight: bold;
+    left: 50%;
+    color: #fff;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
   }
   .cont_t{
     margin-top: 0.1rem;
@@ -181,14 +186,14 @@
   }
   .cont_t_f{
     padding-left: 5%;
-    width: 90%;
+    width: 100%;
     padding-right: 5%;
     height: 2rem;
     color: #ffffff;
     font-size: 0.8rem;
     line-height: 2rem;
-    border-top: 1px solid #1F1F21;
-    border-bottom: 1px solid #1F1F21;
+    border-top: 1px solid #222225;
+    border-bottom: 1px solid #222225;
   }
   .f_l{
     width: 60%;

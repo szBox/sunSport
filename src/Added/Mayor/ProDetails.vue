@@ -15,8 +15,8 @@
       -->
 
 				<p>
-					<span>{{province}}</span>
-					<span>{{city}}</span>
+					<!--<span>{{province}}</span>-->
+					<span>{{district}}</span>
 					<span class="city">{{Area}}</span>
 				</p>
 				<p class="project-p" @click="open()">
@@ -46,7 +46,8 @@
 						<p>测试人数</p>
 						<p>达标率</p>
 					</li>
-					<ul style="height: 13.5rem;overflow-y: scroll;">
+					<!--<ul style="height: 11.5rem;overflow-y: scroll;">-->
+						<ul style="">
 						<li v-for="(list,index) in result.pass_rate_rank" class="rankTop ranktop2">
 						<span>{{index+1}}</span>
 						<span>{{list.school_name}}</span>
@@ -73,7 +74,7 @@
 					<span class="fi">增长率排行</span>
 					<!--<span @click="route()">查看全部</span>-->
 				</div>
-				<div id="map1" style="width: 90%;height:300px;margin: 0 auto;">
+				<div id="map1" style="width: 90%;height:20rem;margin: 0 auto;">
 
 				</div>
 			</div>
@@ -103,6 +104,7 @@
 				show1:false,
 				province: "",
 				city: "",
+				district:'',
 				Area: "",
 				result: [],
 				project_on:'',
@@ -143,16 +145,22 @@
 //					district: vm.Area,
 					uid: vm.$store.state.e.uid,
 					school_opens_time: vm.$store.state.e.startTime,
-          proportion:vm.$store.state.e.proportion
+         			 proportion:vm.$store.state.e.proportion
 				},
 				success: function(response) {
 					vm.result = response;
+					vm.$root.eventHub.$emit('Vloading',false)
 					console.log(vm.result);
 					var project_text =[]; //选择项目的  项目名称
 					var project_val=[];	  //选择项目的  项目ID
 					var types = []; //学校数组
 					var nums = []; //学校学生数组
-
+					if(response.district!=''){
+						vm.district=response.district
+					}else{
+						vm.district=response.city
+					}
+					
 					for(var i in response.project_arr){
 						vm.pickData1.pData1.push({
 							text:response.project_arr[i],
@@ -187,8 +195,8 @@
 
 						grid: {
 							left: '3%',
-							right: '4%',
-							bottom: '3%',
+							right: '8%',
+							bottom: '5%',
 							containLabel: true,
 						},
 						xAxis: {
@@ -255,7 +263,7 @@
 							data: nums,
 
 							//设置柱子的宽度
-							barWidth: 25,
+							barWidth: 20,
 							//配置样式
 							itemStyle: {
 
@@ -293,9 +301,11 @@
 							},
 						}],
 					});
+					
+					
 					}
 					
-
+					
 				},
 				error: function(err) {
 					console.log("err" + err);
@@ -303,7 +313,9 @@
 			});
 
 			}
+			
 			ajax()
+			
 		},
 		methods: {
 			goBack() {
@@ -385,7 +397,11 @@
 				},
 				success: function(response) {
 					vm.result = response;
-					
+					if(response.district!=''){
+						vm.district=response.district
+					}else{
+						vm.district=response.city
+					}
 					console.log(response)
 					var project_text =[]; //选择项目的  项目名称
 					var project_val=[];	  //选择项目的  项目ID
@@ -422,8 +438,8 @@
 
 						grid: {
 							left: '3%',
-							right: '4%',
-							bottom: '3%',
+							right: '8%',
+							bottom: '5%',
 							containLabel: true,
 						},
 						xAxis: {
@@ -555,10 +571,16 @@
 	border-bottom: 1px solid #222224;
 }
 .topbar > p {
-	color: #fff;
-  font-size: 18px;
-  font-weight: bold;
-   padding-left: 0.9rem;
+font-size: 18px;
+   font-weight: bold;
+    position: absolute;
+    left: 50%;
+    color: #fff;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 
 	.topbar>img {
@@ -609,8 +631,8 @@
 		margin-left: 0.5rem;
 	}
 	.proData {
-		border-top: 1.8vw solid #202022;
-		border-bottom: 1.8vw solid #202022;
+		border-top: 2px solid #202022;
+		border-bottom: 2px solid #202022;
 		padding: 2.1vw 0;
 	}
 
@@ -681,7 +703,7 @@
 		justify-content: space-between;
 		border-bottom: 1px solid #252527;
 		text-align: center;
-		padding: 5px 0;
+		padding: 0.5rem 0;
 		color: #ccc;
 	}
 
@@ -711,5 +733,16 @@
 
 	.rank .rankWrap .ranktop2:nth-child(3) {
 		color: #ffcc00;
+	}
+	.rank{
+		position: relative;
+	}
+	#map1{
+		position: absolute;
+		top: 0.5rem;
+		
+	}
+	.rank .rankWrap .rankTop:last-child{
+		border: none;
 	}
 </style>

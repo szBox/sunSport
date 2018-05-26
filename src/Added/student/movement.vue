@@ -142,7 +142,7 @@ export default {
         gid:stugid
       },
       success: function(response) {
-
+				vm.$root.eventHub.$emit('Vloading',false)
       	console.log(response)
 //    	for(var i = 0; i < response.mark.length; i++ ){
 //    		if(response.mark[i].text=='达标'){
@@ -195,6 +195,8 @@ export default {
       });
     },
     toPlan() {
+    	var self=this;
+    	self.$root.eventHub.$emit('Vloading',true)
       this.$router.replace({ path: "/Plan1/" +this.$route.params.id });
     },
     goBack() {
@@ -207,11 +209,14 @@ export default {
       console.log(val.select1.val);
 			
       var vm = this;
+      
       if(val.select1.text=='身高体重'){
+      	vm.$root.eventHub.$emit('Vloading',true)
       	this.$router.replace({ path: "/HealthRecords/" + val.select1.val });
       }
       else{
       	$('.ivu-input').val('')
+      	vm.$root.eventHub.$emit('Vloading',true)
       		localStorage.setItem('proheads',val.select1.text)
       		 var pHead=localStorage.getItem('proheads')
 					vm.prohead=pHead;
@@ -239,6 +244,7 @@ export default {
         				gid:stugid
 			        },
 			        success: function(response) {
+			        	vm.$root.eventHub.$emit('Vloading',false)
 			          vm.result = response;
 			          console.log(response);
 

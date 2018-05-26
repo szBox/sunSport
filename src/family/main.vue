@@ -29,7 +29,7 @@
       <!--<button class="main-btn" v-for="(item,index,key) in result" :key="key" @click="routerTo(item.starttime)">{{ item.name }}</button>-->
       
       <!--现在点击查询成绩-->
-      <div  class="main-btn"  @click="routerTo(result[0].starttime)">查询成绩</div>
+      <div  class="main-btn"  @click="diabled && routerTo(result[0].starttime)">查询成绩</div>
       
        
       <div class="modell" style="display: none;">
@@ -66,7 +66,7 @@
       return{
         addcj: false,
         show:true,
-      
+        diabled:true,
         proportion:0,
      
                 modal10: false,
@@ -93,7 +93,7 @@
         dataType: "jsonp",
         url:int.getxueqi,
         success: function(response) {
-        
+        	self.$root.eventHub.$emit('Vloading',false)
           console.log(response);
           self.result = response;
         },
@@ -139,6 +139,8 @@
       },
       routerTo(time) {
         var vm = this;
+        vm.diabled=false;
+        localStorage.clear('schoolName')
        vm.$root.eventHub.$emit('Vloading',true)
         if(window.iosParams.stuTid==0){
           this.got();
@@ -156,6 +158,7 @@
 //						vm.$root.eventHub.$emit('Vloading',false)
             if(s.type=='student'){
 //            vm.addcj = false;
+							vm.diabled=true;
               self.go(s.uid,time);  // 新 传uid
                localStorage.setItem('stugid',s.gid);
               /*if(s.card==" " || s.card==null || s.card==undefined ){
@@ -168,23 +171,24 @@
               //班主任
 //          alert('你是一名学生')
             }else if(s.type=='headteacher'){
-
+							vm.diabled=true;
 //            alert('你是一名班主任');
               self.gob(s.uid,time);
               //授课老师
             }else if(s.type=='physical'){
-
+							vm.diabled=true;
 //            alert('你是一名体育老师');
               self.got(s.uid,time);
 
 //          self.$router.push({path:'/main'});
               //领导
             }else if(s.type=='manager'){
-
+							vm.diabled=true;
               self.gol(s.uid,time);
 
             }else if(s.type=='other'){
 //          	alert('11111')
+							vm.diabled=true;
               $('.modell').css({display:'block'});
               $('.model-b').css({display:'block'});
 //            alert('用户没有权限或者未绑定卡号');
@@ -193,7 +197,7 @@
             }else if(s.type == 'district_manager'){
               //区长的
 //              vm.$router.push({path: '/QHomepage/'+time})
-
+							vm.diabled=true;
               self.goa(s.uid,time);
             }
           });

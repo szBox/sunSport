@@ -89,6 +89,8 @@ export default {
         proportion:vm.$store.state.a.data.base.user.proportion
       },
       success: function(response) {
+//    	var self=this;
+//    	self.$root.eventHub.$emit('Vloading',false)
       	console.log(response)
         // vm.pickData1.pData1 = response.project;
         for (var i = 0; i < response.project.length; i++) {
@@ -108,6 +110,8 @@ export default {
       this.$router.replace({ path: "/HealthRecords/" + this.$route.params.id });
     },
     toPlan() {
+    	var self=this
+    	self.$root.eventHub.$emit('Vloading',true)
     	if($('.ivu-input').val()!=''){
     			var timesel=$('.ivu-input').val();
       		this.$router.replace({ path: "/Plan/" + this.$route.params.id});
@@ -127,6 +131,7 @@ export default {
       var vm = this;
       if(this.$route.params.id!=val.select1.val){
       	localStorage.setItem('proheads',val.select1.text)
+      	vm.$root.eventHub.$emit('Vloading',true)
       	this.$router.replace({ path: "/movement/" + val.select1.val});
       }
 

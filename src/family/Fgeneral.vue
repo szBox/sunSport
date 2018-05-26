@@ -98,6 +98,7 @@
       var arr=new Array();
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
       api.get_api_data(mainUrl,params,function(d){
+      	self.$root.eventHub.$emit('Vloading',false)
       	console.log(d)
         self.$store.state.a.data.detail=d.detail;
 
@@ -242,11 +243,16 @@
     margin-top: 0.1rem;
   }
   .c{
+    font-size: 18px;
+   font-weight: bold;
     position: absolute;
-    left: 40%;
-    text-align: center;
-    /*width: 50%;*/
-    font-weight: bold;
+    left: 50%;
+    color: #fff;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
   }
   .y{
     width: 30%;

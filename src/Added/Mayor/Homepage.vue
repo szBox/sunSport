@@ -1,4 +1,5 @@
 <template>
+	<transition name="slideIn">
 <div class="content">
   <div class="topbar">
     <img src="../../assets/img/Navigationbar_icon_fanhui.png" @click="goBack">
@@ -53,7 +54,7 @@
         <p>测试人数</p>
         <p>达标率</p>
       </li>
-      <li v-for="(list,index) in result.school" class="rankTop" @click="Lmain(list.uid)">
+      <li v-for="(list,index) in result.school" :schoolgo='list.school_name' class="rankTop" @click="list.uid && Lmain(list.uid,list.school_name)">
         <span>{{index+1}}</span>
         <span>{{list.school_name}}</span>
         <span>{{list.all_stu}}</span>
@@ -67,6 +68,7 @@
             v-on:confirm="confirmFn">
   </vue-pickers>
 </div>
+</transition>
 </template>
 
 <script>
@@ -84,6 +86,7 @@ export default {
     return {
       show1: false,
       result: [],
+      schoolgo:'',
       trem_on:'',
 			trem_time:'',
 			province:'',
@@ -114,6 +117,7 @@ export default {
     },
     toDate() {
     	var vm=this;
+    	vm.$root.eventHub.$emit('Vloading',true)
 			if(vm.city==''){
 				this.$router.push({path: "/ProDetails/" + vm.district})
 				
@@ -126,10 +130,11 @@ export default {
     },
 	
 
-    Lmain(val) {
+    Lmain(val,school) {
       var self = this;
+      localStorage.setItem('schoolName',school)
       var time = this.$route.params.id;
-
+			self.$root.eventHub.$emit('Vloading',true)
       var mainUrl_l = int.getweek;
       var params_l = {
         uid: val,
@@ -160,7 +165,10 @@ export default {
           self.$store.state.d.uid = val;
           self.$store.state.d.startTime = time;
           self.show = false;
-          self.$router.push({ path: "/lmain/" + time });
+          
+          	self.$router.push({ path: "/lmain/" + time});
+          
+          
         });
       });
     },
@@ -316,6 +324,7 @@ export default {
       },
       url: int.getalldatas,
       success: function(response) {
+      	vm.$root.eventHub.$emit('Vloading',false)
         vm.result = response;
         if(response.district==''){
         	vm.province=response.province;
@@ -438,7 +447,15 @@ export default {
 				]
 
 			});
-
+//			myChart1.on('click', function (params) {
+//				console.log(params)
+//					for(var i=0;i<types.length;i++){
+//          if(params.name==types[i]){
+//            self.$router.push({path:'/ProDetails/'+api.get_projectid(types[i])});
+//          }
+//        }
+//      
+//			})
       },
       error: function(err) {
         console.log(err);
@@ -455,7 +472,7 @@ export default {
 		height: 100%;
 		width: 100%;
 		overflow-x: hidden;
-	}
+}
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -466,10 +483,16 @@ export default {
 	border-bottom: 1px solid #222224;
 }
 .topbar > p {
-	color: #fff;
   font-size: 18px;
-  font-weight: bold;
-   padding-left: 0.9rem;
+   font-weight: bold;
+    position: absolute;
+    left: 50%;
+    color: #fff;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 .topbar>img {
 		height: 1rem;
@@ -504,10 +527,12 @@ export default {
   margin-left: 3.1vw;
 }
 .proData {
-  border-top: 1.8vw solid #202022;
-  border-bottom: 1.8vw solid #202022;
+  border-top: 2px solid #202022;
+  border-bottom: 2px solid #202022;
 }
-
+.rank{
+	margin-bottom: 1rem;
+}
 .rank > .rankTle {
   display: flex;
   align-items: center;
@@ -550,7 +575,7 @@ export default {
   justify-content: space-between;
   border-bottom: 1px solid #252527;
   text-align: center;
-  padding: 5px 0;
+  padding: 0.5rem 0;
   color: #ccc;
 }
 .rank .rankWrap .rankTop :nth-child(1) {

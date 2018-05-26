@@ -6,7 +6,7 @@
           <img src="../assets/img/goback.png" height="100%">
         </div>
         <!--<div class="c">体质监测</div>-->
-        <div class="c">菁菁达人</div>
+        <div :title="school" class="c">{{school}}</div>
         <div class="y" @click="gostatistic">数据统计</div>
       </div>
       <hello-div></hello-div>
@@ -21,12 +21,23 @@
     name:'teacher',
     data(){
       return{
-
+					school:''
       }
     },
     components:{
       HelloDiv,
       LunDiv
+    },
+    created(){
+    	var self=this;
+    	var schoolName=localStorage.getItem('schoolName');
+    	if(!schoolName){
+    		self.school='菁菁达人'
+    	}else{
+    		
+    		self.school=schoolName
+    	}
+    	
     },
     methods:{
       goGrowUp(){
@@ -73,13 +84,23 @@
   }
   .c{
     position: absolute;
-    left: 40%;
+    left: 50%;
+    height: 2.5rem;
+    -webkit-transform: translateX(-50%);
+      -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
     text-align: center;
-    /*width: 50%;*/
+    width: 60%;
     font-weight: bold;
+    overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		  -webkit-line-clamp: 1;
   }
   .y{
-    width: 30%;
     float: right;
     text-align: right;
     font-size: 0.8rem;

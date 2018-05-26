@@ -88,6 +88,7 @@ export default {
         proportion:vm.$store.state.a.data.base.user.proportion
       },
       success:function (response){
+      	vm.$root.eventHub.$emit('Vloading',false)
       	console.log(response)
         vm.result = response.data.breakfast;
         vm.result2=	response.data.lunch;

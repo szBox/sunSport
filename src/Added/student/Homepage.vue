@@ -68,17 +68,28 @@
 				<p>全校排名</p>
 			</div>
 		</div>
+		
 
 			  <!--
       下拉组件
     -->
-
+		<div class="modell" style="display: none;">
+        <div class="model-img">
+          <img src="../../assets/img/xinxitu@2x.png" width="100%">
+        </div>
+        <div class="model-text">
+          <!--用户没有权限或者未绑定卡号-->
+        </div>
+        <div class="model-content" >
+          <div class="model-btn" @click="closeBtn">知道了</div>
+        </div>
+      </div>	
     <vue-pickers :show="show1"
     :selectData="pickData1"
     v-on:cancel="close"
     v-on:confirm="confirmFn"></vue-pickers>
 
-
+	
 	</div>
 
 
@@ -151,6 +162,7 @@
         proportion:self.$store.state.a.data.base.user.proportion
 			};
 			api.get_api_data(mainUrl, params, function(d) {
+				self.$root.eventHub.$emit('Vloading',false)
 				console.log(d)
 //				self.$store.state.a.weeks = d;
 //				self.selectData(d);
@@ -220,12 +232,21 @@
 			},
 			godetails() {
 				var vm = this;
-
-				if(vm.val == undefined) {
+				
+				if(vm.val == undefined&&vm.$store.state.a.week!=NaN) {
+					vm.$root.eventHub.$emit('Vloading',true)
 					vm.$router.push({
 						path: '/fgeneral/' + parseInt(vm.$store.state.a.week +1)
 					})
-				} else {
+				}else if(vm.$store.state.a.week==NaN){
+					
+					$(".modell").css({
+							display: "block"
+						});
+					$('.model-text').html('暂无测试成绩');
+				}
+				else {
+					vm.$root.eventHub.$emit('Vloading',true)
 					vm.$router.push({
 						path: '/fgeneral/' + vm.val
 					})
@@ -239,12 +260,15 @@
 			},
 			goGrowUp() {
 				var self = this;
+				self.$root.eventHub.$emit('Vloading',true)
 				self.$router.push({
 					path: "/fgrow"
 				});
 				self.$store.state.a.count--;
 			},
 			toFile(id) {
+				var self=this;
+				self.$root.eventHub.$emit('Vloading',true)
 				this.$router.push({
 					path: "/HealthRecords/" +23
 //					path: "/HealthRecords/" +23+'?time='+this.$route.params.id
@@ -275,6 +299,7 @@
 						$(".modell").css({
 							display: "block"
 						});
+						$('.model-text').html('暂无测试成绩');
 						$(".model-b").css({
 							display: "block"
 						});
@@ -378,7 +403,10 @@
 				});
 			},
 
-
+				 closeBtn(){
+        $('.modell').css({display:'none'});
+        $('.model-b').css({display:'none'});
+      },
 			close() {
 				this.show1 = false;
 			},
@@ -687,5 +715,45 @@
 		height: 0.4rem;
 		margin-bottom: 0.4rem;
 	}
-
+ .modell{
+    position: fixed;
+    z-index: 30;
+    width: 12rem;
+    height: 13rem;
+    left: 50%;
+    top: 50%;
+    margin-top: -6.5rem;
+    margin-left: -6rem;
+    background-color: #F6F6F6;
+    border-radius: 0.5rem;
+    }
+    .model-img img{
+    width: 7rem;
+    height: 8rem;
+    margin-left: 2.5rem;
+    margin-top: 1rem;
+	}
+	.model-text{
+    font-size: 0.75rem;
+    color: #000000;
+    text-align: center;
+}
+.model-content{
+    border-top: 1px solid #C9CBD1;
+    margin-top: 0.5rem;
+    height: 4rem;
+    width: 100%;
+}
+.model-btn{
+    width: 5rem;
+    margin-left: 3.5rem;
+    height: 1.5rem;
+    border-radius: 1rem;
+    background-color: #33B097;
+    color: #ffffff;
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+    text-align: center;
+    line-height: 1.5rem;
+}
 </style>

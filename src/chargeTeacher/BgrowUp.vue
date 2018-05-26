@@ -274,7 +274,8 @@
     methods:{
       getdata(start,end,pro){
         var self=this;
-        self.$root.eventHub.$emit('Vloading',false)
+        
+        
 //        alert(self.$store.state.b.basic.card);
         var schooltime='';
         var proportion='';
@@ -308,6 +309,7 @@
         var data1='';
         var data2='';
         api.get_api_data(mainUrl,params,function(d){
+        	self.$root.eventHub.$emit('Vloading',false)
           console.log(JSON.stringify(d));
           self.show1=false;
           self.list=d;
@@ -368,11 +370,16 @@
     color: #9C9C9E;
   }
   .c{
+    font-size: 18px;
+   font-weight: bold;
     position: absolute;
-    left: 40%;
-    text-align: center;
-    /*width: 50%;*/
-    font-weight: bold;
+    left: 50%;
+    color: #fff;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
   }
   .y{
     width: 30%;

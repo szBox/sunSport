@@ -227,6 +227,7 @@ var zz=(function(){
       v1.on('click',function (params) {
         for(var i=0;i<a3.length;i++){
           if(params.name==a3[i]){
+          	self.$root.eventHub.$emit('Vloading',true)
             self.$router.push({path:'/ranklist/'+api.get_projectid(a3[i])});
           }
         }

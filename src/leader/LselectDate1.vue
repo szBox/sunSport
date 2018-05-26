@@ -84,7 +84,7 @@
 
 
         <ul>
-          <li class="listContent clearfix" v-for="(item,index,key) in result" @click="routerTo(result[index].uid)" :key="key">
+          <li class="listContent clearfix" v-for="(item,index,key) in result" @click="routerTo(result[index].uid,result[index].classname)" :key="key">
             <div class="gradeGroup"><span>{{result[index].classname}}</span><span>({{result[index].class_stu}})</span></div>
             <div class="evelGroup">
           <span>
@@ -289,8 +289,9 @@ export default {
       $('.model-b').css({display:'none'});
     },
     /*路由跳转*/
-    routerTo(gid) {
+    routerTo(gid,banji) {
     	var self=this;
+    	 localStorage.setItem('banjiName',banji)
     	 self.$root.eventHub.$emit('Vloading',true)
       this.$router.push({ path: "/single/" + gid });
     },
@@ -680,7 +681,7 @@ export default {
 
   .listTopBar {
     padding: 1rem 0vw 0.5rem 5vw;
-    border-bottom: 2px solid rgb(31, 31, 33);
+    border-bottom: 1px solid #222225;
   }
 
   .listTopBar>div {
@@ -710,7 +711,7 @@ export default {
 
   .listContent {
     margin: 0 5vw;
-    border-bottom: 2px solid rgb(31, 31, 33);
+    border-bottom: 1px solid #222225;
     list-style: none;
     padding: 1rem 0rem;
     cursor: pointer;
@@ -748,7 +749,7 @@ export default {
     color:#9B9B9B;
     font-size: 1rem;
     padding: 0.8rem 0;
-    border-bottom: 2px solid rgb(31, 31, 33);
+    border-bottom: 1px solid #222225;
     padding-left: 1rem;
   }
   .wrap .andTop>span{

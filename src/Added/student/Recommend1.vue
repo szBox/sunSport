@@ -6,13 +6,9 @@
     <p>菁菁达人</p>
     <div class="menu"></div>
   </div>
-  <div class="c3posi">
-  	<div class="c3Box">
-			<div class="typing_loader"></div>
-		</div>
-  </div>
+  
 
-  <ol v-show="status">
+  <ol  v-if='result.length'>
     <li class="list" v-for="item in result">
     	<div class="len" v-for="(middle,index) in item">
     		<p class="lTitle">
@@ -43,11 +39,11 @@
 
     </li>
   </ol>
-  <div v-show="status" class="more-btn" @click="next && more() ">{{next_text}}</div>
+  <div  class="more-btn" @click="next && more() ">{{next_text}}</div>
 
-  <div class="no-data" v-show='!status'>
-  	暂无数据
-  </div>
+  <!--<div class="no-data" v-if='!result.length'>
+  	{{nodate}}
+  </div>-->
 </div>
 </template>
 
@@ -63,6 +59,7 @@ export default {
           page:1,
           next_text:'加载更多',
           next:true,
+          nodate:'暂无数据'
         }
     },
     methods: {
@@ -71,6 +68,8 @@ export default {
       },
       toRoute(id){
         console.log(id);
+        var self=this;
+        self.$root.eventHub.$emit('Vloading',true)
         this.$router.push({path: '/Recommend2/' + id})
       },
     	mp4(u){
@@ -80,7 +79,9 @@ export default {
 				$('[data-bg!="'+u+'"]').parent('.video-img').show();
     	},
     	more(){
+    		
     		var vm = this;
+    		vm.$root.eventHub.$emit('Vloading',true)
 				vm.page++;
 				$('.c3posi').show();
 				vm.getAjax();
@@ -105,6 +106,10 @@ export default {
 //      url: 'http://192.168.0.247/index.php?m=content&f=web_healthy&v=project&recommend=1',
         success: function (response){
           console.log(response);
+          vm.$root.eventHub.$emit('Vloading',false)
+//        if(response.data){
+//        	
+//        }
           if(response.status=='success'){
           	vm.result.push(response.data);
 						console.log(vm.result)
@@ -221,87 +226,5 @@ export default {
 	padding: 0.75rem;
 	font-size: 0.7rem;
 }
-.c3posi{
-	position:fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	display: block;
-	z-index: 99;
-}
-.c3Box {
 
-				width: 100px;
-				/*background-color: rgba(0,0,0, 0.02);*/
-				height: 100px;
-				vertical-align: middle;
-				border-radius: 1px;
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				-webkit-transform: translate(-50%, -50%);
-				-moz-transform: translate(-50%, -50%);
-				-ms-transform: translate(-50%, -50%);
-				-o-transform: translate(-50%, -50%);
-				transform: translate(-50%, -50%);
-
-			}
-
-			.typing_loader {
-				width: 16px;
-				height: 16px;
-				border-radius: 50%;
-				-webkit-animation: typing 1s linear infinite alternate;
-				-moz-animation: Typing 1s linear infinite alternate;
-				animation: typing 1s linear infinite alternate;
-				margin: 46px auto;
-				position: relative;
-				left: -12px;
-			}
-
-			@-webkit-keyframes typing {
-				0% {
-					background-color: rgba(0, 169, 217, 1);
-					box-shadow: 18px 0px 0px 0px rgba(0, 169, 217, 0.2), 36px 0px 0px 0px rgba(0, 169, 217, 0.2);
-				}
-				25% {
-					background-color: rgba(0, 169, 217, 0.4);
-					box-shadow: 18px 0px 0px 0px rgba(0, 169, 217, 2), 36px 0px 0px 0px rgba(0, 169, 217, 0.2);
-				}
-				75% {
-					background-color: rgba(0, 169, 217, 0.4);
-					box-shadow: 18px 0px 0px 0px rgba(0, 169, 217, 0.2), 36px 0px 0px 0px rgba(0, 169, 217, 1);
-				}
-			}
-
-			@-moz-keyframes typing {
-				0% {
-					background-color: rgba(0, 169, 217, 1);
-					box-shadow: 18px 0px 0px 0px rgba(0, 169, 217, 0.2), 36px 0px 0px 0px rgba(0, 169, 217, 0.2);
-				}
-				25% {
-					background-color: rgba(0, 169, 217, 0.4);
-					box-shadow: 18px 0px 0px 0px rgba(0, 169, 217, 2), 36px 0px 0px 0px rgba(0, 169, 217, 0.2);
-				}
-				75% {
-					background-color: rgba(0, 169, 217, 0.4);
-					box-shadow: 18px 0px 0px 0px rgba(0, 169, 217, 0.2), 36px 0px 0px 0px rgba(0, 169, 217, 1);
-				}
-			}
-
-			@keyframes typing {
-				0% {
-					background-color: rgba(0, 169, 217, 1);
-					box-shadow: 18px 0px 0px 0px rgba(0, 169, 217, 0.2), 36px 0px 0px 0px rgba(0, 169, 217, 0.2);
-				}
-				25% {
-					background-color: rgba(0, 169, 217, 0.4);
-					box-shadow: 18px 0px 0px 0px rgba(0, 169, 217, 2), 36px 0px 0px 0px rgba(0, 169, 217, 0.2);
-				}
-				75% {
-					background-color: rgba(0, 169, 217, 0.4);
-					box-shadow: 18px 0px 0px 0px rgba(0, 169, 217, 0.2), 36px 0px 0px 0px rgba(0, 169, 217, 1);
-				}
-			}
 </style>

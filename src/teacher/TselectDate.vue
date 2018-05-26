@@ -253,6 +253,8 @@ export default {
 //      })
 //    },
     routerTo(gid){
+    	var self=this;
+    	self.$root.eventHub.$emit('Vloading',true)
       this.$router.push({ path: "/single/" + gid})
     },
     toggle() {
@@ -364,7 +366,7 @@ export default {
 
 //      this.$store.dispatch('storeMovieID',this.$route.params.ID);
       api.get_api_data(mainUrl,params,function(d){
-      	 self.$root.eventHub.$emit('Vloading',true)
+      	 self.$root.eventHub.$emit('Vloading',false)
         console.log(JSON.stringify(d));
         self.$store.state.c.basic=d;
         self.$store.state.c.basic.uid=val;
@@ -616,7 +618,7 @@ export default {
 
   .listTopBar {
     padding: 1rem 5vw 0.7rem 5vw;
-    border-bottom: 2px solid rgb(31, 31, 33);
+    border-bottom: 1px solid #222225;
   }
 
   .listTopBar>div {
@@ -646,7 +648,7 @@ export default {
 
   .listContent {
     margin: 0 5vw;
-    border-bottom: 2px solid rgb(31, 31, 33);
+    border-bottom: 1px solid #222225;
     list-style: none;
     padding: 1rem 0;
     cursor: pointer;

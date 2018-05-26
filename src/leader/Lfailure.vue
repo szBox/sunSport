@@ -151,11 +151,16 @@
     color: #9C9C9E;
   }
   .c{
+    font-size: 18px;
+   font-weight: bold;
     position: absolute;
-    left: 40%;
-    text-align: center;
-    /*width: 50%;*/
-    font-weight: bold;
+    left: 50%;
+    color: #fff;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
   }
   .cont_t{
     margin-top: 0.1rem;

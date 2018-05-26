@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!--<img src="./assets/logo.png">-->
-    	<s_loading v-if="shows"></s_loading>
+    	<s_loading v-show="shows"></s_loading>
     <router-view></router-view>
   
   </div>
@@ -19,7 +19,10 @@
    		shows:false
    	}
    },
-    created(){
+    components:{
+			 s_loading:loading
+    },
+    mounted(){
       resize.getFontSzie();
       resize.root();
       resize.getHeight();
@@ -29,9 +32,7 @@
       })
     },
     
-    components:{
-			 s_loading:loading
-    },
+   
   }
 
 </script>

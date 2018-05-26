@@ -8,7 +8,7 @@
             </div>
             <!--<div class="c">体质监测</div>-->
             <div class="c">菁菁达人</div>
-            <div class="y" @click="goGrowUp">班级成长</div>
+            <!--<div class="y" @click="goGrowUp">班级成长</div>-->
           </div>
           <hello-div></hello-div>
           <lun-div></lun-div>
@@ -77,11 +77,16 @@
     color: #9C9C9E;
   }
   .c{
+    font-size: 18px;
+   font-weight: bold;
     position: absolute;
-    left: 40%;
-    text-align: center;
-    /*width: 50%;*/
-    font-weight: bold;
+    left: 50%;
+    color: #fff;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
   }
   .y{
     width: 30%;

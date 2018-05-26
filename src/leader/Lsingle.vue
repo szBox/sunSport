@@ -6,7 +6,7 @@
           <img src="../assets/img/goback.png" height="100%">
         </div>
         <!--<div class="c">体质监测</div>-->
-        <div class="c">菁菁达人</div>
+        <div class="c">{{grade}}</div>
         <!--<div class="y" @click="goGrowUp">班级成长</div>-->
       </div>
       <hello-div></hello-div>
@@ -21,8 +21,13 @@
     name:'teacher',
     data(){
       return{
-
+				grade:''
       }
+    },
+    created(){
+    	var self=this;
+    	var gradeName=localStorage.getItem('gradeName');
+    	self.grade=gradeName
     },
     components:{
       HelloDiv,
@@ -30,6 +35,8 @@
     },
     methods:{
       goGrowUp(){
+      	var self=this;
+      	self.$root.eventHub.$emit('Vloading',true)
         this.$router.push({path:'/growUp'})
       },
       goback(){
@@ -60,10 +67,21 @@
   }
   .c{
     position: absolute;
-    left: 40%;
+    left: 50%;
+    height: 2.5rem;
+    -webkit-transform: translateX(-50%);
+      -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
     text-align: center;
-    /*width: 50%;*/
+    width: 60%;
     font-weight: bold;
+    overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		  -webkit-line-clamp: 1;
   }
   .y{
     width: 30%;

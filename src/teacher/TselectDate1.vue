@@ -328,6 +328,8 @@
     methods:{
       /*路由跳转*/
       routerTo(gid) {
+      	var self=this;
+      	self.$root.eventHub.$emit('Vloading',true)
         this.$router.push({ path: "/ranklist/" + gid });
       },
       /* 显隐切换 */
@@ -357,6 +359,7 @@
           }
         }
         self.$store.state.b.week=x;
+        self.$root.eventHub.$emit('Vloading',true)
         this.$router.push({path:'/general_details/'+x})
       },
       selectData(val){
@@ -739,7 +742,7 @@
 
   .listTopBar {
     padding: 1rem 0vw 0.5rem 7vw;
-    border-bottom: 2px solid rgb(31, 31, 33);
+    border-bottom: 1px solid #222225;
   }
 
   .listTopBar>div {
@@ -769,7 +772,7 @@
   /*  content */
 
   .listContent {
-    border-bottom: 2px solid rgb(31, 31, 33);
+    border-bottom: 1px solid #222225;
     list-style: none;
     padding: 1rem 3vw;
     cursor: pointer;
@@ -808,7 +811,7 @@
     align-items: center;
     /*text-align: center;*/
     padding: 0.8rem 0;
-    border-bottom: 1px solid #27272A;
+    border-bottom:1px solid #222225;;
     padding-left: 1rem;
     color: #9B9B9B;
     font-size: 1rem;

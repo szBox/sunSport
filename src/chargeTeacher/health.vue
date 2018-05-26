@@ -19,7 +19,7 @@
             <!--<img src="../assets/img/fail.png" width="100%">-->
           <!--</div>-->
           <div class="c_cont" style="color: #FFCC00">
-            偏瘦(<span>{{list.bmi.to_light.percentage}}</span>)
+            低体重(<span>{{list.bmi.to_light.percentage}}</span>)
           </div>
           <div class="c_right">
             <div class="c_num">{{list.bmi.to_light.num}}人</div>
@@ -48,7 +48,7 @@
             <!--<img src="../assets/img/well.png" width="100%">-->
           <!--</div>-->
           <div class="c_cont" style="color:#FF9C00">
-            过重(<span>{{list.bmi.overweight.percentage}}</span>)
+            超重(<span>{{list.bmi.overweight.percentage}}</span>)
           </div>
           <div class="c_right">
             <div class="c_num">{{list.bmi.overweight.num}}人</div>
@@ -71,11 +71,11 @@
             </div>
           </div>
         </li>
-        <li @click="godetail(4)">
+        <!--<li @click="godetail(4)">
           <!--<div class="c_img">-->
           <!--<img src="../assets/img/excellent.png" width="100%">-->
           <!--</div>-->
-          <div class="c_cont" style="color: silver">
+          <!--<div class="c_cont" style="color: silver">
             非常肥胖(<span>{{list.bmi.very_fat.percentage}}</span>)
           </div>
           <div class="c_right">
@@ -84,7 +84,7 @@
               <img src="../assets/img/advance.png" width="100%">
             </div>
           </div>
-        </li>
+        </li>-->
       </div>
     </div>
   </div>
@@ -175,12 +175,16 @@
     color: #9C9C9E;
   }
   .c{
+   font-size: 18px;
+   font-weight: bold;
     position: absolute;
-    /*left: 40%;*/
-    text-align: center;
-    width: 90%;
-    font-weight: bold;
-    z-index:-1;
+    left: 50%;
+    color: #fff;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
   }
   .cont_c{
     background-color: #2E2E31;

@@ -79,9 +79,13 @@ export default {
   },
   methods: {
     toRec() {
+    	var self=this;
+    	self.$root.eventHub.$emit('Vloading',true)
       this.$router.push("/Recommend1/" + this.$route.params.id);
     },
     toRouter() {
+    	var self=this;
+    	self.$root.eventHub.$emit('Vloading',true)
       this.$router.replace({ path: "/movement/" + this.$route.params.id });
     },
     toPlan() {
@@ -115,6 +119,7 @@ export default {
         sex:vm.$store.state.a.data.base.user.sex
       },
       success: function(response) {
+      	vm.$root.eventHub.$emit('Vloading',false)
       	if(response.data){
       		console.log(response)
 	        console.log(response.data.period);

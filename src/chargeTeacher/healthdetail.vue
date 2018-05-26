@@ -91,11 +91,11 @@
       var self=this;
       var n=self.$route.params.id;
       if(n==0){
-        this.title='偏瘦';
+        this.title='低体重';
       }else if(n==1){
         this.title='正常';
       }else if(n==2){
-        this.title='过重';
+        this.title='超重';
       }else if(n==3){
         this.title='肥胖';
       }else if(n==4){
